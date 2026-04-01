@@ -164,15 +164,16 @@ sudo nano /etc/tiermaking/backend.env
 Example `backend.env` (EDIT VALUES):
 
 ```bash
-DJANGO_SETTINGS_MODULE=config.settings
-DJANGO_SECRET_KEY=CHANGE_ME
-DJANGO_DEBUG=False
-DJANGO_ALLOWED_HOSTS=YOUR_DOMAIN,YOUR_EC2_IP,localhost,127.0.0.1
+# Names must match config/settings.py (not DJANGO_* — those are ignored)
+SECRET_KEY=CHANGE_ME_LONG_RANDOM_STRING
+DEBUG=False
+ALLOWED_HOSTS=YOUR_EC2_PUBLIC_IP,YOUR_DOMAIN,localhost,127.0.0.1
 
 # SQLite: ensure Django settings use the default db.sqlite3 (or your path).
 # Back up db.sqlite3 before deploys if you care about data.
 
-# If you use JWT / auth settings add them here
+# When DEBUG=False, set browser origins (comma-separated, no spaces)
+# CORS_ORIGINS=https://YOUR_DOMAIN,http://YOUR_EC2_PUBLIC_IP
 ```
 
 Load env variables inside your Gunicorn service (below).
