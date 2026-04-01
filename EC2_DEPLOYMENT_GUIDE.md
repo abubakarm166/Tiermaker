@@ -9,15 +9,34 @@ This guide deploys the whole project on an **Ubuntu 22.04** EC2 instance:
   - `/api/` → Django
   - `/media/` → Django media files
   - `/static/` → Django static files
-- **DB**: Postgres
+- **DB**: **SQLite** (default `db.sqlite3` in the project root — no separate database server)
 - **SSL**: Let’s Encrypt (Certbot)
 
 > Assumptions
-> - Your repo is copied/cloned to: `/var/www/tiermaking`
+> - Your repo lives at **`/var/www/Tiermaker`** (use this path everywhere: venv, systemd, Nginx, `collectstatic`, media).
 > - Django project root is the repo root (has `manage.py`).
 > - Next.js app is in: `web/`
 
 If your structure is different, adjust the paths.
+
+### Git clone: “Permission denied” in `/var/www`
+
+`/var/www` is owned by root. Either:
+
+```bash
+sudo mkdir -p /var/www/Tiermaker
+sudo chown -R ubuntu:ubuntu /var/www/Tiermaker
+cd /var/www/Tiermaker
+git clone https://github.com/YOUR_USER/YOUR_REPO.git .
+```
+
+Or clone with sudo then fix ownership:
+
+```bash
+cd /var/www
+sudo git clone https://github.com/YOUR_USER/YOUR_REPO.git Tiermaker
+sudo chown -R ubuntu:ubuntu /var/www/Tiermaker
+```
 
 ---
 
@@ -53,15 +72,19 @@ sudo apt-get install -y \
   ufw \
   python3-pip python3-venv python3-dev \
   build-essential \
-  postgresql postgresql-contrib libpq-dev \
   certbot python3-certbot-nginx
 ```
 
-Enable firewall (optional but recommended):
+Enable firewall **after** Nginx is installed (so the `Nginx Full` app profile exists). If you already enabled UFW without HTTP/HTTPS, add ports manually:
 
 ```bash
 sudo ufw allow OpenSSH
 sudo ufw allow 'Nginx Full'
+# If you see: ERROR: Could not find a profile matching 'Nginx Full'
+# use ports instead (works even before nginx profile is registered):
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
 sudo ufw --force enable
 sudo ufw status
 ```
@@ -83,53 +106,35 @@ npm -v
 ## 5) Create app user + folders
 
 ```bash
-sudo mkdir -p /var/www/tiermaking
-sudo chown -R ubuntu:ubuntu /var/www/tiermaking
+sudo mkdir -p /var/www/Tiermaker
+sudo chown -R ubuntu:ubuntu /var/www/Tiermaker
 ```
 
-Put your code in `/var/www/tiermaking` (choose one):
+Put your code in `/var/www/Tiermaker` (choose one):
 
 ### Option A: Git clone
 ```bash
 cd /var/www
-git clone YOUR_REPO_URL tiermaking
-cd /var/www/tiermaking
+git clone YOUR_REPO_URL Tiermaker
+cd Tiermaker
 ```
 
 ### Option B: Upload (SCP)
 From your local machine:
 ```bash
-scp -i /path/to/key.pem -r "D:\Tiermaking\*" ubuntu@YOUR_EC2_IP:/var/www/tiermaking/
+scp -i /path/to/key.pem -r "D:\Tiermaking\*" ubuntu@YOUR_EC2_IP:/var/www/Tiermaker/
 ```
+
+Optional shortcut for shells: `export APP=/var/www/Tiermaker` and use `$APP` in commands.
 
 ---
 
-## 6) Postgres setup
-
-```bash
-sudo -u postgres psql
-```
-
-In the Postgres prompt:
-
-```sql
-CREATE DATABASE tiermaking;
-CREATE USER tiermaking_user WITH PASSWORD 'CHANGE_ME_STRONG_PASSWORD';
-ALTER ROLE tiermaking_user SET client_encoding TO 'utf8';
-ALTER ROLE tiermaking_user SET default_transaction_isolation TO 'read committed';
-ALTER ROLE tiermaking_user SET timezone TO 'UTC';
-GRANT ALL PRIVILEGES ON DATABASE tiermaking TO tiermaking_user;
-\q
-```
-
----
-
-## 7) Backend (Django) environment + dependencies
+## 6) Backend (Django) environment + dependencies
 
 Create a Python venv:
 
 ```bash
-cd /var/www/tiermaking
+cd /var/www/Tiermaker
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip wheel
@@ -145,7 +150,7 @@ pip install -r requirements.txt
 ### If you do NOT have `requirements.txt`
 You must create one (recommended). Typical packages:
 ```bash
-pip install django djangorestframework gunicorn psycopg2-binary pillow django-cors-headers
+pip install django djangorestframework gunicorn pillow django-cors-headers
 pip freeze > requirements.txt
 ```
 
@@ -159,12 +164,13 @@ sudo nano /etc/tiermaking/backend.env
 Example `backend.env` (EDIT VALUES):
 
 ```bash
-DJANGO_SETTINGS_MODULE=Tiermaking.settings
+DJANGO_SETTINGS_MODULE=config.settings
 DJANGO_SECRET_KEY=CHANGE_ME
 DJANGO_DEBUG=False
 DJANGO_ALLOWED_HOSTS=YOUR_DOMAIN,YOUR_EC2_IP,localhost,127.0.0.1
 
-DATABASE_URL=postgres://tiermaking_user:CHANGE_ME_STRONG_PASSWORD@127.0.0.1:5432/tiermaking
+# SQLite: ensure Django settings use the default db.sqlite3 (or your path).
+# Back up db.sqlite3 before deploys if you care about data.
 
 # If you use JWT / auth settings add them here
 ```
@@ -174,7 +180,7 @@ Load env variables inside your Gunicorn service (below).
 Run migrations + collectstatic:
 
 ```bash
-cd /var/www/tiermaking
+cd /var/www/Tiermaker
 source .venv/bin/activate
 
 # Make sure Django can read env; for quick run you can export:
@@ -189,18 +195,20 @@ python manage.py collectstatic --noinput
 Create media/static directories:
 
 ```bash
-sudo mkdir -p /var/www/tiermaking/staticfiles
-sudo mkdir -p /var/www/tiermaking/media
-sudo chown -R ubuntu:www-data /var/www/tiermaking/staticfiles /var/www/tiermaking/media
-sudo chmod -R 775 /var/www/tiermaking/staticfiles /var/www/tiermaking/media
+sudo mkdir -p /var/www/Tiermaker/staticfiles
+sudo mkdir -p /var/www/Tiermaker/media
+sudo chown -R ubuntu:www-data /var/www/Tiermaker/staticfiles /var/www/Tiermaker/media
+sudo chmod -R 775 /var/www/Tiermaker/staticfiles /var/www/Tiermaker/media
 ```
+
+Paths are **case-sensitive**: `/var/www/Tiermaker` is not the same as `/var/www/tiermaking`. If you created dirs under the wrong name, either remove the mistaken folder (`sudo rm -rf /var/www/tiermaking`) when unused, or fix Nginx/systemd to point at `/var/www/Tiermaker` only.
 
 ---
 
-## 8) Frontend (Next.js) environment + build
+## 7) Frontend (Next.js) environment + build
 
 ```bash
-cd /var/www/tiermaking/web
+cd /var/www/Tiermaker/web
 npm install
 ```
 
@@ -223,7 +231,7 @@ NEXT_PUBLIC_API_BASE=http://127.0.0.1:8000
 Build:
 
 ```bash
-cd /var/www/tiermaking/web
+cd /var/www/Tiermaker/web
 set -a
 source /etc/tiermaking/web.env
 set +a
@@ -233,27 +241,27 @@ npm run build
 
 ---
 
-## 9) systemd services (Gunicorn + Next.js)
+## 8) systemd services (Gunicorn + Next.js)
 
-### 9.1 Gunicorn service
+### 8.1 Gunicorn service
 
 ```bash
 sudo nano /etc/systemd/system/tiermaking-backend.service
 ```
 
-Paste (EDIT `WorkingDirectory`, `ExecStart`, and `Tiermaking.wsgi:application` if needed):
+Paste (adjust paths only if your app root is not `/var/www/Tiermaker`):
 
 ```ini
 [Unit]
 Description=Tiermaking Django Backend (Gunicorn)
-After=network.target postgresql.service
+After=network.target
 
 [Service]
 User=ubuntu
 Group=www-data
-WorkingDirectory=/var/www/tiermaking
+WorkingDirectory=/var/www/Tiermaker
 EnvironmentFile=/etc/tiermaking/backend.env
-ExecStart=/var/www/tiermaking/.venv/bin/gunicorn Tiermaking.wsgi:application \
+ExecStart=/var/www/Tiermaker/.venv/bin/gunicorn config.wsgi:application \
   --bind 127.0.0.1:8000 \
   --workers 3 \
   --timeout 120
@@ -277,7 +285,7 @@ Logs:
 sudo journalctl -u tiermaking-backend -n 200 --no-pager
 ```
 
-### 9.2 Next.js service
+### 8.2 Next.js service
 
 ```bash
 sudo nano /etc/systemd/system/tiermaking-web.service
@@ -292,7 +300,7 @@ After=network.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/var/www/tiermaking/web
+WorkingDirectory=/var/www/Tiermaker/web
 EnvironmentFile=/etc/tiermaking/web.env
 ExecStart=/usr/bin/npm run start -- -p 3000
 Restart=always
@@ -317,7 +325,7 @@ sudo journalctl -u tiermaking-web -n 200 --no-pager
 
 ---
 
-## 10) Nginx reverse proxy config
+## 9) Nginx reverse proxy config
 
 ```bash
 sudo nano /etc/nginx/sites-available/tiermaking
@@ -334,14 +342,14 @@ server {
 
     # Django static
     location /static/ {
-        alias /var/www/tiermaking/staticfiles/;
+        alias /var/www/Tiermaker/staticfiles/;
         access_log off;
         expires 30d;
     }
 
     # Django media
     location /media/ {
-        alias /var/www/tiermaking/media/;
+        alias /var/www/Tiermaker/media/;
         access_log off;
         expires 30d;
     }
@@ -377,7 +385,7 @@ sudo systemctl restart nginx
 
 ---
 
-## 11) SSL (Let’s Encrypt)
+## 10) SSL (Let’s Encrypt)
 
 ```bash
 sudo certbot --nginx -d YOUR_DOMAIN
@@ -390,7 +398,7 @@ sudo certbot renew --dry-run
 
 ---
 
-## 12) Django settings checklist (important)
+## 11) Django settings checklist (important)
 
 In your Django `settings.py` ensure:
 
@@ -406,9 +414,11 @@ In your Django `settings.py` ensure:
 If you use CORS:
 - `CORS_ALLOWED_ORIGINS = ["https://YOUR_DOMAIN"]`
 
+**SQLite:** the app user (`ubuntu`) must be able to read/write `db.sqlite3` in the project directory. If Gunicorn runs as `ubuntu`, keep the file owned by `ubuntu`.
+
 ---
 
-## 13) Quick health checks
+## 12) Quick health checks
 
 ### Check services
 ```bash
@@ -431,14 +441,14 @@ curl -I http://YOUR_DOMAIN/api/
 
 ---
 
-## 14) Updating code (repeat whenever you deploy new changes)
+## 13) Updating code (repeat whenever you deploy new changes)
 
 ```bash
-cd /var/www/tiermaking
+cd /var/www/Tiermaker
 git pull
 
 # Backend
-source /var/www/tiermaking/.venv/bin/activate
+source /var/www/Tiermaker/.venv/bin/activate
 pip install -r requirements.txt
 set -a; source /etc/tiermaking/backend.env; set +a
 python manage.py migrate
@@ -446,7 +456,7 @@ python manage.py collectstatic --noinput
 sudo systemctl restart tiermaking-backend
 
 # Frontend
-cd /var/www/tiermaking/web
+cd /var/www/Tiermaker/web
 set -a; source /etc/tiermaking/web.env; set +a
 npm install
 npm run build
@@ -457,7 +467,16 @@ sudo systemctl restart nginx
 
 ---
 
-## 15) Common issues
+## 14) Common issues
+
+### `npm error ENOENT` — `Could not read package.json` in `/var/www/Tiermaker/web`
+
+The `web` folder on the server is empty or incomplete (no `package.json`). The repo expects **`web/package.json`** at the project root next to `manage.py`.
+
+- Check: `ls -la /var/www/Tiermaker/web/package.json` — it must exist.
+- Fix: deploy the full repo (including the entire `web/` tree), e.g. `git pull` from a remote that contains `web/`, or re-copy/rsync **`web/`** from your machine:  
+  `scp -i key.pem -r "D:\Tiermaking\web" ubuntu@IP:/var/www/Tiermaker/`  
+  (overwrites/adds `web` with `package.json`, `app/`, `public/`, etc.)
 
 ### “socket hang up” / `ECONNRESET` in Next.js proxy
 - Django not running or crashed.
@@ -467,14 +486,14 @@ sudo systemctl restart nginx
 - Safe to ignore (source map not shipped).
 
 ### Images/media not loading
-- Ensure Nginx `/media/` points to `/var/www/tiermaking/media/`
+- Ensure Nginx `/media/` points to `/var/www/Tiermaker/media/`
 - Ensure Django saves uploads to `MEDIA_ROOT`
-- Ensure file permissions allow Nginx to read `/var/www/tiermaking/media`
+- Ensure file permissions allow Nginx to read `/var/www/Tiermaker/media`
 
 ### Permission denied for static/media
 ```bash
-sudo chown -R ubuntu:www-data /var/www/tiermaking/staticfiles /var/www/tiermaking/media
-sudo chmod -R 775 /var/www/tiermaking/staticfiles /var/www/tiermaking/media
+sudo chown -R ubuntu:www-data /var/www/Tiermaker/staticfiles /var/www/Tiermaker/media
+sudo chmod -R 775 /var/www/Tiermaker/staticfiles /var/www/Tiermaker/media
 sudo systemctl restart nginx
 ```
 
