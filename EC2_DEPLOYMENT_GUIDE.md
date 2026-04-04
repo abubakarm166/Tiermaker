@@ -50,6 +50,41 @@ sudo chown -R ubuntu:ubuntu /var/www/Tiermaker
 3. (Recommended) Assign an Elastic IP.
 4. Point your domain DNS (A record) to the instance public IP.
 
+### Message you can send to your client (DNS)
+
+Copy and adjust names/sign-off as needed:
+
+---
+
+**Subject: DNS for thetiermaker.com**
+
+Hello,
+
+Please update DNS for **thetiermaker.com** so the domain points to our application server.
+
+**A record (root domain)**
+
+| Field | Value |
+|--------|--------|
+| Type | **A** |
+| Host / Name | **@** (or your provider’s equivalent for the root domain) |
+| Value / Points to | **13.60.215.9** |
+| TTL | 300–3600 seconds (or default) |
+
+**Optional — www**
+
+| Field | Value |
+|--------|--------|
+| Type | **A** (or **CNAME** to `thetiermaker.com` if your provider prefers) |
+| Host / Name | **www** |
+| Value | **13.60.215.9** (or CNAME target as above) |
+
+Propagation is often a few minutes but can take up to 24–48 hours in some regions.
+
+After DNS resolves correctly, we will finish HTTPS (SSL) on the server.
+
+Thank you,
+
 ---
 
 ## 2) SSH into server
@@ -225,9 +260,11 @@ Example `web.env` (EDIT VALUES):
 NODE_ENV=production
 PORT=3000
 
-# IMPORTANT: Next.js rewrites use this to proxy /api and /media to Django
-NEXT_PUBLIC_API_BASE=http://127.0.0.1:8000
+# Same public origin as the site (Nginx serves Next + proxies /api and /media to Django)
+NEXT_PUBLIC_API_BASE=https://thetiermaker.com
 ```
+
+For local `npm run dev`, use `.env.local` with `NEXT_PUBLIC_API_BASE=http://localhost:8000`. The committed `web/.env.production` matches **thetiermaker.com** for production builds.
 
 Build:
 

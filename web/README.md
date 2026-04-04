@@ -14,7 +14,7 @@ This is the main Next.js app that combines:
    ```bash
    NEXT_PUBLIC_API_BASE=http://localhost:8000
    ```
-   If unset, the app assumes the API is at `http://localhost:8000` for rewrites.
+   If unset during **development**, rewrites default to `http://localhost:8000`. **Production** builds use `web/.env.production` (`https://thetiermaker.com`) or the same fallback in `next.config.mjs`.
 
 3. **Install and run**:
    ```bash
