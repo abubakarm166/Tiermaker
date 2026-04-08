@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-50 px-3 py-3">
         <div className="mx-auto max-w-6xl rounded-2xl bg-[#10101099] border border-[#202020] backdrop-blur-md px-4 py-2 flex items-center justify-between gap-2">
           <Link href="/" className="text-xl font-semibold text-white tracking-tight">
-            TierListMaker
+            Thetiermaker
           </Link>
 
           {/* Desktop nav */}

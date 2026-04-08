@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-/* Landing only: loaded by (landing)/layout so TierBuddy colors apply on / */
+/* Landing only: loaded by (landing)/layout so Thetiermaker colors apply on / */
 .landing-root {
     font-family: "Inter", sans-serif !important;
     padding: 0 !important;
@@ -854,7 +854,7 @@
     border-radius: 10px;
     margin-bottom: 4px;
 }
-.choice_col_header_tierbuddy {
+.choice_col_header_thetiermaker {
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 137, 4, 0.1) 100%);
     border: 1px solid #F0B10033;
 }
@@ -901,11 +901,11 @@
     border-radius: 10px;
     transition: background 0.2s ease;
 }
-.choice_feature_row_tierbuddy {
+.choice_feature_row_thetiermaker {
     background: linear-gradient(135deg, rgba(0, 201, 80, 0.05) 0%, rgba(0, 188, 125, 0.05) 100%);
     border: 1px solid #F0B10033;
 }
-.choice_feature_row_tierbuddy:hover {
+.choice_feature_row_thetiermaker:hover {
     background: #212121;
     border-color: #F0B10033;
 }

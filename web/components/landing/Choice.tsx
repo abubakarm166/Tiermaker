@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-const tierbuddyFeatures = [
+const thetiermakerFeatures = [
   "Completely Free, No Restrictions",
   "Built-In Smart Ranking Tools",
   "Start Instantly — No Login Needed",
@@ -33,19 +33,19 @@ export default function Choice() {
         <div className="container">
           <div className="my_title_div">
             <span>THE SMARTER CHOICE</span>
-            <h2>Why TierBuddy Outperforms <br /> Other Ranking Platforms</h2>
+            <h2>Why Thetiermaker Outperforms <br /> Other Ranking Platforms</h2>
             <p>Discover why thousands of creators are switching to a faster, simpler tier list experience.</p>
           </div>
           <div className="choice_content_main">
             <div className="row">
               <div className="col-lg-6 col-md-12 col-sm-12">
                 <div className="choice_col">
-                  <div className="choice_col_header choice_col_header_tierbuddy">
-                    <div className="choice_col_brand">🏅 TierBuddy</div>
+                  <div className="choice_col_header choice_col_header_thetiermaker">
+                    <div className="choice_col_brand">🏅 Thetiermaker</div>
                     <span className="choice_winner_badge">✦ WINNER</span>
                   </div>
-                  {tierbuddyFeatures.map((feature, idx) => (
-                    <div className="choice_feature_row choice_feature_row_tierbuddy" key={idx}>
+                  {thetiermakerFeatures.map((feature, idx) => (
+                    <div className="choice_feature_row choice_feature_row_thetiermaker" key={idx}>
                       <div className="choice_icon_check">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="20 6 9 17 4 12" />
@@ -77,7 +77,7 @@ export default function Choice() {
             </div>
             <div className="choice_cta_wrap">
               <Link href="/register" className="choice_cta_btn">
-                Try TierBuddy Free Today
+                Try Thetiermaker Free Today
               </Link>
               <p className="choice_cta_sub">Join 100,000+ creators who made the switch</p>
             </div>

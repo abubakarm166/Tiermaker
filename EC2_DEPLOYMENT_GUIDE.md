@@ -528,6 +528,13 @@ The `web` folder on the server is empty or incomplete (no `package.json`). The r
 - Ensure Django saves uploads to `MEDIA_ROOT`
 - Ensure file permissions allow Nginx to read `/var/www/Tiermaker/media`
 
+### Meme gallery previews not showing
+- Meme previews are stored in Django **media** as `memes/...` and served via `/media/`.
+- If you see broken images on `/app/memes`, verify:
+  - Nginx `location /media/` is set correctly
+  - Django `MEDIA_ROOT` points to `/var/www/Tiermaker/media`
+  - File permissions allow Nginx to read `/var/www/Tiermaker/media`
+
 ### Permission denied for static/media
 ```bash
 sudo chown -R ubuntu:www-data /var/www/Tiermaker/staticfiles /var/www/Tiermaker/media

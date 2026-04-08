@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="row">
           <div className="col-lg-4 col-md-5 col-sm-12">
             <div className="footer_text1_div">
-              <h2>TierListMaker</h2>
+              <h2>Thetiermaker</h2>
               <p>
                 The best free tier list maker for creators. Create, share, and go viral with beautiful tier lists.
               </p>
@@ -81,7 +81,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer_bottom">
-          <p>© 2026 TierBuddy. All rights reserved.</p>
+          <p>© 2026 Thetiermaker. All rights reserved.</p>
           <div className="footer_bottom_links">
             <Link href="/status">Status</Link>
             <Link href="/sitemap">Sitemap</Link>

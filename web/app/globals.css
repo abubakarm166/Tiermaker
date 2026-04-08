@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TierBuddy color scheme for app/dashboard pages */
+/* Thetiermaker color scheme for app/dashboard pages */
 :root {
   --background: #000000;
   --foreground: #ffffff;
@@ -100,7 +100,7 @@ label {
   }
 }
 
-/* TierBuddy-aligned utilities for app pages */
+/* Thetiermaker-aligned utilities for app pages */
 /* User request: ensure these are pure white everywhere – override Bootstrap .text-muted !important */
 body .text-muted { color: #ffffff !important; }
 body .text-muted-strong { color: #ffffff !important; }

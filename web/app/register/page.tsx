@@ -48,7 +48,7 @@ export default function RegisterPage() {
           <div className="mb-4 flex items-center justify-between">
             <div>
               <p className="inline-flex items-center rounded-full bg-[#1a1a1a] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-strong">
-                Join TierListMaker
+                Join Thetiermaker
               </p>
             </div>
           </div>

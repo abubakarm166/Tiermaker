@@ -1,8 +1,8 @@
-# TierBuddy – Next.js App
+# Thetiermaker – Next.js App
 
 This is the main Next.js app that combines:
 
-- **Landing page** (from TierBuddy): Hero, stats, featured categories, rankings, recent work, how it works, choice, build CTA, and footer. Served at `/`.
+- **Landing page**: Hero, stats, featured categories, rankings, recent work, how it works, choice, build CTA, and footer. Served at `/`.
 - **Auth**: Login and register at `/login` and `/register`.
 - **App** (from Tiermaking): Dashboard under `/app` with templates, categories, lists, and meme editor. Protected; redirects to `/login` when not authenticated.
 
@@ -29,14 +29,14 @@ This is the main Next.js app that combines:
 
 ## Structure
 
-- `app/page.tsx` – Landing (TierBuddy)
+- `app/page.tsx` – Landing
 - `app/login`, `app/register` – Auth
 - `app/app/*` – Protected dashboard (Tiermaking): templates, categories, lists, meme-editor
-- `components/landing/*` – TierBuddy landing sections
+- `components/landing/*` – Landing sections
 - `components/Layout.tsx`, `ProtectedApp.tsx` – App shell and auth guard
 - `lib/api.ts` – API client (proxied to Django via rewrites)
 - `contexts/AuthContext.tsx` – Auth state
-- `styles/landing.css` – TierBuddy styles (from TierBuddy-main)
-- `public/assets` – TierBuddy images
+- `styles/landing.css` – Landing styles
+- `public/assets` – Landing images
 
 Template form, list form, list detail (full view), category form, and the full Meme Editor from the Vite app can be ported into the corresponding `app/app/...` routes as needed.

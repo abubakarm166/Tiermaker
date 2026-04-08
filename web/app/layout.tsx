@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "TierBuddy – Create, Rank & Share Tier Lists",
+  title: "Thetiermaker – Create, Rank & Share Tier Lists",
   description: "The ultimate platform for tier list creation. Create tier lists in seconds, rank anything, share with your community.",
 };
 

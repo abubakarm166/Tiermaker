@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import Konva from 'konva'
 import 'konva/lib/filters/Brighten'
 import 'konva/lib/filters/Contrast'
@@ -161,7 +161,13 @@ function MemeImageNode({ img, maintainAspect, onSelect, onChange }: MemeImageNod
   )
 }
 
-export default function MemeEditor() {
+type MemeEditorProps = {
+  initialSnapshot?: Partial<EditorSnapshot> | null
+  onSave?: (payload: { title?: string; snapshot: EditorSnapshot; previewDataUrl: string }) => Promise<void> | void
+  saveLabel?: string
+}
+
+export default function MemeEditor({ initialSnapshot, onSave, saveLabel }: MemeEditorProps) {
   const stageRef = useRef<Konva.Stage | null>(null)
   const transformerRef = useRef<Konva.Transformer | null>(null)
   const [containerWidth, setContainerWidth] = useState(900)
@@ -177,6 +183,8 @@ export default function MemeEditor() {
   const [history, setHistory] = useState<EditorSnapshot[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
   const isRestoringRef = useRef(false)
+
+  const canSave = useMemo(() => Boolean(onSave), [onSave])
 
   const selectedImage = images.find((img) => img.id === selectedId) || null
 
@@ -235,6 +243,22 @@ export default function MemeEditor() {
     setMaintainAspect(snap.maintainAspect)
     setZoom(snap.zoom)
   }
+
+  // Load initial snapshot (for editing/remixing an existing meme)
+  useEffect(() => {
+    if (!initialSnapshot) return
+    const merged: EditorSnapshot = {
+      images: initialSnapshot.images ?? [],
+      texts: initialSnapshot.texts ?? [],
+      layerOrder: initialSnapshot.layerOrder ?? [],
+      backgroundColor: initialSnapshot.backgroundColor ?? '#050816',
+      maintainAspect: initialSnapshot.maintainAspect ?? true,
+      zoom: initialSnapshot.zoom ?? 1,
+    }
+    restoreSnapshot(merged)
+    setSelectedId(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleUndo = () => {
     if (!canUndo) return
@@ -355,11 +379,58 @@ export default function MemeEditor() {
   const handleDownload = () => {
     const stage = stageRef.current
     if (!stage) return
+    // Hide editor UI (selection transformer) so it doesn't appear in exports
+    const tr = transformerRef.current
+    const wasVisible = tr?.visible() ?? false
+    if (tr) {
+      tr.visible(false)
+      tr.getLayer()?.batchDraw()
+    }
+
     const dataURL = stage.toDataURL({ pixelRatio: 2 })
+
+    if (tr) {
+      tr.visible(wasVisible)
+      tr.getLayer()?.batchDraw()
+    }
     const link = document.createElement('a')
     link.download = 'meme.png'
     link.href = dataURL
     link.click()
+  }
+
+  const buildSnapshot = (): EditorSnapshot => ({
+    images,
+    texts,
+    layerOrder,
+    backgroundColor,
+    maintainAspect,
+    zoom,
+  })
+
+  const exportPreviewDataUrl = (): string | null => {
+    const stage = stageRef.current
+    if (!stage) return null
+    const tr = transformerRef.current
+    const wasVisible = tr?.visible() ?? false
+    if (tr) {
+      tr.visible(false)
+      tr.getLayer()?.batchDraw()
+    }
+    const dataUrl = stage.toDataURL({ pixelRatio: 2 })
+    if (tr) {
+      tr.visible(wasVisible)
+      tr.getLayer()?.batchDraw()
+    }
+    return dataUrl
+  }
+
+  const handleSave = async () => {
+    if (!onSave) return
+    const previewDataUrl = exportPreviewDataUrl()
+    if (!previewDataUrl) return
+    const title = window.prompt("Title (optional)", "") ?? undefined
+    await onSave({ title, snapshot: buildSnapshot(), previewDataUrl })
   }
 
   const handleCanvasClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
@@ -1283,6 +1354,11 @@ export default function MemeEditor() {
                 +
               </button>
             </div>
+            {canSave && (
+              <button type="button" onClick={handleSave} className="btn-secondary">
+                {saveLabel ?? "Save"}
+              </button>
+            )}
             <button type="button" onClick={handleDownload} className="btn-primary">
               Download
             </button>
@@ -1353,9 +1429,16 @@ export default function MemeEditor() {
               Crop: Off
             </button>
           </div>
-          <button type="button" onClick={handleDownload} className="btn-primary px-6">
-            Download Meme
-          </button>
+          <div className="flex items-center gap-2">
+            {canSave && (
+              <button type="button" onClick={handleSave} className="btn-secondary text-xs">
+                {saveLabel ?? "Save"}
+              </button>
+            )}
+            <button type="button" onClick={handleDownload} className="btn-primary px-6">
+              Download Meme
+            </button>
+          </div>
         </footer>
       </div>
     </div>

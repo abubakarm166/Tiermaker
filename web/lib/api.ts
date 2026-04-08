@@ -1,4 +1,4 @@
-import type { User, RegisterResponse, PaginatedResponse, Category, Template, TierList, ReactionType } from "@/types/api";
+import type { User, RegisterResponse, PaginatedResponse, Category, Template, TierList, ReactionType, Meme } from "@/types/api";
 
 const BASE = "/api";
 
@@ -157,6 +157,28 @@ export function fetchMyLists() {
 export function fetchFeed(params: Record<string, string> = {}) {
   const q = new URLSearchParams(params).toString();
   return api<PaginatedResponse<TierList>>(`/lists/feed/${q ? "?" + q : ""}`);
+}
+
+export function fetchMemes(params: Record<string, string> = {}) {
+  const q = new URLSearchParams(params).toString();
+  return api<PaginatedResponse<Meme>>(`/memes/${q ? "?" + q : ""}`);
+}
+
+export function fetchMeme(id: string) {
+  return api<Meme>(`/memes/${id}/`);
+}
+
+export function createMeme(data: {
+  title?: string;
+  snapshot: unknown;
+  preview_data_url?: string;
+  parent?: number | null;
+}) {
+  return api<Meme>("/memes/", { method: "POST", body: JSON.stringify(data) });
+}
+
+export function remixMeme(id: string, data: { title?: string; snapshot: unknown; preview_data_url?: string }) {
+  return api<Meme>(`/memes/${id}/remix/`, { method: "POST", body: JSON.stringify(data) });
 }
 
 export function reactToList(id: string, reactionType: ReactionType | null) {

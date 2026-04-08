@@ -82,3 +82,14 @@ export interface RegisterResponse {
   access: string;
   refresh: string;
 }
+
+export interface Meme {
+  id: number;
+  title: string;
+  snapshot?: unknown;
+  preview: string | null;
+  author_email: string | null;
+  parent_id: number | null;
+  created_at: string;
+  updated_at: string;
+}
