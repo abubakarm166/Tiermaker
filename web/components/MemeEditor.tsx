@@ -1360,9 +1360,6 @@ export default function MemeEditor({ initialSnapshot, onSave, saveLabel }: MemeE
                 {saveLabel ?? "Save"}
               </button>
             )}
-            <button type="button" onClick={handleDownload} className="btn-primary">
-              Download
-            </button>
           </div>
         </header>
 

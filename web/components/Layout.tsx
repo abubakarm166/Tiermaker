@@ -25,6 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     pathname === "/app/lists" ||
     (pathname.startsWith("/app/lists/") && !isFeed && !isNewList);
   const isMemeEditor = pathname.startsWith("/app/meme-editor");
+  const isMemes = pathname === "/app/memes" || pathname.startsWith("/app/memes/");
 
   const handleLogout = () => {
     logout();
@@ -56,6 +57,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
             <Link href="/app/lists/new" className={navLinkClass(isNewList)}>
               New List
+            </Link>
+            <Link href="/app/memes" className={navLinkClass(isMemes)}>
+              Memes
             </Link>
             <Link href="/app/meme-editor" className={navLinkClass(isMemeEditor)}>
               Meme Editor
@@ -119,6 +123,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 onClick={() => setOpen(false)}
               >
                 New List
+              </Link>
+              <Link
+                href="/app/memes"
+                className={navLinkClass(isMemes)}
+                onClick={() => setOpen(false)}
+              >
+                Memes
               </Link>
               <Link
                 href="/app/meme-editor"

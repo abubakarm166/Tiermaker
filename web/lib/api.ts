@@ -90,11 +90,16 @@ export class ApiError extends Error {
   }
 }
 
-export function login(email: string, password: string) {
-  return api<{ access: string; refresh: string; user: User }>("/auth/login/", {
+export async function login(email: string, password: string) {
+  // Backend login endpoint returns tokens only (SimpleJWT default).
+  // We fetch /auth/me/ after storing tokens to populate the user.
+  const tokens = await api<{ access: string; refresh: string }>("/auth/login/", {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });
+  authStorage.setTokens(tokens.access, tokens.refresh);
+  const user = await fetchMe();
+  return { ...tokens, user };
 }
 
 export function register(email: string, password: string) {
