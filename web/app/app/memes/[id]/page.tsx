@@ -49,7 +49,7 @@ export default function MemeEditPage() {
 
   return (
     <MemeEditor
-      initialSnapshot={(meme.snapshot as any) ?? null}
+      initialSnapshot={meme.snapshot ?? null}
       saveLabel="Save remix"
       onSave={async ({ title, snapshot, previewDataUrl }) => {
         try {

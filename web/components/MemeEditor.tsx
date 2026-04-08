@@ -162,7 +162,7 @@ function MemeImageNode({ img, maintainAspect, onSelect, onChange }: MemeImageNod
 }
 
 type MemeEditorProps = {
-  initialSnapshot?: Partial<EditorSnapshot> | null
+  initialSnapshot?: unknown
   onSave?: (payload: { title?: string; snapshot: EditorSnapshot; previewDataUrl: string }) => Promise<void> | void
   saveLabel?: string
 }
@@ -246,14 +246,15 @@ export default function MemeEditor({ initialSnapshot, onSave, saveLabel }: MemeE
 
   // Load initial snapshot (for editing/remixing an existing meme)
   useEffect(() => {
-    if (!initialSnapshot) return
+    if (!initialSnapshot || typeof initialSnapshot !== "object") return
+    const maybe = initialSnapshot as Partial<EditorSnapshot>
     const merged: EditorSnapshot = {
-      images: initialSnapshot.images ?? [],
-      texts: initialSnapshot.texts ?? [],
-      layerOrder: initialSnapshot.layerOrder ?? [],
-      backgroundColor: initialSnapshot.backgroundColor ?? '#050816',
-      maintainAspect: initialSnapshot.maintainAspect ?? true,
-      zoom: initialSnapshot.zoom ?? 1,
+      images: Array.isArray(maybe.images) ? (maybe.images as MemeImage[]) : [],
+      texts: Array.isArray(maybe.texts) ? (maybe.texts as MemeText[]) : [],
+      layerOrder: Array.isArray(maybe.layerOrder) ? (maybe.layerOrder as string[]) : [],
+      backgroundColor: typeof maybe.backgroundColor === "string" ? maybe.backgroundColor : '#050816',
+      maintainAspect: typeof maybe.maintainAspect === "boolean" ? maybe.maintainAspect : true,
+      zoom: typeof maybe.zoom === "number" ? maybe.zoom : 1,
     }
     restoreSnapshot(merged)
     setSelectedId(null)
