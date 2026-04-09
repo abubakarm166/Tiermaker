@@ -109,5 +109,20 @@ class MemeViewSet(viewsets.ModelViewSet):
         serializer = MemeCreateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         meme: Meme = serializer.save(author=request.user, parent=parent)
+
+        # Accept preview as dataURL for remixes too (so gallery thumbnails work)
+        preview_data_url = request.data.get("preview_data_url")
+        if preview_data_url and not meme.preview:
+            try:
+                header, b64 = str(preview_data_url).split(",", 1)
+                raw = base64.b64decode(b64)
+                content, content_type = optimize_image(ContentFile(raw))
+                ext = ".jpg" if content_type == "image/jpeg" else ".png"
+                name = (meme.title or f"meme-{meme.id}").strip().replace(" ", "-") or f"meme-{meme.id}"
+                name = os.path.basename(name) + ext
+                meme.preview.save(name, ContentFile(content), save=True)
+            except Exception:
+                pass
+
         return Response(MemeDetailSerializer(meme, context={"request": request}).data, status=201)
 
