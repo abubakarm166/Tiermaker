@@ -33,6 +33,7 @@ export default function ListForm() {
   const [assignments, setAssignments] = useState<Record<string, number[]>>({});
   const [rowOrder, setRowOrder] = useState<string[]>([]);
   const [labelOverrides, setLabelOverrides] = useState<Record<string, string>>({});
+  const [colorOverrides, setColorOverrides] = useState<Record<string, string>>({});
   const [customRows, setCustomRows] = useState<{ label: string; color: string }[]>([]);
   const [settingsRowDisplayIndex, setSettingsRowDisplayIndex] = useState<number | null>(null);
 
@@ -93,6 +94,7 @@ export default function ListForm() {
           setAssignments(initial);
           setRowOrder(rows.map((r) => r.label));
           setLabelOverrides({});
+          setColorOverrides({});
           setCustomRows([]);
         }
       })
@@ -133,6 +135,7 @@ export default function ListForm() {
             : rows.map((r: { label: string }) => r.label)
         );
         setLabelOverrides(list.label_overrides ?? {});
+        setColorOverrides(list.color_overrides ?? {});
         setCustomRows(list.custom_rows ?? []);
       })
       .catch(() => {})
@@ -202,7 +205,7 @@ export default function ListForm() {
           return {
             key,
             label: labelOverrides[key] ?? templateRow.label,
-            color: templateRow.color,
+            color: colorOverrides[key] ?? templateRow.color,
             id: templateRow.id,
             isCustom: false,
           };
@@ -260,6 +263,10 @@ export default function ListForm() {
     setLabelOverrides((prev) => ({ ...prev, [key]: value }));
   };
 
+  const setRowDisplayColor = (key: string, value: string) => {
+    setColorOverrides((prev) => ({ ...prev, [key]: value }));
+  };
+
   const clearTier = (key: string) => {
     setAssignments((prev) => ({ ...prev, [key]: [] }));
     setSettingsRowDisplayIndex(null);
@@ -292,6 +299,7 @@ export default function ListForm() {
         tier_assignments: assignments,
         row_order: rowOrder,
         label_overrides: labelOverrides,
+        color_overrides: colorOverrides,
         custom_rows: customRows,
       };
       if (isEdit && id) {
@@ -635,6 +643,16 @@ export default function ListForm() {
                             placeholder="e.g. Best, Great, Good"
                             maxLength={30}
                           />
+                          <div className="flex items-center justify-between gap-3 mb-4">
+                            <span className="text-muted text-sm">Tier color:</span>
+                            <input
+                              type="color"
+                              value={row.color}
+                              onChange={(e) => setRowDisplayColor(row.key, e.target.value)}
+                              className="h-9 w-16 rounded cursor-pointer bg-transparent border border-app"
+                              aria-label="Tier color"
+                            />
+                          </div>
                           <div className="flex flex-wrap gap-2">
                             <button
                               type="button"

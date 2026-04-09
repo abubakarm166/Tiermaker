@@ -23,6 +23,7 @@ class TierListSerializer(serializers.ModelSerializer):
             "tier_assignments",
             "row_order",
             "label_overrides",
+            "color_overrides",
             "custom_rows",
             "created_at",
             "updated_at",
@@ -79,7 +80,7 @@ class TierListDetailSerializer(TierListSerializer):
 class TierListWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = TierList
-        fields = ("id", "template", "title", "visibility", "tier_assignments", "row_order", "label_overrides", "custom_rows")
+        fields = ("id", "template", "title", "visibility", "tier_assignments", "row_order", "label_overrides", "color_overrides", "custom_rows")
         read_only_fields = ("id",)
 
     def validate_row_order(self, value):
@@ -106,6 +107,13 @@ class TierListWriteSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(f"custom_rows[{i}] must have a string 'label'.")
             if "color" not in row or not isinstance(row.get("color"), str):
                 raise serializers.ValidationError(f"custom_rows[{i}] must have a string 'color'.")
+        return value
+
+    def validate_color_overrides(self, value):
+        if not isinstance(value, dict):
+            raise serializers.ValidationError("color_overrides must be a JSON object.")
+        if not all(isinstance(k, str) and isinstance(v, str) for k, v in value.items()):
+            raise serializers.ValidationError("color_overrides keys and values must be strings.")
         return value
 
     def validate_tier_assignments(self, value):

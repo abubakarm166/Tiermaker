@@ -56,6 +56,7 @@ class TierList(models.Model):
     tier_assignments = models.JSONField(default=dict)  # e.g. {"S": [1, 3], "A": [2, 4]}
     row_order = models.JSONField(default=list, blank=True)  # e.g. ["S", "A", "B"] – display order of tier rows
     label_overrides = models.JSONField(default=dict, blank=True)  # e.g. {"S": "Best"} – custom display labels per row
+    color_overrides = models.JSONField(default=dict, blank=True)  # e.g. {"S": "#ff0000"} – custom colors per row
     custom_rows = models.JSONField(default=list, blank=True)  # e.g. [{"label": "F", "color": "#0891b2"}] – rows added only to this list
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -62,6 +62,7 @@ export interface TierList {
   tier_assignments: Record<string, number[]>;
   row_order?: string[];
   label_overrides?: Record<string, string>;
+  color_overrides?: Record<string, string>;
   custom_rows?: { label: string; color: string }[];
   created_at: string;
   updated_at: string;
