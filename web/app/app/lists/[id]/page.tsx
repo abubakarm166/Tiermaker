@@ -22,6 +22,16 @@ const REACTIONS: { type: ReactionType; emoji: string; label: string }[] = [
   { type: "sad", emoji: "😢", label: "Sad" },
 ];
 
+const getContrastTextColor = (hex: string) => {
+  const clean = hex.replace("#", "");
+  if (clean.length !== 6) return "#ffffff";
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.6 ? "#111111" : "#ffffff";
+};
+
 export default function ListDetailPage() {
   const params = useParams();
   const id = params?.id as string;
@@ -242,17 +252,17 @@ export default function ListDetailPage() {
             <div
               key={row.key}
               className="flex items-center gap-4 p-4"
-              style={{
-                backgroundColor: row.color + "20",
-                borderLeft: `4px solid ${row.color}`,
-              }}
             >
               <span
-                className="font-display font-semibold text-lg w-12 shrink-0"
-                style={{ color: row.color }}
+                className="inline-flex h-11 min-w-[132px] shrink-0 items-center justify-center rounded-lg px-3 text-sm font-semibold uppercase tracking-wide"
+                style={{
+                  backgroundColor: row.color,
+                  color: getContrastTextColor(row.color),
+                }}
               >
                 {row.label}
               </span>
+              <div className="h-10 w-px bg-white/10 shrink-0" />
               <div className="flex flex-wrap gap-2 min-h-[60px]">
                 {(assignments[row.key] ?? []).map((itemId) => {
                   const item = items.find((i) => i.id === itemId);

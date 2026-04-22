@@ -14,6 +14,16 @@ import { useAuth } from "@/contexts/AuthContext";
 import { mediaSrc } from "@/lib/media";
 import type { Template } from "@/types/api";
 
+const getContrastTextColor = (hex: string) => {
+  const clean = hex.replace("#", "");
+  if (clean.length !== 6) return "#ffffff";
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.6 ? "#111111" : "#ffffff";
+};
+
 export default function ListForm() {
   const params = useParams();
   const id = params?.id as string | undefined;
@@ -449,17 +459,17 @@ export default function ListForm() {
                   onDragLeave={(e) => handleDragLeave(e, row.key)}
                   onDrop={(e) => handleDrop(e, row.key)}
                   className={`flex items-center gap-4 p-4 border-b border-app last:border-0 transition-all min-h-[72px] ${dragOverTier === row.key ? "ring-2 ring-inset ring-white/50" : ""}`}
-                  style={{
-                    backgroundColor: row.color + "15",
-                    borderLeft: `4px solid ${row.color}`,
-                  }}
                 >
                   <span
-                    className="font-display font-semibold w-12 shrink-0"
-                    style={{ color: row.color }}
+                    className="inline-flex h-11 min-w-[132px] shrink-0 items-center justify-center rounded-lg px-3 text-sm font-semibold uppercase tracking-wide"
+                    style={{
+                      backgroundColor: row.color,
+                      color: getContrastTextColor(row.color),
+                    }}
                   >
                     {row.label}
                   </span>
+                  <div className="h-10 w-px bg-white/10 shrink-0" />
                   <div className="flex flex-wrap gap-2 min-h-[64px] flex-1">
                     {(assignments[row.key] ?? []).map((itemId) => {
                       const item = items.find((i) => i.id === itemId);

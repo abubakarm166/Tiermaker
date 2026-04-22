@@ -124,7 +124,7 @@ class FeedView(APIView):
             .order_by("-created_at")
         )
         paginator = PageNumberPagination()
-        paginator.page_size = 20
+        paginator.page_size = 50
         page = paginator.paginate_queryset(qs, request)
         serializer = TierListSerializer(page, many=True, context={"request": request})
         return paginator.get_paginated_response(serializer.data)
