@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "lists",
     "uploads",
     "memes",
+    "live",
     "core",
 ]
 
@@ -119,7 +120,9 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+        # Public read by default; specific endpoints enforce auth for write actions.
+        "rest_framework.permissions.AllowAny",
+        # If an authenticated user is banned, deny access.
         "core.permissions.IsNotBannedUser",
     ],
     "DEFAULT_FILTER_BACKENDS": [
@@ -140,6 +143,9 @@ REST_FRAMEWORK = {
         "login": "30/hour",
         "register": "20/hour",
         "token_refresh": "120/hour",
+        "password_reset": "5/hour",
+        "password_reset_confirm": "20/hour",
+        "landing_live": "120/hour",
     },
 }
 
@@ -165,3 +171,30 @@ ALLOWED_IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".webp")
 # Image processing (Pillow)
 IMAGE_MAX_SIZE = (1200, 1200)
 IMAGE_QUALITY = 85
+
+# Password reset links in email (Next.js app origin)
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000").rstrip("/")
+
+# Email — configure via .env (never commit EMAIL_HOST_PASSWORD).
+# Gmail: use an App Password (Google Account → Security → 2-Step Verification → App passwords).
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "").strip()
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "").strip()
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "").strip()
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True").lower() in ("true", "1", "yes")
+
+# If SMTP is fully configured, use it; otherwise console (safe default — never connect with empty creds).
+if os.environ.get("EMAIL_BACKEND", "").strip():
+    EMAIL_BACKEND = os.environ["EMAIL_BACKEND"].strip()
+elif EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+    # Allow omitting EMAIL_HOST for Gmail (defaults below).
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend" and not EMAIL_HOST:
+    EMAIL_HOST = "smtp.gmail.com"
+
+DEFAULT_FROM_EMAIL = (
+    os.environ.get("DEFAULT_FROM_EMAIL", "").strip() or EMAIL_HOST_USER or "noreply@localhost"
+)

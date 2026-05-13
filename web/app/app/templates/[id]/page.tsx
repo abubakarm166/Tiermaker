@@ -4,8 +4,12 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchTemplate } from "@/lib/api";
+import { CommunityRankingPageLink } from "@/components/templates/CommunityRankingView";
+import { LiveVotingPollLink } from "@/components/templates/LiveVotingPollLink";
+import { RecentLiveEventsForTemplateSection } from "@/components/live/RecentLiveEventsForTemplate";
 import { mediaSrc } from "@/lib/media";
 import type { Template } from "@/types/api";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function TemplateDetailPage() {
   const params = useParams();
@@ -13,6 +17,7 @@ export default function TemplateDetailPage() {
   const id = params.id as string;
   const [template, setTemplate] = useState<Template | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     let cancelled = false;
@@ -39,6 +44,10 @@ export default function TemplateDetailPage() {
       </div>
     );
 
+  const canEditTemplate = Boolean(
+    user && (user.role === "ADMIN" || user.id === template.created_by)
+  );
+
   return (
     <div className="relative">
       {/* ambient glow behind content */}
@@ -57,17 +66,21 @@ export default function TemplateDetailPage() {
             </button>
           </div>
 
-          <div className="flex gap-2">
-            <button
-              type="button"
-              className="btn-secondary text-sm"
-              onClick={() => router.push(`/app/templates/${id}/edit`)}
-            >
-              Edit template
-            </button>
+          <div className="flex flex-wrap gap-2 justify-end">
+            {canEditTemplate && (
+              <button
+                type="button"
+                className="btn-secondary text-sm"
+                onClick={() => router.push(`/app/templates/${id}/edit`)}
+              >
+                Edit template
+              </button>
+            )}
             <Link href={`/app/lists/new?template=${id}`} className="btn-primary text-sm px-5">
-              Use this template
+              Create this tier list
             </Link>
+            <LiveVotingPollLink templateId={id} />
+            <CommunityRankingPageLink templateId={id} />
           </div>
         </div>
 
@@ -222,6 +235,8 @@ export default function TemplateDetailPage() {
             </div>
           )}
         </div>
+
+        <RecentLiveEventsForTemplateSection templateId={id} variant="app" />
       </div>
     </div>
   );

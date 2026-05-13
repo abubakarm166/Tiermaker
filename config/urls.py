@@ -8,6 +8,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/auth/", include("accounts.urls")),
     path("api/upload/", include("uploads.urls")),
+    # Before generic `api/` includes so `/api/live/` never depends on other routers.
+    path("api/live/", include("live.urls")),
     path("api/", include("memes.urls")),
     path("api/", include("core.urls")),
 ]

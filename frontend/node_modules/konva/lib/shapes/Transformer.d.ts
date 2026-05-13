@@ -46,6 +46,7 @@ export declare class Transformer extends Group {
     sin: number;
     cos: number;
     _cursorChange: boolean;
+    _elementsCreated: boolean;
     static isTransforming: () => boolean;
     constructor(config?: TransformerConfig);
     attachTo(node: Node): this;
@@ -92,6 +93,7 @@ export declare class Transformer extends Group {
     isTransforming(): boolean;
     stopTransform(): void;
     destroy(): this;
+    add(...children: any[]): this;
     toObject(): {
         attrs: any;
         className: string;

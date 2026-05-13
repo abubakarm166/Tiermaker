@@ -475,8 +475,32 @@
 .voting_card_image_item:first-child {
     margin-left: 0;
 }
-.voting_card_images:hover .voting_card_image_item {
+.voting_card_avatar_initial {
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+    border: 2px solid #0D0D0D;
+    margin-left: -10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0;
+    transition: margin-left 0.2s ease;
+}
+.voting_card_avatar_initial:first-child {
+    margin-left: 0;
+}
+.voting_card_images:hover .voting_card_image_item,
+.voting_card_images:hover .voting_card_avatar_initial {
     margin-left: -6px;
+}
+.voting_card_images:hover .voting_card_image_item:first-child,
+.voting_card_images:hover .voting_card_avatar_initial:first-child {
+    margin-left: 0;
 }
 .voting_card_extra_count {
     width: 47px;
@@ -543,6 +567,12 @@
 .voting_card_vote_btn:hover svg {
     transform: translateX(3px);
 }
+.voting_card_link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
 .recentwork_section{
     padding: 60px 0px;
     margin-top: 50px;
@@ -584,6 +614,13 @@
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-top: 50px;
+}
+.recentwork_grid_empty {
+    grid-column: 1 / -1;
+}
+.recentwork_card_link {
+    text-decoration: none;
+    color: inherit;
 }
 .recent_work_card_body {
     background: #1a1a1c;

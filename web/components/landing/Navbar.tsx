@@ -45,6 +45,11 @@ export default function Navbar() {
                     Forum
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link href="/live" className="nav-link">
+                    Live
+                  </Link>
+                </li>
               </ul>
 
               {/* Desktop auth */}
@@ -115,6 +120,11 @@ export default function Navbar() {
                   <li className="nav-item">
                     <Link href="/app/lists/feed" className="nav-link" onClick={() => setOpen(false)}>
                       Forum
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link href="/live" className="nav-link" onClick={() => setOpen(false)}>
+                      Live
                     </Link>
                   </li>
                 </ul>

@@ -86,7 +86,8 @@ label {
     color: var(--foreground);
   }
   .input::placeholder {
-    color: var(--muted-strong);
+    color: rgba(255, 255, 255, 0.38);
+    opacity: 1;
   }
   .input:focus {
     @apply outline-none ring-1;

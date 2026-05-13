@@ -97,7 +97,8 @@ export default function TemplateForm({ id, presetCategoryId = "" }: TemplateForm
     };
   }, [id]);
 
-  const addItem = () => setItems((prev) => [...prev, { name: "", image: null, order: prev.length }]);
+  const addItem = () =>
+    setItems((prev) => [{ name: "", image: null, order: 0 }, ...prev]);
   const updateItem = (index: number, field: "name" | "image", value: string | null) => {
     setItems((prev) => prev.map((it, i) => (i === index ? { ...it, [field]: value } : it)));
   };

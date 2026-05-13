@@ -146,6 +146,7 @@ export class Transformer extends Group {
         super(config);
         this._movingAnchorName = null;
         this._transforming = false;
+        this._elementsCreated = false;
         this._createElements();
         this._handleMouseMove = this._handleMouseMove.bind(this);
         this._handleMouseUp = this._handleMouseUp.bind(this);
@@ -365,6 +366,7 @@ export class Transformer extends Group {
             this._createAnchor(name);
         });
         this._createAnchor('rotater');
+        this._elementsCreated = true;
     }
     _createAnchor(name) {
         const anchor = new Rect({
@@ -986,6 +988,13 @@ export class Transformer extends Group {
         this.detach();
         this._removeEvents();
         return this;
+    }
+    add(...children) {
+        if (this._elementsCreated) {
+            Util.error('You cannot add external nodes to the Transformer. Use tr.nodes([node]) instead.');
+            return this;
+        }
+        return super.add(...children);
     }
     toObject() {
         return Node.prototype.toObject.call(this);

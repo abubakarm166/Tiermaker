@@ -1,31 +1,63 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { fetchCategories } from "@/lib/api";
+import { mediaSrc } from "@/lib/media";
+import type { Category } from "@/types/api";
 
-const categories = [
-  { id: "all", label: "All Categories" },
-  { id: "gaming", label: "Gaming" },
-  { id: "movies", label: "Movies & TV" },
-  { id: "anime", label: "Anime" },
-  { id: "sports", label: "Sports" },
-  { id: "music", label: "Music" },
-  { id: "food", label: "Food & Drinks" },
-  { id: "popculture", label: "Pop Culture" },
+const FALLBACK_IMAGES = [
+  "/assets/images/f1.jpg",
+  "/assets/images/f2.jpg",
+  "/assets/images/f3.jpg",
+  "/assets/images/f4.jpg",
+  "/assets/images/f5.jpg",
+  "/assets/images/f6.jpg",
 ];
 
-const items = [
-  { category: "gaming", title: "Gaming", img: "/assets/images/f1.jpg", subtext: "Rank games, characters, and consoles across genres.", templates: 150, badge: "Popular" },
-  { category: "movies", title: "Movies & TV", img: "/assets/images/f2.jpg", subtext: "Compare films, shows, and iconic moments.", templates: 150, badge: "Trending" },
-  { category: "anime", title: "Anime", img: "/assets/images/f3.jpg", subtext: "Rank characters, arcs, and series favorites.", templates: 150, badge: "Popular" },
-  { category: "sports", title: "Sports", img: "/assets/images/f4.jpg", subtext: "Compare teams, players, and historic performances.", templates: 150, badge: "New" },
-  { category: "music", title: "Music", img: "/assets/images/f5.jpg", subtext: "Rank artists, albums, and genres.", templates: 150, badge: "Popular" },
-  { category: "food", title: "Food & Drinks", img: "/assets/images/f6.jpg", subtext: "Debate snacks, meals, and drink favorites.", templates: 150, badge: "Popular" },
-];
+function badgeForCategory(count: number, index: number): string | null {
+  if (count >= 8) return "Popular";
+  if (count >= 3) return "Trending";
+  if (count >= 1) return "New";
+  return index < 3 ? "New" : null;
+}
 
 export default function FeaturedCategories() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
-  const filteredItems = activeTab === "all" ? items : items.filter((item) => item.category === activeTab);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchCategories()
+      .then((res) => {
+        if (!cancelled) setCategories(res.results ?? []);
+      })
+      .catch(() => {
+        if (!cancelled) setCategories([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const tabs = useMemo(() => {
+    const list = [{ id: "all", label: "All Categories" }];
+    for (const c of categories) {
+      list.push({ id: String(c.id), label: c.name });
+    }
+    return list;
+  }, [categories]);
+
+  const filteredItems = useMemo(() => {
+    if (activeTab === "all") return categories;
+    const id = Number(activeTab);
+    return categories.filter((c) => c.id === id);
+  }, [categories, activeTab]);
 
   return (
     <section className="featured_categories_section">
@@ -37,7 +69,7 @@ export default function FeaturedCategories() {
         </div>
         <div className="featured_categories_tabs">
           <ul className="nav nav-pills mb-4 ">
-            {categories.map((cat) => (
+            {tabs.map((cat) => (
               <li className="nav-item" key={cat.id}>
                 <button
                   className={`nav-link ${activeTab === cat.id ? "active" : ""}`}
@@ -49,25 +81,51 @@ export default function FeaturedCategories() {
             ))}
           </ul>
         </div>
-        <div className="row g-4">
-          {filteredItems.map((item, index) => (
-            <div className="col-lg-4 col-md-6 col-sm-12" key={index}>
-              <Link href="/app/categories" className="text-decoration-none">
-                <div className="category_card_body">
-                  {item.badge && <span className="badge_category">{item.badge}</span>}
-                  <img src={item.img} className="category_card_img" alt={item.title} />
-                  <div className="category_card_text">
-                    <h5>{item.title}</h5>
-                    <p>{item.subtext}</p>
-                    <span>{item.templates}+ templates</span>
-                  </div>
+        {loading ? (
+          <div className="text-center text-muted py-5">Loading categories…</div>
+        ) : filteredItems.length === 0 ? (
+          <div className="text-center text-muted py-5">
+            No categories yet.{" "}
+            <Link href="/app/categories" className="link-primary">
+              Browse the app
+            </Link>
+          </div>
+        ) : (
+          <div className="row g-4">
+            {filteredItems.map((item, index) => {
+              const count = item.template_count ?? 0;
+              const img =
+                item.image && item.image.trim()
+                  ? mediaSrc(item.image)
+                  : FALLBACK_IMAGES[item.id % FALLBACK_IMAGES.length];
+              const badge = badgeForCategory(count, index);
+              const subtext =
+                count === 0
+                  ? "No templates yet — be the first to add one in this category."
+                  : `Browse ${count} tier list template${count === 1 ? "" : "s"} and create your own ranking.`;
+
+              return (
+                <div className="col-lg-4 col-md-6 col-sm-12" key={item.id}>
+                  <Link href={`/app/categories/${item.id}`} className="text-decoration-none">
+                    <div className="category_card_body">
+                      {badge && <span className="badge_category">{badge}</span>}
+                      <img src={img} className="category_card_img" alt={item.name} />
+                      <div className="category_card_text">
+                        <h5>{item.name}</h5>
+                        <p>{subtext}</p>
+                        <span>
+                          {count} template{count === 1 ? "" : "s"}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        )}
         <div className="btn_load_more">
-          <Link href="/app">
+          <Link href="/app/categories">
             <button type="button">Load More</button>
           </Link>
         </div>

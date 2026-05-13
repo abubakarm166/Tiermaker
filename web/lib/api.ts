@@ -1,4 +1,20 @@
-import type { User, RegisterResponse, PaginatedResponse, Category, Template, TierList, ReactionType, Meme } from "@/types/api";
+import type {
+  User,
+  RegisterResponse,
+  PaginatedResponse,
+  Category,
+  Template,
+  TierList,
+  ReactionType,
+  Meme,
+  LiveEventDetail,
+  LiveState,
+  LiveNextItemResponse,
+  LiveBrowseResponse,
+  LiveEventCard,
+  LiveLandingEvent,
+  Visibility,
+} from "@/types/api";
 
 const BASE = "/api";
 
@@ -109,6 +125,20 @@ export function register(email: string, password: string) {
   });
 }
 
+export function requestPasswordReset(email: string) {
+  return api<{ detail: string }>("/auth/password-reset/", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+}
+
+export function confirmPasswordReset(payload: { uid: string; token: string; new_password: string }) {
+  return api<{ detail: string }>("/auth/password-reset/confirm/", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
 export function fetchMe() {
   return api<User>("/auth/me/");
 }
@@ -132,6 +162,13 @@ export function fetchTemplates(params: Record<string, string> = {}) {
 
 export function fetchTemplate(id: string) {
   return api<Template>(`/templates/${id}/`);
+}
+
+/** Public tier lists created from a template (community ranking). */
+export function fetchTierListsForTemplate(templateId: number | string, page = 1) {
+  return api<PaginatedResponse<TierList>>(
+    `/templates/${templateId}/tier-lists/?page=${encodeURIComponent(String(page))}`
+  );
 }
 
 export function createTemplate(data: Record<string, unknown>) {
@@ -205,6 +242,10 @@ export function deleteList(id: string) {
   return api<undefined>(`/lists/${id}/`, { method: "DELETE" });
 }
 
+export function fetchRelatedLists(id: string, limit = 6) {
+  return api<TierList[]>(`/lists/${id}/related/?limit=${encodeURIComponent(String(limit))}`);
+}
+
 export async function exportListPng(id: string): Promise<Blob> {
   const token = getAccessToken();
   const res = await fetch(`${BASE}/lists/${id}/export/`, {
@@ -213,6 +254,85 @@ export async function exportListPng(id: string): Promise<Blob> {
   });
   if (!res.ok) throw new ApiError(res.status, await res.text());
   return res.blob();
+}
+
+/** TierMaker Live — voting sessions */
+export function fetchLiveBrowse() {
+  return api<LiveBrowseResponse>("/live/events/browse/");
+}
+
+/** Public homepage slice — no auth (throttled). */
+export function fetchLiveLandingPreview() {
+  return api<{ results: LiveLandingEvent[] }>("/live/events/landing-preview/");
+}
+
+/** Public live sessions that used this template (newest first). */
+export function fetchLiveEventsForTemplate(templateId: number) {
+  return api<{ results: LiveEventCard[] }>(`/live/templates/${templateId}/events/`);
+}
+
+export function createLiveEvent(data: {
+  title: string;
+  template_id: number;
+  starts_at: string;
+  ends_at: string;
+  visibility: Visibility;
+}) {
+  return api<LiveEventDetail>("/live/events/", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function fetchLiveEvent(token: string) {
+  return api<LiveEventDetail>(`/live/events/${token}/`);
+}
+
+export function fetchLiveState(token: string) {
+  return api<LiveState>(`/live/events/${token}/state/`);
+}
+
+export function liveJoin(token: string) {
+  return api<{ session_key: string; joined: boolean }>(`/live/events/${token}/join/`, {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
+}
+
+export function liveNextItem(token: string, sessionKey: string) {
+  const q = `session_key=${encodeURIComponent(sessionKey)}`;
+  return api<LiveNextItemResponse>(`/live/events/${token}/next-item/?${q}`);
+}
+
+export function liveVote(
+  token: string,
+  body: { session_key: string; template_item_id: number; tier_label?: string; skip?: boolean }
+) {
+  return api<{ ok: boolean; next_index: number }>(`/live/events/${token}/vote/`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+}
+
+export function liveHostEnd(token: string) {
+  return api<{ status: string }>(`/live/events/${token}/host/end/`, {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
+}
+
+export function liveHostPause(token: string) {
+  return api<{ status: string }>(`/live/events/${token}/host/pause/`, {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
+}
+
+export function liveHostResume(token: string) {
+  return api<{ status: string }>(`/live/events/${token}/host/resume/`, {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
 }
 
 export function uploadImage(file: File) {

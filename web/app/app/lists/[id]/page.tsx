@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   fetchList,
+  fetchRelatedLists,
   deleteList,
   exportListPng,
   reactToList,
@@ -12,6 +13,7 @@ import {
 } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { mediaSrc } from "@/lib/media";
+import { TierListCardCaption } from "@/components/TierListCardCaption";
 import type { TierList, ReactionType } from "@/types/api";
 
 const REACTIONS: { type: ReactionType; emoji: string; label: string }[] = [
@@ -37,6 +39,8 @@ export default function ListDetailPage() {
   const id = params?.id as string;
   const router = useRouter();
   const [list, setList] = useState<TierList | null>(null);
+  const [related, setRelated] = useState<TierList[]>([]);
+  const [relatedLoading, setRelatedLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deleting, setDeleting] = useState(false);
@@ -64,6 +68,25 @@ export default function ListDetailPage() {
       cancelled = true;
     };
   }, [id, router]);
+
+  useEffect(() => {
+    if (!id || id === "undefined") return;
+    let cancelled = false;
+    setRelatedLoading(true);
+    fetchRelatedLists(id, 9)
+      .then((res) => {
+        if (!cancelled) setRelated(res);
+      })
+      .catch(() => {
+        if (!cancelled) setRelated([]);
+      })
+      .finally(() => {
+        if (!cancelled) setRelatedLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
 
   const canEdit = Boolean(list?.can_edit);
 
@@ -303,6 +326,55 @@ export default function ListDetailPage() {
           </p>
         </div>
       )}
+
+      <div className="mt-10">
+        <h2 className="font-display text-xl font-semibold text-white mb-3">
+          You might also like
+        </h2>
+        <p className="text-muted text-sm mb-5">
+          More tier lists made with the same template.
+        </p>
+        {relatedLoading ? (
+          <div className="text-muted py-6 text-center">Loading…</div>
+        ) : related.length === 0 ? (
+          <div className="card p-6 text-muted text-sm">
+            No other public tier lists for this template yet.
+          </div>
+        ) : (
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((rl) => {
+              const thumb = rl.thumbnail ?? rl.template_detail?.thumbnail;
+              return (
+                <li key={rl.id}>
+                  <div className="rounded-xl overflow-hidden border border-app bg-surface-elevated">
+                    <Link
+                      href={`/app/lists/${rl.id}`}
+                      className="block aspect-[4/3] relative bg-surface-elevated overflow-hidden"
+                    >
+                      {thumb ? (
+                        <img
+                          src={mediaSrc(thumb)}
+                          alt=""
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-muted-strong text-2xl font-display font-semibold">
+                          {rl.title?.charAt(0) || "?"}
+                        </div>
+                      )}
+                      <TierListCardCaption
+                        title={rl.title}
+                        subtitle={rl.user_email ?? ""}
+                        subtitleTone="muted"
+                      />
+                    </Link>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

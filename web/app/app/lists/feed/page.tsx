@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchFeed, reactToList } from "@/lib/api";
 import { mediaSrc } from "@/lib/media";
+import { TierListCardCaption } from "@/components/TierListCardCaption";
 import type { TierList, PaginatedResponse, ReactionType } from "@/types/api";
 
 const REACTIONS: { type: ReactionType; label: string; emoji: string }[] = [
@@ -76,7 +77,7 @@ export default function FeedPage() {
         <>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {lists.map((list) => {
-              const thumb = list.template_detail?.thumbnail;
+              const thumb = list.thumbnail ?? list.template_detail?.thumbnail;
               return (
                 <li key={list.id}>
                   <div className="rounded-xl overflow-hidden border border-app bg-surface-elevated">
@@ -95,12 +96,11 @@ export default function FeedPage() {
                           {list.title.charAt(0) || "?"}
                         </div>
                       )}
-                      <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
-                        <span className="font-display font-medium text-white text-sm truncate block">
-                          {list.title}
-                        </span>
-                        <span className="text-muted text-xs">{list.user_email}</span>
-                      </div>
+                      <TierListCardCaption
+                        title={list.title}
+                        subtitle={list.user_email}
+                        subtitleTone="muted"
+                      />
                     </Link>
                     <div className="p-2 border-t border-app bg-surface">
                       <div className="flex items-center gap-1 flex-wrap">

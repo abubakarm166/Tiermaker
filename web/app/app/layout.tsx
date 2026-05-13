@@ -1,5 +1,5 @@
-import ProtectedApp from "@/components/ProtectedApp";
+import Layout from "@/components/Layout";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <ProtectedApp>{children}</ProtectedApp>;
+  return <Layout>{children}</Layout>;
 }

@@ -4,6 +4,8 @@ export interface Category {
   id: number;
   name: string;
   image: string | null;
+  /** Number of tier list templates in this category (from API). */
+  template_count?: number;
 }
 
 export interface User {
@@ -64,6 +66,7 @@ export interface TierList {
   label_overrides?: Record<string, string>;
   color_overrides?: Record<string, string>;
   custom_rows?: { label: string; color: string }[];
+  thumbnail?: string | null;
   created_at: string;
   updated_at: string;
   reaction_counts?: Record<string, number>;
@@ -93,4 +96,96 @@ export interface Meme {
   parent_id: number | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface LiveTierRow {
+  label: string;
+  color: string;
+  order: number;
+}
+
+export interface LiveEventDetail {
+  id: number;
+  title: string;
+  invite_token: string;
+  invite_url_path: string;
+  starts_at: string;
+  ends_at: string;
+  visibility: Visibility;
+  status: "SCHEDULED" | "LIVE" | "PAUSED" | "ENDED";
+  template_title: string;
+  template_id: number;
+  host_email: string | null;
+  tier_rows: LiveTierRow[];
+  summary: {
+    total_votes: number;
+    total_participants: number;
+    locked: boolean;
+  };
+}
+
+export interface LiveStateItem {
+  item_id: number;
+  name: string;
+  image: string | null;
+  average_score: number | null;
+  vote_count: number;
+  display_tier: string | null;
+}
+
+export interface LiveState {
+  total_votes: number;
+  total_participants: number;
+  skip_count: number;
+  /** Non-skip votes grouped by tier label (matches tier row labels). */
+  tier_vote_counts?: Record<string, number>;
+  items: LiveStateItem[];
+  board: Record<string, number[]>;
+  locked: boolean;
+  voting_open: boolean;
+  now: string;
+}
+
+export interface LiveNextItemResponse {
+  done: boolean;
+  item: { id: number; name: string; image: string | null } | null;
+  progress_index: number;
+  progress_total: number;
+  /** Personal vote order for this browser session (shuffled). */
+  queue_item_ids?: number[];
+  /** Template item ids this browser session has already voted on (tier or skip). */
+  voted_item_ids?: number[];
+}
+
+export interface LiveEventCard {
+  id: number;
+  title: string;
+  invite_token: string;
+  invite_url_path: string;
+  starts_at: string;
+  ends_at: string;
+  status: string;
+  vote_count: number;
+  participant_count: number;
+  item_count: number;
+  thumbnail_url: string | null;
+}
+
+export interface LiveBrowseResponse {
+  ending_soon: LiveEventCard[];
+  most_voted: LiveEventCard[];
+  popular_completed: LiveEventCard[];
+}
+
+/** Homepage carousel — public landing preview (poll for updates). */
+export interface LiveLandingEvent {
+  id: number;
+  title: string;
+  invite_url_path: string;
+  host_display: string;
+  vote_count: number;
+  participant_count: number;
+  ends_at: string;
+  recent_voter_initials: string[];
+  extra_voters: number;
 }

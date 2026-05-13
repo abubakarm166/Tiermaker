@@ -4,9 +4,19 @@ from lists.models import TierList
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """template_count usually comes from annotate() on CategoryViewSet.get_queryset()."""
+
+    template_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = ("id", "name", "image")
+        fields = ("id", "name", "image", "template_count")
+
+    def get_template_count(self, obj):
+        v = getattr(obj, "template_count", None)
+        if v is not None:
+            return int(v)
+        return Template.objects.filter(category=obj).count()
 
 
 class CategoryWriteSerializer(serializers.ModelSerializer):

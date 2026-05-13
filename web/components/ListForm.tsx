@@ -29,6 +29,7 @@ export default function ListForm() {
   const id = params?.id as string | undefined;
   const searchParams = useSearchParams();
   const presetTemplateId = searchParams?.get("template") ?? null;
+  const remixFromId = searchParams?.get("remix") ?? null;
   const isEdit = Boolean(id);
   const { user } = useAuth();
   const router = useRouter();
@@ -118,6 +119,31 @@ export default function ListForm() {
       cancelled = true;
     };
   }, [templateId]);
+
+  /** Pre-fill from an existing public list (?remix=<listId>) after template loads. */
+  useEffect(() => {
+    if (!remixFromId || !/^\d+$/.test(remixFromId) || !template || isEdit) return;
+    let cancelled = false;
+    fetchList(remixFromId)
+      .then((list) => {
+        if (cancelled) return;
+        if (list.template !== template.id) return;
+        setTitle((prev) => (prev.trim() ? prev : `${list.title} (remix)`));
+        setVisibility(list.visibility);
+        setAssignments(list.tier_assignments ?? {});
+        const rows = template.tier_rows ?? [];
+        setRowOrder(
+          list.row_order && list.row_order.length ? list.row_order : rows.map((r) => r.label)
+        );
+        setLabelOverrides(list.label_overrides ?? {});
+        setColorOverrides(list.color_overrides ?? {});
+        setCustomRows(list.custom_rows ?? []);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [remixFromId, template, isEdit]);
 
   useEffect(() => {
     if (!id || !template) return;

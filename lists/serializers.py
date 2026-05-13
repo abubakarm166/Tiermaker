@@ -25,6 +25,7 @@ class TierListSerializer(serializers.ModelSerializer):
             "label_overrides",
             "color_overrides",
             "custom_rows",
+            "thumbnail",
             "created_at",
             "updated_at",
             "reaction_counts",
