@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
-import { uploadImage, ApiError } from "@/lib/api";
+import { uploadImage, ApiError, authStorage } from "@/lib/api";
 import { mediaSrc } from "@/lib/media";
 
 const MAX_SIZE = 5 * 1024 * 1024;
@@ -31,6 +32,10 @@ export default function ImageUpload({ value, onChange, className = "" }: ImageUp
       setError("Max 5MB");
       return;
     }
+    if (!authStorage.getAccessToken()) {
+      setError("Sign in to upload images.");
+      return;
+    }
     setUploading(true);
     try {
       const res = await uploadImage(file);
@@ -39,7 +44,13 @@ export default function ImageUpload({ value, onChange, className = "" }: ImageUp
       const url = raw.startsWith("http") ? raw : raw.startsWith("/") ? raw : `/${raw}`;
       onChange(url);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Upload failed");
+      const msg = err instanceof ApiError ? err.message : "Upload failed";
+      setError(
+        msg.includes("Authentication credentials") ||
+          (err instanceof ApiError && err.status === 401)
+          ? "Sign in to upload images."
+          : msg
+      );
     } finally {
       setUploading(false);
     }
@@ -74,7 +85,19 @@ export default function ImageUpload({ value, onChange, className = "" }: ImageUp
           <img src={mediaSrc(value)} alt="" className="w-full h-full object-cover" />
         </div>
       )}
-      {error && <p className="text-primary text-sm mt-1">{error}</p>}
+      {error && (
+        <p className="text-primary text-sm mt-1">
+          {error}
+          {error.includes("Sign in") && (
+            <>
+              {" "}
+              <Link href="/login" className="underline hover:text-white">
+                Sign in
+              </Link>
+            </>
+          )}
+        </p>
+      )}
     </div>
   );
 }

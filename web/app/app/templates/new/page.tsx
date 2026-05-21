@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import TemplateForm from "@/components/TemplateForm";
+import RequireAuth from "@/components/RequireAuth";
 
 function NewTemplateFormInner() {
   const searchParams = useSearchParams();
@@ -13,8 +14,10 @@ function NewTemplateFormInner() {
 
 export default function NewTemplatePage() {
   return (
-    <Suspense fallback={<p className="text-muted p-4">Loading…</p>}>
-      <NewTemplateFormInner />
-    </Suspense>
+    <RequireAuth>
+      <Suspense fallback={<p className="text-muted p-4">Loading…</p>}>
+        <NewTemplateFormInner />
+      </Suspense>
+    </RequireAuth>
   );
 }
