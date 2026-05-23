@@ -3,9 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchCategories } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
+import { mediaSrc } from "@/lib/media";
 import type { Category, PaginatedResponse } from "@/types/api";
 
 export default function CategoriesPage() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "ADMIN";
   const [data, setData] = useState<PaginatedResponse<Category> | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,24 +31,35 @@ export default function CategoriesPage() {
   }, []);
 
   const categories = data?.results ?? [];
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE || "";
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-6">
-        <h1 className="font-display text-2xl font-semibold text-white">Categories</h1>
-        <Link href="/app/categories/new" className="btn-primary">
-          New category
-        </Link>
+        <div>
+          <h1 className="font-display text-2xl font-semibold text-white">Categories</h1>
+          <p className="text-muted text-sm mt-1 max-w-2xl">
+            Browse templates by category. Open a category to see its tier list templates.
+          </p>
+        </div>
+        {isAdmin && (
+          <Link href="/app/categories/new" className="btn-primary shrink-0">
+            New category
+          </Link>
+        )}
       </div>
       {loading ? (
         <div className="text-muted py-12 text-center">Loading…</div>
       ) : categories.length === 0 ? (
         <div className="card p-12 text-center text-muted">
-          No categories yet.{" "}
-          <Link href="/app/categories/new" className="link-primary hover:underline">
-            Create one
-          </Link>
+          No categories yet.
+          {isAdmin && (
+            <>
+              {" "}
+              <Link href="/app/categories/new" className="link-primary hover:underline">
+                Create one
+              </Link>
+            </>
+          )}
         </div>
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -54,12 +69,16 @@ export default function CategoriesPage() {
                 href={`/app/categories/${c.id}`}
                 className="block rounded-xl overflow-hidden border border-app bg-surface-elevated hover:border-[#333] p-4"
               >
-                {c.image && (
+                {c.image ? (
                   <img
-                    src={c.image.startsWith("http") ? c.image : `${apiBase}/media/${c.image}`}
+                    src={mediaSrc(c.image)}
                     alt=""
                     className="w-full h-32 object-cover rounded-lg mb-2"
                   />
+                ) : (
+                  <div className="w-full h-32 rounded-lg mb-2 bg-surface-elevated flex items-center justify-center text-3xl font-semibold text-muted-strong">
+                    {c.name.charAt(0)}
+                  </div>
                 )}
                 <h2 className="font-display font-medium text-white">{c.name}</h2>
               </Link>
