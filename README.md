@@ -132,7 +132,9 @@ Use header: `Authorization: Bearer <access_token>` for all authenticated endpoin
 ## Database
 
 - Default: **SQLite** (`db.sqlite3` in project root).
-- **PostgreSQL:** set `DATABASE_URL` in `.env` (e.g. `postgres://user:pass@localhost:5432/tiermaker`) and ensure `dj-database-url` is installed.
+- **PostgreSQL:** set `DATABASE_URL` in `.env` (e.g. `postgres://user:pass@localhost:5432/tiermaker`). Dependencies `dj-database-url` and `psycopg2-binary` are in `requirements.txt`.
+
+**Full step-by-step install and usage:** see **[docs/POSTGRESQL_SETUP.md](docs/POSTGRESQL_SETUP.md)** (install Postgres, create DB/user, `.env`, migrate, troubleshoot).
 
 ## Frontend (Vite + React)
 
