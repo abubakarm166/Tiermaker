@@ -1,6 +1,6 @@
 # TierMaker Backend
 
-A production-ready Django REST backend for a TierMaker-like service (tier list templates and user rankings). Uses **email/password** authentication only (no social auth), **JWT (SimpleJWT)**, **SQLite** by default (optional PostgreSQL), **Pillow** for images, and **django-filter** for search/filtering.
+A production-ready Django REST backend for a TierMaker-like service (tier list templates and user rankings). Uses **email/password** and **Sign in with X (Twitter OAuth 2.0)**, **JWT (SimpleJWT)**, **SQLite** by default (optional PostgreSQL), **Pillow** for images, and **django-filter** for search/filtering.
 
 ## Tech Stack
 
@@ -135,6 +135,8 @@ Use header: `Authorization: Bearer <access_token>` for all authenticated endpoin
 - **PostgreSQL:** set `DATABASE_URL` in `.env` (e.g. `postgres://user:pass@localhost:5432/tiermaker`). Dependencies `dj-database-url` and `psycopg2-binary` are in `requirements.txt`.
 
 **Full step-by-step install and usage:** see **[docs/POSTGRESQL_SETUP.md](docs/POSTGRESQL_SETUP.md)** (install Postgres, create DB/user, `.env`, migrate, troubleshoot).
+
+**Sign in with X:** see **[docs/TWITTER_OAUTH_SETUP.md](docs/TWITTER_OAUTH_SETUP.md)** (X Developer Portal, Client ID/Secret, callback URL, `.env`, testing).
 
 ## Frontend (Vite + React)
 

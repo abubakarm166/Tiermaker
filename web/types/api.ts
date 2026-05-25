@@ -11,6 +11,7 @@ export interface Category {
 export interface User {
   id: number;
   email: string;
+  x_username?: string;
   role: UserRole;
   is_banned: boolean;
   created_at: string;

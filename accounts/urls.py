@@ -1,10 +1,13 @@
 from django.urls import path
 from . import views
 from .password_reset import PasswordResetConfirmView, PasswordResetRequestView
+from .twitter_views import TwitterOAuthCallbackView, TwitterOAuthStartView
 
 urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="auth_register"),
     path("login/", views.CustomTokenObtainPairView.as_view(), name="auth_login"),
+    path("twitter/start/", TwitterOAuthStartView.as_view(), name="auth_twitter_start"),
+    path("twitter/callback/", TwitterOAuthCallbackView.as_view(), name="auth_twitter_callback"),
     path("password-reset/", PasswordResetRequestView.as_view(), name="auth_password_reset"),
     path("password-reset/confirm/", PasswordResetConfirmView.as_view(), name="auth_password_reset_confirm"),
     path("token/refresh/", views.CustomTokenRefreshView.as_view(), name="token_refresh"),

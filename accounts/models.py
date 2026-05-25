@@ -8,7 +8,10 @@ class UserManager(BaseUserManager):
             raise ValueError("Users must have an email address.")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
+        if password:
+            user.set_password(password)
+        else:
+            user.set_unusable_password()
         user.save(using=self._db)
         return user
 
@@ -25,6 +28,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         ADMIN = "ADMIN", "Admin"
 
     email = models.EmailField(unique=True, db_index=True)
+    twitter_id = models.CharField(max_length=32, unique=True, null=True, blank=True, db_index=True)
+    x_username = models.CharField(max_length=50, blank=True, default="")
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.USER)
     is_banned = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

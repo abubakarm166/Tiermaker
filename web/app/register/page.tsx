@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { ApiError } from "@/lib/api";
+import TwitterLoginButton from "@/components/TwitterLoginButton";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -102,6 +103,18 @@ export default function RegisterPage() {
             {loading ? "Creating…" : "Sign up"}
           </button>
         </form>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-[#333]" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-[#101010] px-2 text-muted">or</span>
+          </div>
+        </div>
+        <Suspense fallback={<div className="h-10 animate-pulse rounded-xl bg-white/5" />}>
+          <TwitterLoginButton label="Sign up with X" />
+        </Suspense>
 
         <p className="mt-4 text-[11px] text-muted-strong text-center">
           By continuing, you agree to our{" "}

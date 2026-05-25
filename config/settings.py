@@ -198,3 +198,19 @@ if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend" and not EMAIL_
 DEFAULT_FROM_EMAIL = (
     os.environ.get("DEFAULT_FROM_EMAIL", "").strip() or EMAIL_HOST_USER or "noreply@localhost"
 )
+
+# X (Twitter) OAuth 2.0 — see docs/TWITTER_OAUTH_SETUP.md
+TWITTER_CLIENT_ID = os.environ.get("TWITTER_CLIENT_ID", "").strip()
+TWITTER_CLIENT_SECRET = os.environ.get("TWITTER_CLIENT_SECRET", "").strip()
+# Must match exactly what you register in the X Developer Portal (include trailing slash if Django expects it).
+_default_twitter_callback = f"{FRONTEND_URL}/api/auth/twitter/callback/"
+TWITTER_CALLBACK_URL = os.environ.get("TWITTER_CALLBACK_URL", _default_twitter_callback).strip()
+TWITTER_OAUTH_SCOPES = os.environ.get(
+    "TWITTER_OAUTH_SCOPES",
+    "users.read tweet.read offline.access",
+).strip()
+TWITTER_OAUTH_EMAIL_DOMAIN = os.environ.get("TWITTER_OAUTH_EMAIL_DOMAIN", "oauth.thetiermaker.local").strip()
+
+# OAuth state stored in session between /twitter/start/ and /twitter/callback/
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE = not DEBUG

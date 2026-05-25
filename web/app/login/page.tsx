@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { ApiError } from "@/lib/api";
 import { safeReturnPath } from "@/components/RequireAuth";
+import TwitterLoginButton from "@/components/TwitterLoginButton";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -74,6 +75,17 @@ function LoginForm() {
             {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-[#333]" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-[#151515] px-2 text-muted">or</span>
+          </div>
+        </div>
+        <Suspense fallback={<div className="h-10 animate-pulse rounded-xl bg-white/5" />}>
+          <TwitterLoginButton label="Continue with X" />
+        </Suspense>
         <p className="mt-4 text-center">
           <Link href="/forgot-password" className="text-sm text-muted hover:text-[#FF9F1C] hover:underline">
             Forgot password?
