@@ -16,7 +16,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Python packaging at repo root only (do not ignore web/lib/)
+/lib/
 lib64/
 parts/
 sdist/
