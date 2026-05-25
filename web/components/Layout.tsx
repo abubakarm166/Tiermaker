@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { getUserDisplayName, getUserDisplayTitle } from "@/lib/userDisplay";
 import { useEffect, useRef, useState } from "react";
 
 const navLinkClass = (active: boolean) =>
@@ -200,7 +201,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               Live
             </Link>
 
-            {user?.email && (
+            {user && (
               <div className="relative ml-1 shrink-0 pl-2 border-l border-[#2a2a2a]" ref={userMenuRef}>
                 <button
                   type="button"
@@ -210,11 +211,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     setMemesMenuOpen(false);
                   }}
                   className="px-3 py-2 rounded-xl text-[#c4c4c4] hover:text-white hover:bg-white/5 text-sm font-medium transition-colors border border-[#2a2a2a] hover:border-[#404040] max-w-[200px] truncate"
-                  title={user.email}
+                  title={getUserDisplayTitle(user)}
                   aria-haspopup="menu"
                   aria-expanded={userMenuOpen}
                 >
-                  {user.email}
+                  {getUserDisplayName(user)}
                 </button>
                 {userMenuOpen && (
                   <div
@@ -288,8 +289,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Link>
 
               <div className="mt-4 pt-3 border-t border-[#2a2a2a] flex items-center justify-between gap-3">
-                <span className="truncate text-xs text-[#888]" title={user?.email ?? ""}>
-                  {user?.email}
+                <span className="truncate text-xs text-[#888]" title={user ? getUserDisplayTitle(user) : ""}>
+                  {user ? getUserDisplayName(user) : ""}
                 </span>
                 <button
                   type="button"

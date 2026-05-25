@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { authStorage } from "@/lib/api";
+import { getUserDisplayName, getUserDisplayTitle } from "@/lib/userDisplay";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -59,9 +60,9 @@ export default function Navbar() {
                     <span
                       className="text-white-50 small text-truncate d-inline-block"
                       style={{ maxWidth: "10rem" }}
-                      title={user.email}
+                      title={getUserDisplayTitle(user)}
                     >
-                      {user.email}
+                      {getUserDisplayName(user)}
                     </span>
                     <Link href="/app">
                       <button className="navbar_btn2" type="button">
@@ -131,7 +132,7 @@ export default function Navbar() {
                 <div className="navbar_btns flex-column align-items-stretch gap-2">
                   {user ? (
                     <>
-                      <span className="text-white-50 small px-2">{user.email}</span>
+                      <span className="text-white-50 small px-2">{getUserDisplayName(user)}</span>
                       <Link href="/app" onClick={() => setOpen(false)}>
                         <button className="navbar_btn2 w-100" type="button">
                           Dashboard
