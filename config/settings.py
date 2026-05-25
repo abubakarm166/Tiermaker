@@ -205,9 +205,10 @@ TWITTER_CLIENT_SECRET = os.environ.get("TWITTER_CLIENT_SECRET", "").strip()
 # Must match exactly what you register in the X Developer Portal (include trailing slash if Django expects it).
 _default_twitter_callback = f"{FRONTEND_URL}/api/auth/twitter/callback/"
 TWITTER_CALLBACK_URL = os.environ.get("TWITTER_CALLBACK_URL", _default_twitter_callback).strip()
+# /2/users/me requires BOTH users.read and tweet.read (X API security on that endpoint).
 TWITTER_OAUTH_SCOPES = os.environ.get(
     "TWITTER_OAUTH_SCOPES",
-    "users.read tweet.read offline.access",
+    "users.read tweet.read",
 ).strip()
 TWITTER_OAUTH_EMAIL_DOMAIN = os.environ.get("TWITTER_OAUTH_EMAIL_DOMAIN", "oauth.thetiermaker.local").strip()
 TWITTER_AUTHORIZE_URL = os.environ.get(

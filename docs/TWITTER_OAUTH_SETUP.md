@@ -85,14 +85,15 @@ Enable at least:
 Requested scopes in code (default in `settings.py`):
 
 ```text
-users.read tweet.read offline.access
+users.read tweet.read
 ```
 
-- **users.read** — read profile (`/2/users/me`) for login  
-- **tweet.read** — often required with read-only apps  
-- **offline.access** — optional refresh token from X (not required for our JWT flow)
+- **users.read** — user profile access  
+- **tweet.read** — **required by X** for `GET /2/users/me` even for sign-in only ([Get my User](https://docs.x.com/x-api/users/user-lookup-me) lists both scopes under security)
 
-You can narrow scopes in `.env` with `TWITTER_OAUTH_SCOPES` if the portal allows fewer.
+Do **not** set `TWITTER_OAUTH_SCOPES=users.read` alone — after authorize succeeds, `/2/users/me` returns **403 Forbidden**.
+
+Optional: add `offline.access` in `.env` if you want X refresh tokens (not used by TierMaker’s JWT flow).
 
 ### Step 5: Callback URL / Redirect URI
 
@@ -116,13 +117,24 @@ Set **Website URL** to your site root, e.g.:
 - `https://thetiermaker.com`
 - `http://localhost:3000` (dev)
 
-### Step 7: Copy Client ID and Client Secret
+### Step 7: Copy Client ID and Client Secret (critical)
 
-From the app’s **Keys and tokens** / **OAuth 2.0** section:
+**Do not use the “Consumer Key” from the “Application created” popup** for OAuth login.
 
-1. Copy **OAuth 2.0 Client ID** → `TWITTER_CLIENT_ID`
-2. Copy **OAuth 2.0 Client Secret** → `TWITTER_CLIENT_SECRET`  
-   - Regenerate if exposed; update `.env` immediately.
+| Key shown when app is created | Use for Sign in with X? |
+|------------------------------|-------------------------|
+| Consumer Key / API Key | **No** — wrong for OAuth 2.0 authorize |
+| Secret Key / API Key Secret | **No** — unless it is the OAuth 2.0 secret from Step 3 |
+| Bearer Token | **No** |
+
+After **User authentication settings → Set up OAuth 2.0**, open **Keys and tokens** again. You should see:
+
+1. **OAuth 2.0 Client ID** → `TWITTER_CLIENT_ID` (often longer than the Consumer Key; may contain `:`)
+2. **OAuth 2.0 Client Secret** → `TWITTER_CLIENT_SECRET`
+
+If `TWITTER_CLIENT_ID` in `.env` is the short Consumer Key (e.g. `N2p83KfSgyT9N8H580QO4uxxg`), X will show **“Something went wrong — You weren’t able to give access to the App.”**
+
+Regenerate secrets if they were exposed; update `.env` and restart Django.
 
 ---
 
@@ -152,7 +164,7 @@ TWITTER_CALLBACK_URL=http://localhost:3000/api/auth/twitter/callback/
 Optional:
 
 ```env
-TWITTER_OAUTH_SCOPES=users.read tweet.read offline.access
+TWITTER_OAUTH_SCOPES=users.read tweet.read
 TWITTER_OAUTH_EMAIL_DOMAIN=oauth.thetiermaker.local
 ```
 
@@ -205,16 +217,21 @@ Check backend logs if redirect fails.
 
 ## Troubleshooting
 
-### X page says “Something went wrong” on authorize
+### X page says “Something went wrong” / “You weren’t able to give access to the App”
 
-The authorize URL must use **`https://x.com/i/oauth2/authorize`** (not `twitter.com`). This project uses that by default; redeploy Django after pulling the latest code.
+**Most common fix:** use **OAuth 2.0 Client ID + Secret** from **User authentication settings**, not the **Consumer Key** from app creation (see Step 7 above).
 
-Also check in the developer portal:
+Checklist:
 
-1. **User authentication settings** → OAuth 2.0 is **Set up** (not only “API keys” from app creation).
-2. **OAuth 2.0 Client ID** in that section is what goes in `TWITTER_CLIENT_ID` — it may look different from the legacy “Consumer Key” (often longer, with `:` in it).
-3. **Callback URI** is exactly `https://thetiermaker.com/api/auth/twitter/callback/`.
-4. **App permissions** include Read (`users.read` scope).
+1. **User authentication settings** → **Set up** OAuth 2.0 (must show as enabled / configured).
+2. **Type of app:** Web App, **confidential** client.
+3. **Callback URI** (exact): `https://thetiermaker.com/api/auth/twitter/callback/`
+4. **Website URL:** `https://thetiermaker.com`
+5. **App permissions:** Read; `.env` scopes `users.read tweet.read` (both required).
+6. **Authorize URL:** `https://x.com/i/oauth2/authorize` (this repo defaults to `x.com`; redeploy backend after pull).
+7. `.env` then `sudo systemctl restart tiermaking-backend`.
+
+Verify the authorize link uses the **OAuth 2.0 Client ID** (paste into browser after clicking “Continue with X” — the `client_id=` param should not be the short Consumer Key unless X shows the same value under OAuth 2.0).
 
 Official flow: [X OAuth 2.0 Authorization Code with PKCE](https://docs.x.com/resources/fundamentals/authentication/oauth-2-0/user-access-token).
 
@@ -228,6 +245,24 @@ X shows an error about redirect URI. Fix:
 
 1. Portal callback list includes exact `TWITTER_CALLBACK_URL`.
 2. No `http` vs `https` typo, no missing trailing slash.
+
+### “Sign-in failed” with `403 Forbidden` (after X approve screen)
+
+You reached X’s authorize page and were redirected back, but the backend call to **`GET /2/users/me`** failed.
+
+**Fix:** set both scopes (space-separated), restart Django, sign in again (old tokens cannot gain new scopes):
+
+```env
+TWITTER_OAUTH_SCOPES=users.read tweet.read
+```
+
+X documents that [Get my User](https://docs.x.com/x-api/users/user-lookup-me) requires **both** `users.read` and `tweet.read`. Using only `users.read` commonly returns the generic JSON you saw:
+
+```json
+{ "title": "Forbidden", "status": 403, "detail": "Forbidden" }
+```
+
+If it still fails after both scopes, check the developer portal **Usage** / plan: your project may need endpoint access enabled for user lookup ([response codes](https://docs.x.com/x-api/fundamentals/response-codes-and-errors)).
 
 ### “Sign-in failed” / invalid state
 

@@ -130,7 +130,12 @@ class TwitterOAuthCallbackView(APIView):
             if str(e) == "banned":
                 return redirect(f"{frontend}/auth/callback?error=account_banned")
             msg = str(e) if e else "twitter_failed"
-            q = urllib.parse.urlencode({"error": "twitter_failed", "message": msg[:200]})
+            if "403" in msg and "Forbidden" in msg:
+                msg = (
+                    "X API returned Forbidden (403). Ensure TWITTER_OAUTH_SCOPES includes "
+                    "users.read tweet.read, save .env, restart the backend, then sign in again."
+                )
+            q = urllib.parse.urlencode({"error": "twitter_failed", "message": msg[:400]})
             return redirect(f"{frontend}/auth/callback?{q}")
         except Exception:
             return redirect(f"{frontend}/auth/callback?error=twitter_failed")

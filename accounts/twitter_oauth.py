@@ -42,7 +42,7 @@ def build_authorize_url(*, state: str, code_challenge: str) -> str:
         "response_type": "code",
         "client_id": settings.TWITTER_CLIENT_ID,
         "redirect_uri": settings.TWITTER_CALLBACK_URL,
-        "scope": getattr(settings, "TWITTER_OAUTH_SCOPES", "users.read tweet.read offline.access"),
+        "scope": getattr(settings, "TWITTER_OAUTH_SCOPES", "users.read tweet.read"),
         "state": state,
         "code_challenge": code_challenge,
         "code_challenge_method": "S256",
@@ -101,7 +101,8 @@ def exchange_code_for_token(*, code: str, code_verifier: str) -> dict[str, Any]:
 
 
 def fetch_twitter_profile(access_token: str) -> dict[str, Any]:
-    fields = "id,name,username,profile_image_url"
+    # Minimal fields; profile_image_url is optional and not required for login.
+    fields = "id,name,username"
     url = f"{TWITTER_USERS_ME_URL}?user.fields={urllib.parse.quote(fields)}"
     payload = _http_get_json(url, access_token)
     data = payload.get("data")
