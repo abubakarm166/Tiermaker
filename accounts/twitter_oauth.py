@@ -12,7 +12,8 @@ from typing import Any
 
 from django.conf import settings
 
-TWITTER_AUTHORIZE_URL = "https://twitter.com/i/oauth2/authorize"
+# Authorize on x.com (current X docs); token/API stay on api.twitter.com
+TWITTER_AUTHORIZE_URL = "https://x.com/i/oauth2/authorize"
 TWITTER_TOKEN_URL = "https://api.twitter.com/2/oauth2/token"
 TWITTER_USERS_ME_URL = "https://api.twitter.com/2/users/me"
 
@@ -46,7 +47,8 @@ def build_authorize_url(*, state: str, code_challenge: str) -> str:
         "code_challenge": code_challenge,
         "code_challenge_method": "S256",
     }
-    return f"{TWITTER_AUTHORIZE_URL}?{urllib.parse.urlencode(params)}"
+    authorize_base = getattr(settings, "TWITTER_AUTHORIZE_URL", TWITTER_AUTHORIZE_URL)
+    return f"{authorize_base}?{urllib.parse.urlencode(params)}"
 
 
 def _http_post_form(url: str, data: dict[str, str], *, basic_auth: str | None = None) -> dict[str, Any]:

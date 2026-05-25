@@ -210,6 +210,10 @@ TWITTER_OAUTH_SCOPES = os.environ.get(
     "users.read tweet.read offline.access",
 ).strip()
 TWITTER_OAUTH_EMAIL_DOMAIN = os.environ.get("TWITTER_OAUTH_EMAIL_DOMAIN", "oauth.thetiermaker.local").strip()
+TWITTER_AUTHORIZE_URL = os.environ.get(
+    "TWITTER_AUTHORIZE_URL",
+    "https://x.com/i/oauth2/authorize",
+).strip()
 
 # OAuth state stored in session between /twitter/start/ and /twitter/callback/
 SESSION_COOKIE_SAMESITE = "Lax"

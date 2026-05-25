@@ -205,6 +205,19 @@ Check backend logs if redirect fails.
 
 ## Troubleshooting
 
+### X page says “Something went wrong” on authorize
+
+The authorize URL must use **`https://x.com/i/oauth2/authorize`** (not `twitter.com`). This project uses that by default; redeploy Django after pulling the latest code.
+
+Also check in the developer portal:
+
+1. **User authentication settings** → OAuth 2.0 is **Set up** (not only “API keys” from app creation).
+2. **OAuth 2.0 Client ID** in that section is what goes in `TWITTER_CLIENT_ID` — it may look different from the legacy “Consumer Key” (often longer, with `:` in it).
+3. **Callback URI** is exactly `https://thetiermaker.com/api/auth/twitter/callback/`.
+4. **App permissions** include Read (`users.read` scope).
+
+Official flow: [X OAuth 2.0 Authorization Code with PKCE](https://docs.x.com/resources/fundamentals/authentication/oauth-2-0/user-access-token).
+
 ### “X login is not configured on the server”
 
 `TWITTER_CLIENT_ID`, `TWITTER_CLIENT_SECRET`, or `TWITTER_CALLBACK_URL` is missing in `.env`. Restart Django after editing.
