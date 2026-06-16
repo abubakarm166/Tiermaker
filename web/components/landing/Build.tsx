@@ -23,7 +23,7 @@ export default function Build() {
             <p>Start for free. No downloads. No credit card. Just open and create.</p>
             <Link href="/register">
               <button type="button">
-                Get Started Free → <ArrowRight size={18} />
+                Get Started Free <ArrowRight size={18} />
               </button>
             </Link>
           </div>

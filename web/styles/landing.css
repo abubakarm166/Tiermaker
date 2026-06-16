@@ -119,7 +119,8 @@
     text-align: center;
     font-weight: 700;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 20px 10px;
+    /* Navbar is fixed-position; keep hero content below it */
+    padding: 130px 10px 40px;
 }
 .hero_text_div {
     width: 100%;
@@ -1100,6 +1101,11 @@
     color: #FFFFFF;
     padding: 8px 16px;
     border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
 }
 .build_bottom_txt{
     display: flex;
