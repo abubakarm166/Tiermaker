@@ -138,7 +138,6 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
 
   const initialLoading = loading && page === 1 && lists.length === 0;
   const cardLists = spotlightId != null ? lists.filter((l) => l.id !== spotlightId) : lists;
-  const spotlightSummary = lists.find((l) => l.id === spotlightId);
 
   return (
     <div className="space-y-10">
