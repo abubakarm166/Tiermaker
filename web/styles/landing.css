@@ -123,7 +123,7 @@
 }
 .hero_text_div {
     width: 100%;
-    max-width: 700px;
+    max-width: 920px;
     margin: auto;
     text-align: center;
 }
@@ -152,7 +152,7 @@
     letter-spacing: 0px;
     text-align: center;
     color: #9E9E9E;
-    padding: 0px 35px;
+    padding: 0px 10px;
     margin-top: 25px;
 }
 .hero_text_div button {
@@ -351,14 +351,19 @@
     border: 1px solid #FF9F1C;
     color: #fff;
     width: 100%;
-    max-width: 200px;
+    max-width: 260px;
     margin: auto;
     border-radius: 50px;
     font-weight: 400;
     font-size: 18px;
     color: #FFFFFF;
-    padding: 8px 8px 12px 8px;
+    padding: 12px 24px;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
 }
 .btn_load_more button:hover {
     background-color: #FF9F1C;
@@ -1433,4 +1438,312 @@
         font-size: 16px;
         line-height: 26.5px;
     }
+}
+
+/* Hero extras */
+.hero_login_link {
+    font-size: 15px;
+    color: #9E9E9E;
+    margin-top: 16px;
+    margin-bottom: 0;
+}
+.hero_login_link a {
+    color: #FF9F1C;
+    text-decoration: none;
+}
+.hero_login_link a:hover {
+    text-decoration: underline;
+}
+.hero_trust_line {
+    font-size: 13px;
+    line-height: 22px;
+    color: #6A7282;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+.hero_trending_strip {
+    margin-top: 28px;
+    padding: 12px 18px;
+    background: #FFFFFF08;
+    border: 1px solid #FFFFFF14;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.hero_trending_label {
+    color: #FF9F1C;
+    font-weight: 600;
+    margin-right: 6px;
+}
+.hero_trending_items {
+    color: #9E9E9E;
+}
+
+/* How it works note */
+.howitwork_account_note {
+    text-align: center;
+    color: #99A1AF;
+    font-size: 15px;
+    line-height: 24px;
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+
+/* Static category grid */
+.landing_category_grid {
+    margin-top: 40px;
+}
+.landing_category_card {
+    background: #101010B5;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 24px;
+    height: 100%;
+}
+.landing_category_card h5 {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.landing_category_card p {
+    color: #99A1AF;
+    font-size: 15px;
+    line-height: 24px;
+    margin-bottom: 0;
+}
+
+/* Feature highlight sections (Meme Maker, Go Live) */
+.feature_highlight_section {
+    padding: 60px 0;
+}
+.feature_highlight_grid {
+    margin-top: 40px;
+}
+.feature_highlight_card {
+    background: #101010B5;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 28px 24px;
+    height: 100%;
+}
+.feature_highlight_card h3 {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+.feature_highlight_card p {
+    color: #99A1AF;
+    font-size: 15px;
+    line-height: 24px;
+    margin-bottom: 0;
+}
+.feature_highlight_cta {
+    text-align: center;
+    margin-top: 40px;
+}
+.feature_highlight_cta button {
+    background: #FF9F1C;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 28px;
+    font-size: 16px;
+    color: #fff;
+}
+.feature_highlight_cta p {
+    color: #6A7282;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+.meme_maker_section {
+    background: #0e0e10;
+}
+.go_live_section {
+    margin-top: 0;
+}
+
+/* Community rankings table */
+.landing_rankings_table_wrap {
+    margin-top: 40px;
+    overflow-x: auto;
+}
+.landing_rankings_table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #101010B5;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.landing_rankings_table th,
+.landing_rankings_table td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid #252525;
+}
+.landing_rankings_table th {
+    background: #1a1a1a;
+    color: #6A7282;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+.landing_rankings_table td {
+    color: #FFFFFF;
+    font-size: 15px;
+}
+.landing_rankings_table tbody tr:last-child td {
+    border-bottom: none;
+}
+.landing_rankings_table tbody tr:hover {
+    background: #FFFFFF05;
+}
+
+/* Comparison table */
+.comparison_table_wrap {
+    margin-top: 40px;
+    overflow-x: auto;
+}
+.comparison_table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #101010B5;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.comparison_table th,
+.comparison_table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #252525;
+}
+.comparison_table th {
+    background: #1a1a1a;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+}
+.comparison_table td {
+    color: #99A1AF;
+    font-size: 15px;
+}
+.comparison_table td:nth-child(2),
+.comparison_table td:nth-child(3),
+.comparison_table th:nth-child(2),
+.comparison_table th:nth-child(3) {
+    text-align: center;
+    width: 140px;
+}
+.comparison_table tbody tr:last-child td {
+    border-bottom: none;
+}
+.comparison_note {
+    color: #2CEAA3;
+    font-size: 14px;
+}
+.comparison_note_below {
+    text-align: center;
+    color: #6A7282;
+    font-size: 14px;
+    margin-top: 24px;
+    margin-bottom: 0;
+}
+
+/* FAQ */
+.faq_section {
+    padding: 60px 0;
+    margin-top: 20px;
+}
+.faq_list {
+    max-width: 800px;
+    margin: 40px auto 0;
+}
+.faq_item {
+    border: 1px solid #252525;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: #101010B5;
+    overflow: hidden;
+}
+.faq_question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+.faq_toggle {
+    color: #FF9F1C;
+    font-size: 22px;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+.faq_answer {
+    padding: 0 22px 18px;
+    color: #99A1AF;
+    font-size: 15px;
+    line-height: 24px;
+    margin: 0;
+}
+.faq_item_open {
+    border-color: #FF9F1C33;
+}
+
+/* Footer CTA */
+.footer_cta_section {
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, rgba(255, 159, 28, 0.08) 0%, rgba(44, 234, 163, 0.05) 100%);
+    border: 1px solid #252525;
+    border-radius: 24px;
+}
+.footer_cta_section h2 {
+    color: #FFFFFF;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.footer_cta_section > p {
+    color: #9E9E9E;
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+.footer_cta_btn {
+    display: inline-block;
+    background: #FF9F1C;
+    color: #FFFFFF;
+    border-radius: 30px;
+    padding: 14px 32px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+.footer_cta_btn:hover {
+    opacity: 0.9;
+    color: #FFFFFF;
+}
+.footer_cta_sub {
+    color: #6A7282;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+
+.build_subheading {
+    font-size: 17px !important;
+    line-height: 28px !important;
 }

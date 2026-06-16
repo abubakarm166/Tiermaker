@@ -16,10 +16,9 @@ const PERIOD_PARAM: Record<TabKey, string> = {
 
 const POLL_MS = 45_000;
 
-function authorFromEmail(email: string | null | undefined): string {
-  if (!email) return "Community member";
-  const local = email.split("@")[0];
-  return local || email;
+function authorLabel(): string {
+  // Never display emails/user identifiers on public cards.
+  return "Community member";
 }
 
 function formatTimeAgo(iso: string): string {
@@ -79,7 +78,7 @@ function totalPlacedItems(list: TierList): number {
 function RecentCard({ list, rank }: { list: TierList; rank: number }) {
   const avatars = tierChipsFromList(list);
   const items = totalPlacedItems(list);
-  const author = authorFromEmail(list.user_email);
+  const author = authorLabel();
   const href = `/app/lists/${list.id}`;
 
   return (

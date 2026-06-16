@@ -252,7 +252,7 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
                         {spotlightFull.title}
                       </h2>
                       <p className="text-sm text-muted-strong">
-                        By <span className="text-white">{spotlightSummary?.user_email ?? "—"}</span>
+                        By <span className="text-white">Community member</span>
                       </p>
                       <div className="mt-4 grid gap-3 text-xs text-muted-strong sm:grid-cols-3">
                         <div className="rounded-2xl bg-[#151515] border border-[#262626] px-3 py-2.5">
@@ -335,7 +335,7 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
                 {cardLists.map((list) => {
                   /** Only the server-generated board snapshot — template hero / first-item fallbacks are wrong aspect and look broken in cards. */
                   const thumb = list.thumbnail;
-                  const author = list.user_email ?? "Creator";
+                  const author = "Community member";
                   const initial = author.charAt(0).toUpperCase();
                   const titleInitial = (list.title?.trim().charAt(0) || "?").toUpperCase();
                   return (

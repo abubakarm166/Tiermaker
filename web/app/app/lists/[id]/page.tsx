@@ -364,7 +364,7 @@ export default function ListDetailPage() {
                       )}
                       <TierListCardCaption
                         title={rl.title}
-                        subtitle={rl.user_email ?? ""}
+                        subtitle="Community member"
                         subtitleTone="muted"
                       />
                     </Link>

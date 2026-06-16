@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { fetchTemplate, fetchTemplates, fetchList, createList, updateList } from '../lib/api'
 import { useAuth } from '../contexts/AuthContext'
@@ -243,6 +243,39 @@ export default function ListForm() {
   const DRAG_KEY = 'application/x-tiermaker-item'
   const [dragOverTier, setDragOverTier] = useState<string | null>(null)
   const [dragOverUnassigned, setDragOverUnassigned] = useState(false)
+  const autoScrollRafRef = useRef<number | null>(null)
+  const autoScrollYRef = useRef<number>(0)
+
+  const stopAutoScroll = () => {
+    if (autoScrollRafRef.current != null) {
+      cancelAnimationFrame(autoScrollRafRef.current)
+      autoScrollRafRef.current = null
+    }
+  }
+
+  const scheduleAutoScroll = (clientY: number) => {
+    autoScrollYRef.current = clientY
+    if (autoScrollRafRef.current != null) return
+
+    autoScrollRafRef.current = requestAnimationFrame(() => {
+      autoScrollRafRef.current = null
+      const y = autoScrollYRef.current
+      const edge = 120
+      const maxSpeed = 22
+      const h = window.innerHeight || 0
+      if (h <= 0) return
+
+      if (y < edge) {
+        const t = Math.max(0, Math.min(1, (edge - y) / edge))
+        window.scrollBy({ top: -Math.round(maxSpeed * t), left: 0 })
+        scheduleAutoScroll(y)
+      } else if (y > h - edge) {
+        const t = Math.max(0, Math.min(1, (y - (h - edge)) / edge))
+        window.scrollBy({ top: Math.round(maxSpeed * t), left: 0 })
+        scheduleAutoScroll(y)
+      }
+    })
+  }
 
   const handleDragStart = (e: React.DragEvent, itemId: number, fromLabel: string | null) => {
     e.dataTransfer.setData(DRAG_KEY, JSON.stringify({ itemId, fromLabel }))
@@ -252,6 +285,7 @@ export default function ListForm() {
     }
   }
   const handleDragEnd = (e: React.DragEvent) => {
+    stopAutoScroll()
     if (e.currentTarget instanceof HTMLElement) {
       e.currentTarget.classList.remove('opacity-50', 'cursor-grabbing')
     }
@@ -260,6 +294,7 @@ export default function ListForm() {
   }
   const handleDrop = (e: React.DragEvent, toLabel: string | null) => {
     e.preventDefault()
+    stopAutoScroll()
     setDragOverTier(null)
     setDragOverUnassigned(false)
     const raw = e.dataTransfer.getData(DRAG_KEY)
@@ -273,6 +308,7 @@ export default function ListForm() {
   }
   const handleDragOver = (e: React.DragEvent, tierLabel: string | null) => {
     e.preventDefault()
+    scheduleAutoScroll(e.clientY)
     e.dataTransfer.dropEffect = 'move'
     if (tierLabel !== null) setDragOverTier(tierLabel)
     else setDragOverUnassigned(true)

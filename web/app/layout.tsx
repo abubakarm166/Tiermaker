@@ -4,8 +4,9 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "Thetiermaker – Create, Rank & Share Tier Lists",
-  description: "The ultimate platform for tier list creation. Create tier lists in seconds, rank anything, share with your community.",
+  title: "Free Tier List Maker Online, Create, Rank & Share | TheTierMaker",
+  description:
+    "Make a free tier list online in seconds, no login needed to start. Rank anime, games, Pokémon, sports, fast food & more. Custom tier list maker. Free forever.",
 };
 
 export default function RootLayout({

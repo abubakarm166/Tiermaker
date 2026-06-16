@@ -2,32 +2,24 @@ import Link from "next/link";
 
 const footerLinks = {
   PRODUCT: [
-    { label: "Create Tier List", href: "#" },
-    { label: "Templates", href: "#" },
-    { label: "Browse Tier Lists", href: "#" },
-    { label: "Trending", href: "#" },
-    { label: "Pricing", href: "#" },
-  ],
-  RESOURCES: [
-    { label: "Blog", href: "#" },
-    { label: "Help Center", href: "#" },
-    { label: "Community", href: "#" },
-    { label: "Tutorials", href: "#" },
-    { label: "API", href: "#" },
+    { label: "Create Tier List", href: "/app/templates/new" },
+    { label: "Templates", href: "/app/templates" },
+    { label: "Trending", href: "/app/templates?ordering=most_popular" },
+    { label: "Browse Tier Lists", href: "/app/lists/feed" },
+    { label: "About TheTierMaker", href: "/about" },
+    { label: "How to Make a Tier List", href: "/how-to-make-a-tier-list" },
+    { label: "Unblocked Tier List Maker", href: "/unblocked-tier-list-maker" },
   ],
   COMPANY: [
-    { label: "About Us", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Press Kit", href: "#" },
-    { label: "Contact", href: "#" },
-    { label: "Partners", href: "#" },
+    { label: "About Us", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ],
   LEGAL: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
-    { label: "Cookie Policy", href: "#" },
-    { label: "DMCA", href: "#" },
-    { label: "Acceptable Use", href: "#" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Cookie Policy", href: "/cookies" },
+    { label: "DMCA", href: "/dmca" },
+    { label: "Acceptable Use", href: "/acceptable-use" },
   ],
 };
 
@@ -35,10 +27,18 @@ export default function Footer() {
   return (
     <footer className="footer_section">
       <div className="container">
+        <div className="footer_cta_section">
+          <h2>Your Next Tier List Is One Click Away</h2>
+          <p>Free. Fast. No credit card. Start ranking in seconds.</p>
+          <Link href="/register" className="footer_cta_btn">
+            Create Free Account →
+          </Link>
+          <p className="footer_cta_sub">Join 500+ creators already ranking on TheTierMaker</p>
+        </div>
         <div className="row">
           <div className="col-lg-4 col-md-5 col-sm-12">
             <div className="footer_text1_div">
-              <h2>Thetiermaker</h2>
+              <h2>TheTierMaker</h2>
               <p>
                 The best free tier list maker for creators. Create, share, and go viral with beautiful tier lists.
               </p>
@@ -70,7 +70,7 @@ export default function Footer() {
                     <ul>
                       {links.map((link) => (
                         <li key={link.label}>
-                          <a href={link.href}>{link.label}</a>
+                          <Link href={link.href}>{link.label}</Link>
                         </li>
                       ))}
                     </ul>
@@ -81,11 +81,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer_bottom">
-          <p>© 2026 Thetiermaker. All rights reserved.</p>
+          <p>© 2026 TheTierMaker. All rights reserved.</p>
           <div className="footer_bottom_links">
-            <Link href="/status">Status</Link>
-            <Link href="/sitemap">Sitemap</Link>
-            <Link href="/accessibility">Accessibility</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+            <Link href="/cookies">Cookies</Link>
+            <Link href="/dmca">DMCA</Link>
+            <Link href="/contact">Contact</Link>
           </div>
         </div>
       </div>

@@ -2,23 +2,23 @@ const steps = [
   {
     id: 1,
     image: "/assets/images/w1.svg",
-    title: "Start with the Editor",
+    title: "Pick a Template or Start Blank",
     description:
-      "Launch the tier list maker instantly and begin creating — no account or setup needed.",
+      "Browse hundreds of ready-made templates across gaming, anime, sports, fast food, Pokémon, music, cars, and Marvel. Or build a completely custom tier list from scratch with your own images and labels.",
   },
   {
     id: 2,
     image: "/assets/images/w2.svg",
-    title: "Add Your Items",
+    title: "Drag, Drop & Customize",
     description:
-      "Drag and drop images into tiers. Upload your own content or use existing templates.",
+      "Arrange items into your tiers. Upload your own images, edit labels, customize row colors, and add as many tiers as you need. Your list, your rules.",
   },
   {
     id: 3,
     image: "/assets/images/w3.svg",
-    title: "Share & Get Votes",
+    title: "Save, Share & Go Viral",
     description:
-      "Publish your tier list with one click, share it anywhere, and watch the community interact.",
+      "Create a free account to save your list permanently. Then share your link on Twitter, Discord, Reddit, or TikTok and let the world weigh in.",
   },
 ];
 
@@ -28,11 +28,9 @@ export default function HowWorks() {
       <div className="container">
         <div className="howitwork_card_body">
           <div className="my_title_div">
-            <span>how it works</span>
-            <h2>How to make a Tier List</h2>
-            <p>
-              Creating tier lists is simple. No signup required — just start building, ranking, and sharing in minutes.
-            </p>
+            <span>How It Works</span>
+            <h2>Make a Tier List in 3 Simple Steps</h2>
+            <p>No downloads. No setup. Just open, drag, and rank.</p>
           </div>
           <div className="howitwork_row_main">
             <div className="row">
@@ -61,6 +59,9 @@ export default function HowWorks() {
               </div>
             </div>
           </div>
+          <p className="howitwork_account_note">
+            💾 Create a free account to save your work and vote on community lists. No credit card required, ever.
+          </p>
         </div>
       </div>
     </section>

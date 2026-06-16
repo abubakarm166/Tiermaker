@@ -118,8 +118,14 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-[11px] text-muted-strong text-center">
           By continuing, you agree to our{" "}
-          <span className="text-primary">Terms</span> and{" "}
-          <span className="text-primary">Privacy Policy</span>.
+          <Link href="/terms" className="text-primary hover:underline">
+            Terms
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="text-primary hover:underline">
+            Privacy Policy
+          </Link>
+          .
         </p>
 
         <p className="mt-5 text-center text-muted text-sm">

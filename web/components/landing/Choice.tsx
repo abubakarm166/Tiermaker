@@ -2,88 +2,73 @@
 
 import Link from "next/link";
 
-const thetiermakerFeatures = [
-  "Completely Free, No Restrictions",
-  "Built-In Smart Ranking Tools",
-  "Start Instantly — No Login Needed",
-  "Clean & Intuitive Interface",
-  "Modern, Distraction-Free Design",
-  "Optimized for Speed & Performance",
-  "Fully Responsive on All Devices",
-  "Real-Time Community Interaction",
-  "Powerful Insights & Engagement Tools",
+const COMPARISON_ROWS = [
+  { feature: "100% Free, No Paywalls Ever", us: true, others: false },
+  { feature: "Start Without an Account", us: true, others: false },
+  { feature: "Create a Tier List in Under 60 Seconds", us: true, others: false },
+  { feature: "Built-In Meme Maker", us: true, others: false },
+  { feature: "Host Live Community Votes", us: true, others: false },
+  { feature: "Real-Time Community Rankings", us: true, others: false },
+  { feature: "Clean, Distraction-Free Design", us: true, others: false },
+  { feature: "Fully Responsive on Mobile & Desktop", us: true, others: false },
+  { feature: "Unlimited Tier Lists", us: true, others: false },
+  { feature: "Save & Edit Your Lists Anytime", us: "free account", others: false },
+  { feature: "Personal Profile with Your Rankings", us: true, others: false },
+  { feature: "Custom Images & Labels", us: true, others: false },
 ];
 
-const othersFeatures = [
-  "Paywalls on Advanced Features",
-  "Limited Creation Tools",
-  "Account Required for Full Access",
-  "Cluttered & Dated Layout",
-  "Slower Performance",
-  "Desktop-Heavy Experience",
-  "Basic Sharing Options",
-  "No Real-Time Interaction",
-  "Minimal Reporting or Insights",
-];
+function CellIcon({ value }: { value: boolean | string }) {
+  if (value === true) {
+    return <span className="comparison_check">✅</span>;
+  }
+  if (value === "free account") {
+    return <span className="comparison_note">✅ (free account)</span>;
+  }
+  return <span className="comparison_cross">❌</span>;
+}
 
 export default function Choice() {
   return (
-    <>
-      <section className="choice_section">
-        <div className="container">
-          <div className="my_title_div">
-            <span>THE SMARTER CHOICE</span>
-            <h2>Why Thetiermaker Outperforms <br /> Other Ranking Platforms</h2>
-            <p>Discover why thousands of creators are switching to a faster, simpler tier list experience.</p>
-          </div>
-          <div className="choice_content_main">
-            <div className="row">
-              <div className="col-lg-6 col-md-12 col-sm-12">
-                <div className="choice_col">
-                  <div className="choice_col_header choice_col_header_thetiermaker">
-                    <div className="choice_col_brand">🏅 Thetiermaker</div>
-                    <span className="choice_winner_badge">✦ WINNER</span>
-                  </div>
-                  {thetiermakerFeatures.map((feature, idx) => (
-                    <div className="choice_feature_row choice_feature_row_thetiermaker" key={idx}>
-                      <div className="choice_icon_check">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      </div>
-                      <p className="choice_feature_text_good">{feature}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-12 col-sm-12">
-                <div className="choice_col">
-                  <div className="choice_col_header choice_col_header_others">
-                    <p className="choice_col_others_label">Other Tier List Makers</p>
-                  </div>
-                  {othersFeatures.map((feature, idx) => (
-                    <div className="choice_feature_row choice_feature_row_others" key={idx}>
-                      <div className="choice_icon_cross">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="18" y1="6" x2="6" y2="18" />
-                          <line x1="6" y1="6" x2="18" y2="18" />
-                        </svg>
-                      </div>
-                      <p className="choice_feature_text_bad">{feature}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="choice_cta_wrap">
-              <Link href="/register" className="choice_cta_btn">
-                Try Thetiermaker Free Today
-              </Link>
-              <p className="choice_cta_sub">Join 100,000+ creators who made the switch</p>
-            </div>
-          </div>
+    <section className="choice_section">
+      <div className="container">
+        <div className="my_title_div">
+          <span>The Smarter Choice</span>
+          <h2>Everything You Need to Rank Anything</h2>
+          <p>Fast, free, and built for creators who actually want to make something worth sharing.</p>
         </div>
-      </section>
-    </>
+        <div className="comparison_table_wrap">
+          <table className="comparison_table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>TheTierMaker</th>
+                <th>Others</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARISON_ROWS.map((row) => (
+                <tr key={row.feature}>
+                  <td>{row.feature}</td>
+                  <td>
+                    <CellIcon value={row.us} />
+                  </td>
+                  <td>
+                    <CellIcon value={row.others} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="comparison_note_below">
+          Saving, voting, and hosting live sessions require a free account — takes 30 seconds, no card needed.
+        </p>
+        <div className="choice_cta_wrap">
+          <Link href="/register" className="choice_cta_btn">
+            Create Your Free Account →
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

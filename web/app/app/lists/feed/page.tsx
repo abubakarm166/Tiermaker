@@ -98,7 +98,7 @@ export default function FeedPage() {
                       )}
                       <TierListCardCaption
                         title={list.title}
-                        subtitle={list.user_email}
+                        subtitle="Community member"
                         subtitleTone="muted"
                       />
                     </Link>

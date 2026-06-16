@@ -26,7 +26,7 @@ export default function Navbar() {
           <nav className="navbar navbar-dark">
             <div className="d-flex align-items-center w-100 header_nav_inner">
               <Link href="/" className="navbar-brand me-2">
-                Thetiermaker
+                TheTierMaker
               </Link>
 
               {/* Desktop nav */}

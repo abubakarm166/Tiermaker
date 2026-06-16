@@ -8,14 +8,14 @@ export default function RecentWork() {
     <section className="recentwork_section">
       <div className="container">
         <div className="my_title_div">
-          <span>our recent work</span>
-          <h2>Fresh Tier Lists from the Community</h2>
-          <p>Explore the latest tier lists created by users across gaming, entertainment, sports, and more.</p>
+          <span>Fresh</span>
+          <h2>Latest Tier Lists Just Dropped</h2>
+          <p>See what fans, gamers, and creators are debating right now.</p>
         </div>
         <WorkTabs />
         <div className="btn_load_more">
-          <Link href="/app">
-            <button type="button">Load More</button>
+          <Link href="/app/lists/feed">
+            <button type="button">Browse All Lists →</button>
           </Link>
         </div>
       </div>

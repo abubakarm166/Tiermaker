@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const stats = [
-  { value: 500, suffix: "K+", label: "TIER LISTS CREATED" },
-  { value: 100, suffix: "K+", label: "HAPPY CREATORS" },
-  { value: 4.9, suffix: " ★", label: "USER RATING" },
-  { value: 0.3, suffix: " s", label: "LOAD TIME" },
+  { value: 500, suffix: "+", label: "TIER LISTS CREATED" },
+  { value: 200, suffix: "+", label: "HAPPY CREATORS" },
+  { value: 4.8, suffix: " ★", label: "USER RATING" },
+  { value: 1.2, suffix: "s", label: "LOAD TIME" },
 ];
 
 export default function StatsCounter() {
