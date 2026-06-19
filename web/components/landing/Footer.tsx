@@ -6,13 +6,14 @@ const footerLinks = {
     { label: "Templates", href: "/app/templates" },
     { label: "Trending", href: "/app/templates?ordering=most_popular" },
     { label: "Browse Tier Lists", href: "/app/lists/feed" },
-    { label: "About TheTierMaker", href: "/about" },
     { label: "How to Make a Tier List", href: "/how-to-make-a-tier-list" },
     { label: "Unblocked Tier List Maker", href: "/unblocked-tier-list-maker" },
+    { label: "Text Tier List Maker", href: "/text-tier-list-maker" },
   ],
   COMPANY: [
-    { label: "About Us", href: "/about" },
     { label: "Contact", href: "/contact" },
+    { label: "About Us", href: "/about" },
+
   ],
   LEGAL: [
     { label: "Privacy Policy", href: "/privacy" },
@@ -82,13 +83,6 @@ export default function Footer() {
         </div>
         <div className="footer_bottom">
           <p>© 2026 TheTierMaker. All rights reserved.</p>
-          <div className="footer_bottom_links">
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/cookies">Cookies</Link>
-            <Link href="/dmca">DMCA</Link>
-            <Link href="/contact">Contact</Link>
-          </div>
         </div>
       </div>
     </footer>

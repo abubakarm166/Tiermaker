@@ -29,6 +29,34 @@ class CategoryViewSet(viewsets.ModelViewSet):
             template_count=Count("templates", distinct=True)
         ).order_by("-template_count", "name")
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        categories = list(page) if page is not None else list(queryset)
+
+        category_ids = [category.id for category in categories]
+        samples_by_category: dict[int, list[str]] = {cid: [] for cid in category_ids}
+        if category_ids:
+            for category_id, title in (
+                Template.objects.filter(
+                    category_id__in=category_ids,
+                    visibility=Template.Visibility.PUBLIC,
+                )
+                .order_by("category_id", "-created_at")
+                .values_list("category_id", "title")
+            ):
+                bucket = samples_by_category.get(category_id)
+                if bucket is not None and len(bucket) < 6:
+                    bucket.append(title)
+
+        for category in categories:
+            category._sample_templates = samples_by_category.get(category.id, [])
+
+        serializer = self.get_serializer(categories, many=True)
+        if page is not None:
+            return self.get_paginated_response(serializer.data)
+        return Response(serializer.data)
+
     def get_serializer_class(self):
         if self.action in ("create", "update", "partial_update"):
             return CategoryWriteSerializer

@@ -1,14 +1,15 @@
-import Link from "next/link";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import GuideImage from "@/components/legal/GuideImage";
 
 type LegalArticleProps = {
   title: string;
   lastUpdated?: string;
+  featuredImage?: { src: string; alt: string };
   children: React.ReactNode;
 };
 
-export default function LegalArticle({ title, lastUpdated, children }: LegalArticleProps) {
+export default function LegalArticle({ title, lastUpdated, featuredImage, children }: LegalArticleProps) {
   return (
     <>
       <Navbar />
@@ -18,19 +19,9 @@ export default function LegalArticle({ title, lastUpdated, children }: LegalArti
             <header className="legal-header">
               <h1>{title}</h1>
               {lastUpdated && <p className="legal-updated">Last Updated: {lastUpdated}</p>}
+              {featuredImage && <GuideImage src={featuredImage.src} alt={featuredImage.alt} featured />}
             </header>
             <div className="legal-body">{children}</div>
-            <footer className="legal-footer-nav">
-              <Link href="/">← Back to home</Link>
-              <span className="legal-footer-links">
-                <Link href="/privacy">Privacy</Link>
-                <Link href="/cookies">Cookies</Link>
-                <Link href="/terms">Terms</Link>
-                <Link href="/acceptable-use">Acceptable Use</Link>
-                <Link href="/dmca">DMCA</Link>
-                <Link href="/contact">Contact</Link>
-              </span>
-            </footer>
           </article>
         </div>
       </main>

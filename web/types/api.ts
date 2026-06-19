@@ -6,6 +6,8 @@ export interface Category {
   image: string | null;
   /** Number of tier list templates in this category (from API). */
   template_count?: number;
+  /** Recent public template titles for landing cards and previews. */
+  sample_templates?: string[];
 }
 
 export interface User {

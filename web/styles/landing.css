@@ -1220,11 +1220,6 @@
     border-top: 1px solid #FFFFFF14;
     padding: 20px 0;
     margin-top: 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
 }
 .footer_bottom p {
     font-weight: 400;
@@ -1233,24 +1228,6 @@
     letter-spacing: 0px;
     color: #6A7282;
     margin-bottom: 0;
-}
-.footer_bottom_links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    justify-content: flex-end;
-}
-.footer_bottom_links a {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0px;
-    color: #6A7282;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-.footer_bottom_links a:hover {
-    color: #f0f0f0;
 }
 .navbar-toggler{
     border: none !important;
@@ -1281,6 +1258,67 @@
     border-radius: 14px;
     background: #050505f2;
     border: 1px solid #202020;
+}
+
+/* Navbar guides dropdown */
+.landing_nav_dropdown {
+    position: relative;
+}
+.landing_nav_dropdown_btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem 10px;
+    font: inherit;
+    color: inherit;
+}
+.landing_nav_dropdown_btn_active {
+    color: #FF9F1C;
+}
+.landing_nav_chevron {
+    font-size: 10px;
+    opacity: 0.85;
+}
+.landing_nav_dropdown_menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 240px;
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background: #101010;
+    border: 1px solid #252525;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
+    z-index: 1100;
+}
+.landing_nav_dropdown_link {
+    display: block;
+    padding: 10px 16px;
+    color: #c4c4c4;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.landing_nav_dropdown_link:hover,
+.landing_nav_dropdown_link.active {
+    color: #fff;
+    background: rgba(255, 159, 28, 0.12);
+}
+.landing_mobile_guides_toggle {
+    background: transparent;
+    border: none;
+}
+.landing_mobile_subnav {
+    list-style: none;
+    margin: 0 0 4px 0;
+    padding: 0;
 }
 
 /* Ensure nav items and buttons are visible on desktop (Bootstrap expand) */
@@ -1408,9 +1446,6 @@
     .build_text_div h1 {
         font-size: 38px;
     }
-    .footer_bottom{
-        justify-content: center;
-    }
     .build_card_body_div{
         padding: 50px 12px 20px 12px;
     }
@@ -1484,6 +1519,18 @@
 .hero_trending_items {
     color: #9E9E9E;
 }
+.hero_feature_image {
+    margin: 36px auto 0;
+    max-width: 920px;
+    width: 100%;
+}
+.hero_feature_image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid #252525;
+}
 
 /* How it works note */
 .howitwork_account_note {
@@ -1499,12 +1546,24 @@
 .landing_category_grid {
     margin-top: 40px;
 }
+.landing_category_link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+.landing_category_link:hover .landing_category_card {
+    border-color: #ff9f1c55;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
 .landing_category_card {
     background: #101010B5;
     border: 1px solid #252525;
     border-radius: 16px;
     padding: 24px;
     height: 100%;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .landing_category_card h5 {
     color: #FFFFFF;
@@ -1517,6 +1576,44 @@
     font-size: 15px;
     line-height: 24px;
     margin-bottom: 0;
+}
+.landing_category_empty {
+    color: #99A1AF;
+    text-align: center;
+    margin: 0;
+    padding: 24px 0;
+}
+.landing_category_card_skeleton {
+    pointer-events: none;
+}
+.landing_category_skeleton_title,
+.landing_category_skeleton_text {
+    background: linear-gradient(90deg, #1a1a1a 0%, #252525 50%, #1a1a1a 100%);
+    background-size: 200% 100%;
+    animation: landing_category_shimmer 1.4s ease-in-out infinite;
+    border-radius: 8px;
+}
+.landing_category_skeleton_title {
+    height: 24px;
+    width: 45%;
+    margin-bottom: 14px;
+}
+.landing_category_skeleton_text {
+    height: 14px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.landing_category_skeleton_text_short {
+    width: 72%;
+    margin-bottom: 0;
+}
+@keyframes landing_category_shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 /* Feature highlight sections (Meme Maker, Go Live) */

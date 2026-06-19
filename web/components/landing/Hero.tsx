@@ -34,6 +34,14 @@ export default function Hero() {
             <span className="hero_trending_label">🔥 Trending right now:</span>
             <span className="hero_trending_items">{TRENDING.join(" · ")}</span>
           </div>
+          <figure className="hero_feature_image">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/images/guides/homepage-tier-list-maker-feature.webp"
+              alt="free-online-tier-list-maker-dashboard-showing-customizable-s-to-f-ranking-board-with-drag-and-drop-tools-color-options-and-fast-modern-user-interface"
+              loading="eager"
+            />
+          </figure>
         </div>
       </div>
     </section>

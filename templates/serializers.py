@@ -7,16 +7,30 @@ class CategorySerializer(serializers.ModelSerializer):
     """template_count usually comes from annotate() on CategoryViewSet.get_queryset()."""
 
     template_count = serializers.SerializerMethodField()
+    sample_templates = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ("id", "name", "image", "template_count")
+        fields = ("id", "name", "image", "template_count", "sample_templates")
 
     def get_template_count(self, obj):
         v = getattr(obj, "template_count", None)
         if v is not None:
             return int(v)
         return Template.objects.filter(category=obj).count()
+
+    def get_sample_templates(self, obj):
+        cached = getattr(obj, "_sample_templates", None)
+        if cached is not None:
+            return cached
+        return list(
+            Template.objects.filter(
+                category=obj,
+                visibility=Template.Visibility.PUBLIC,
+            )
+            .order_by("-created_at")
+            .values_list("title", flat=True)[:6]
+        )
 
 
 class CategoryWriteSerializer(serializers.ModelSerializer):

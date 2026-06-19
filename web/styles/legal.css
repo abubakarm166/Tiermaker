@@ -41,6 +41,20 @@
   margin: 28px 0 12px;
 }
 
+.legal-body h4 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 24px 0 10px;
+}
+
+.legal-body h5 {
+  color: #d1d5db;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 20px 0 8px;
+}
+
 .legal-body p {
   color: #99a1af;
   font-size: 16px;
@@ -86,6 +100,69 @@
   color: #fff !important;
 }
 
+.legal-featured-image,
+.legal-inline-image {
+  margin: 0 0 24px;
+}
+
+.legal-featured-image img,
+.legal-inline-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #252525;
+}
+
+.legal-featured-image {
+  margin-top: 24px;
+}
+
+.legal-inline-image {
+  margin: 24px 0 32px;
+}
+
+.legal-faq {
+  margin: 8px 0 32px;
+}
+
+.legal-faq .faq_list {
+  max-width: none;
+  margin: 0;
+}
+
+.legal-faq .faq_question_text {
+  flex: 1;
+  line-height: 1.45;
+}
+
+.legal-faq .faq_answer {
+  padding: 0 22px 20px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.legal-faq .faq_answer a {
+  color: #ff9f1c;
+  text-decoration: underline;
+}
+
+.legal-faq .faq_answer a:hover {
+  color: #ffb84d;
+}
+
+.legal-faq .faq_item {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legal-faq .faq_item_open {
+  box-shadow: 0 0 0 1px #ff9f1c22;
+}
+
+.legal-faq .faq_question:hover {
+  color: #ff9f1c;
+}
+
 .legal-body pre,
 .legal-body .legal-sample {
   background: #101010;
@@ -123,32 +200,6 @@
 
 .legal-body td {
   color: #99a1af;
-}
-
-.legal-footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 48px;
-  padding-top: 24px;
-  border-top: 1px solid #252525;
-  font-size: 14px;
-}
-
-.legal-footer-nav a {
-  color: #ff9f1c;
-  text-decoration: none;
-}
-
-.legal-footer-nav a:hover {
-  text-decoration: underline;
-}
-
-.legal-footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
 }
 
 .contact-table-wrap {
