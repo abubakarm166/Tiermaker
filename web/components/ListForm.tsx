@@ -801,7 +801,7 @@ export default function ListForm() {
               onDrop={(e) => handleDrop(e, null)}
             >
               <h3 className="text-muted text-sm font-medium mb-2">
-                Unassigned — drag items here or click a tier to add
+                Unassigned, drag items here or click a tier to add
               </h3>
               <div className="flex flex-wrap gap-3">
                 {unassigned.map((item) => (

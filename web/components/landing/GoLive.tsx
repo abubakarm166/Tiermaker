@@ -4,7 +4,7 @@ const FEATURES = [
   {
     title: "Real-time voting",
     description:
-      "Your audience votes on each item live. Watch the tiers fill up as votes roll in — no refreshing needed.",
+      "Your audience votes on each item live. Watch the tiers fill up as votes roll in, no refreshing needed.",
   },
   {
     title: "Built for creators",
@@ -23,7 +23,7 @@ export default function GoLive() {
       <div className="container">
         <div className="my_title_div">
           <span>Live</span>
-          <h2>Host a Live Tier List — Let Your Audience Vote in Real Time</h2>
+          <h2>Host a Live Tier List, Let Your Audience Vote in Real Time</h2>
           <p>
             Go live and let your community rank along with you. Perfect for streamers, content creators, and anyone who
             wants to turn ranking into a shared experience.

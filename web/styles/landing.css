@@ -1188,13 +1188,14 @@
 .footer_social_links {
     margin-top: 30px;
 }
-.footer_social_links h6 {
+.footer_column_heading {
     font-weight: 600;
     font-size: 18px;
     line-height: 20px;
     letter-spacing: 0.7px;
     text-transform: uppercase;
     color: #FFFFFF;
+    margin: 0;
 }
 .footer_social_links ul {
     list-style: none;

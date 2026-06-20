@@ -67,7 +67,7 @@ export default function Footer() {
               {Object.entries(footerLinks).map(([heading, links]) => (
                 <div className="col-lg-3 col-md-4 col-sm-6 col-6" key={heading}>
                   <div className="footer_social_links">
-                    <h6>{heading}</h6>
+                    <p className="footer_column_heading">{heading}</p>
                     <ul>
                       {links.map((link) => (
                         <li key={link.label}>

@@ -14,9 +14,9 @@ export default function Hero() {
       <div className="container">
         <div className="hero_text_div">
           <span>RANK ANYTHING. SHARE EVERYWHERE.</span>
-          <h1>The Free Tier List Maker Online — Simple, Fast &amp; Custom</h1>
+          <h1>The Free Tier List Maker Online, Simple, Fast &amp; Custom</h1>
           <p>
-            Drag, drop, and rank anything you love — anime, gaming, sports, Pokémon, fast food, Marvel, music, and more.
+            Drag, drop, and rank anything you love, anime, gaming, sports, Pokémon, fast food, Marvel, music, and more.
             No downloads. No credit card. Just start ranking.
           </p>
           <Link href="/app/templates">

@@ -20,18 +20,18 @@ export default function TextTierListMakerPage() {
     >
       <p>
         Not everything worth ranking has a picture attached to it. Sometimes you want to rank song titles, movie names,
-        programming languages, business ideas, historical figures, or your friends&apos; opinions — things that exist as
+        programming languages, business ideas, historical figures, or your friends&apos; opinions, things that exist as
         words, not images.
       </p>
       <p>
         That is exactly what the text tier list maker on TheTierMaker is built for. Type your items, drag them into
-        tiers, and share the result — no image uploads, no searching for photos, no formatting hassle. Just words,
+        tiers, and share the result, no image uploads, no searching for photos, no formatting hassle. Just words,
         ranked.
       </p>
       <p>Create a free account to get started. It takes 30 seconds and costs nothing.</p>
       <p>
         <Link href="/register" className="legal-cta-link">
-          Create Free Account — Start Your Text Tier List →
+          Create Free Account, Start Your Text Tier List →
         </Link>
       </p>
       <p className="hero_trust_line">
@@ -46,7 +46,7 @@ export default function TextTierListMakerPage() {
       <h2>What Is a Text Tier List and When Should You Use One?</h2>
       <p>
         A text tier list is a tier list where every item is a word or phrase instead of an image. The structure is
-        identical to a standard tier list — S, A, B, C, D rows, drag-and-drop ranking, shareable results — but the
+        identical to a standard tier list, S, A, B, C, D rows, drag-and-drop ranking, shareable results, but the
         items are text labels rather than pictures.
       </p>
       <p>You use a text tier list when:</p>
@@ -63,7 +63,7 @@ export default function TextTierListMakerPage() {
         </li>
         <li>
           <strong>You want a clean, readable result.</strong> Image-heavy tier lists are visually busy. A text-only
-          tier list is clean, scannable, and easier to read quickly — especially when shared as a screenshot on Reddit,
+          tier list is clean, scannable, and easier to read quickly, especially when shared as a screenshot on Reddit,
           Discord, or Twitter.
         </li>
         <li>
@@ -80,10 +80,10 @@ export default function TextTierListMakerPage() {
       <h2>How to Make a Text Tier List on TheTierMaker</h2>
       <h3>How to Build a Text Tier List, Step by Step</h3>
       <p>
-        <strong>Step 1: Create Your Free Account</strong> — Go to{" "}
+        <strong>Step 1: Create Your Free Account</strong> Go to{" "}
         <Link href="/">thetiermaker.com</Link> and create your free account. Enter your email and a password, or sign
         up with X. No credit card, no personal information beyond your email. Done in under 30 seconds. Your account is
-        what saves your text tier lists permanently — without it, your work disappears when you close the browser.
+        what saves your text tier lists permanently, without it, your work disappears when you close the browser.
       </p>
       <p>
         <strong>Step 2: Start a New Tier List and Switch to Text Mode.</strong> Once logged in, open the{" "}
@@ -91,21 +91,21 @@ export default function TextTierListMakerPage() {
         images or choosing an image template, you will type your items directly into the tool.
       </p>
       <p>
-        <strong>Step 3: Add Your Items</strong> — Type each item you want to rank and add it to the pool. You can add as
-        many items as your topic requires. Song titles, game names, concepts, ideas, people, places — anything that can
+        <strong>Step 3: Add Your Items</strong> Type each item you want to rank and add it to the pool. You can add as
+        many items as your topic requires. Song titles, game names, concepts, ideas, people, places, anything that can
         be written down can go into a text tier list.
       </p>
       <p>
-        <strong>Step 4: Set Up Your Tiers</strong> — The default setup gives you S, A, B, C, and D tiers. Rename them
-        to anything you want — &quot;Essential,&quot; &quot;Good,&quot; &quot;Mediocre,&quot; &quot;Skip,&quot; — or any
+        <strong>Step 4: Set Up Your Tiers</strong> The default setup gives you S, A, B, C, and D tiers. Rename them
+        to anything you want, &quot;Essential,&quot; &quot;Good,&quot; &quot;Mediocre,&quot; &quot;Skip,&quot;, or any
         custom labels that suit your topic. Add extra tiers or remove ones you do not need.
       </p>
       <p>
-        <strong>Step 5: Drag and Rank</strong> — Drag each text item from the pool into the tier it belongs in.
+        <strong>Step 5: Drag and Rank</strong> Drag each text item from the pool into the tier it belongs in.
         Rearrange them as many times as you want. There is no limit on edits.
       </p>
       <p>
-        <strong>Step 6: Save and Share</strong> — Save your tier list to your account, then share it via a direct link
+        <strong>Step 6: Save and Share</strong> Save your tier list to your account, then share it via a direct link
         or download it as an image. One link is all you need to start a debate on Discord, Reddit, Twitter, or anywhere
         else.
       </p>
@@ -216,7 +216,7 @@ export default function TextTierListMakerPage() {
       <h2>Text vs. Image Tier Lists: Which Should You Use?</h2>
       <h3>Text Tier List vs Image Tier List: Choosing the Right Format</h3>
       <p>
-        Both formats have the same core function — ranking things into tiers. The format you choose depends on your
+        Both formats have the same core function, ranking things into tiers. The format you choose depends on your
         topic and your audience.
       </p>
       <p>
@@ -233,7 +233,7 @@ export default function TextTierListMakerPage() {
         <strong>Use an image tier list when:</strong>
       </p>
       <ul>
-        <li>The items are visually distinct — characters, logos, products, kits, album covers</li>
+        <li>The items are visually distinct, characters, logos, products, kits, album covers</li>
         <li>Your audience expects images (gaming communities, anime fans)</li>
         <li>The visual comparison adds meaning to the ranking</li>
         <li>You are posting to a community that reacts better to visual content</li>
@@ -258,7 +258,7 @@ export default function TextTierListMakerPage() {
       </p>
       <p>
         <strong>Reddit and Discord Communities:</strong> Text tier lists are common in communities that rank things by
-        name — music subreddits ranking albums, book communities ranking authors, TV communities ranking episodes by
+        name, music subreddits ranking albums, book communities ranking authors, TV communities ranking episodes by
         title. The text format shares cleanly as a screenshot and immediately sparks replies from people who disagree.
       </p>
       <p>
@@ -270,7 +270,7 @@ export default function TextTierListMakerPage() {
       <p>
         <strong>Teams and Professionals:</strong> Product teams use text tier lists to prioritize features. Marketing
         teams use them to rank campaign ideas. Strategy teams use them to evaluate options. The tier format makes
-        relative priority visible in a way that a numbered list does not — items in the same tier are equal, items in
+        relative priority visible in a way that a numbered list does not, items in the same tier are equal, items in
         higher tiers are more important. It is a fast, visual decision-making tool that works in meetings and async
         discussions equally well.
       </p>
@@ -288,7 +288,7 @@ export default function TextTierListMakerPage() {
           when you close the browser.
         </li>
         <li>
-          <strong>Share with a single link.</strong> Every saved tier list gets its own URL. Share it anywhere — one
+          <strong>Share with a single link.</strong> Every saved tier list gets its own URL. Share it anywhere, one
           link, no friction. Whoever opens it sees the full ranked list instantly.
         </li>
         <li>
@@ -302,7 +302,7 @@ export default function TextTierListMakerPage() {
         </li>
         <li>
           <strong>Works on every device.</strong> Build your text tier list on a laptop, Chromebook, tablet, or phone.
-          The tool is fully responsive and browser-based — no downloads or extensions needed.
+          The tool is fully responsive and browser-based, no downloads or extensions needed.
         </li>
         <li>
           <strong>Free account, full access.</strong> Create your free account once and every feature is unlocked. No
@@ -314,7 +314,7 @@ export default function TextTierListMakerPage() {
       <p>
         <strong>What is a text tier list maker?</strong> A text tier list maker is an online tool that lets you create
         tier lists using words and phrases instead of images. You type your items, drag them into S, A, B, C, or D
-        tiers, and share the result. It is ideal for ranking anything that does not have a relevant image — concepts,
+        tiers, and share the result. It is ideal for ranking anything that does not have a relevant image, concepts,
         names, titles, ideas, and opinions.
       </p>
       <p>
@@ -329,7 +329,7 @@ export default function TextTierListMakerPage() {
       </p>
       <p>
         <strong>Can I rename the tiers in a text tier list?</strong> Yes. Click on any tier label to rename it. Change
-        S, A, B, C, D to anything you want — custom names, emoji, descriptive labels. The tier names are fully editable.
+        S, A, B, C, D to anything you want, custom names, emoji, descriptive labels. The tier names are fully editable.
       </p>
       <p>
         <strong>Can I share my text tier list?</strong> Yes. Once saved to your account, every tier list gets a unique
@@ -355,12 +355,12 @@ export default function TextTierListMakerPage() {
       </p>
       <p>
         <strong>What is the difference between a text tier list and a regular tier list?</strong> A regular tier list
-        uses images as items. A text tier list uses words or phrases. The ranking structure — S through D tiers,
-        drag-and-drop interface, shareable output — is identical. The only difference is the format of the items being
+        uses images as items. A text tier list uses words or phrases. The ranking structure, S through D tiers,
+        drag-and-drop interface, shareable output, is identical. The only difference is the format of the items being
         ranked.
       </p>
 
-      <h2>Start Your Text Tier List — Free Account, 30 Seconds</h2>
+      <h2>Start Your Text Tier List, Free Account, 30 Seconds</h2>
       <p>
         You do not need images to make a great tier list. Type your items, rank them, and share the result.
         TheTierMaker&apos;s text tier list maker is free, fast, and built for exactly this.
@@ -368,7 +368,7 @@ export default function TextTierListMakerPage() {
       <p>Create your free account and start ranking in under a minute.</p>
       <p>
         <Link href="/register" className="legal-cta-link">
-          Create Free Account — Start Ranking With Text →
+          Create Free Account, Start Ranking With Text →
         </Link>
       </p>
       <p>

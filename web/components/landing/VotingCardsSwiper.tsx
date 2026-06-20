@@ -73,7 +73,7 @@ export default function VotingCardsSwiper() {
     <section className="voting_swiper_section">
       <div className="voting_swiper_wrapper">
         {loadError && cards !== null && cards.length > 0 && (
-          <p className="text-center text-xs text-amber-200/90 mb-3">Could not refresh — showing last data.</p>
+          <p className="text-center text-xs text-amber-200/90 mb-3">Could not refresh, showing last data.</p>
         )}
         <Swiper
           key={swiperKey}
@@ -105,7 +105,7 @@ export default function VotingCardsSwiper() {
                 <div className="voting_card_header">
                   <h3 className="voting_card_title">No live votes right now</h3>
                   <p className="voting_card_author">
-                    <span>Host a session from the app — rankings will show here automatically.</span>
+                    <span>Host a session from the app, rankings will show here automatically.</span>
                   </p>
                 </div>
                 <div className="voting_card_footer">

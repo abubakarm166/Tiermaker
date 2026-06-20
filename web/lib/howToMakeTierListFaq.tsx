@@ -9,7 +9,7 @@ export const HOW_TO_MAKE_TIER_LIST_FAQ: LegalFaqItem[] = [
   {
     question: "How many tiers should a tier list have?",
     answer:
-      "The standard is five tiers — S, A, B, C, and D. But there's no rule. Some lists use three tiers for simple topics. Others add an F tier below D for truly terrible items, or an SS tier above S for legendary picks. Use as many tiers as your topic actually needs, not more.",
+      "The standard is five tiers, S, A, B, C, and D. But there's no rule. Some lists use three tiers for simple topics. Others add an F tier below D for truly terrible items, or an SS tier above S for legendary picks. Use as many tiers as your topic actually needs, not more.",
   },
   {
     question: "Do I need an account to make a tier list on TheTierMaker?",

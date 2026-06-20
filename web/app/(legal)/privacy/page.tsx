@@ -45,9 +45,9 @@ export default function PrivacyPage() {
 
       <h2>How We Use Your Information</h2>
       <ul>
-        <li>To provide our service — create, save, and edit tier lists</li>
+        <li>To provide our service, create, save, and edit tier lists</li>
         <li>To personalize your experience based on past activity</li>
-        <li>To communicate with you — welcome emails, password resets, service updates</li>
+        <li>To communicate with you, welcome emails, password resets, service updates</li>
         <li>To improve our website through analytics</li>
         <li>To prevent abuse, spam, and vote manipulation</li>
         <li>To serve advertisements via Google AdSense</li>

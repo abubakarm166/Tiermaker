@@ -16,7 +16,7 @@ export default function AboutPage() {
         <strong>Make tier list creation fast, free, and fun for everyone.</strong>
       </p>
       <p>
-        That is our mission. Nothing more. Nothing less. We believe ranking things should be simple — no tutorial, no
+        That is our mission. Nothing more. Nothing less. We believe ranking things should be simple, no tutorial, no
         paywalls, no slow pages. Just drag, drop, and share. That is why we built TheTierMaker.
       </p>
 
@@ -45,12 +45,12 @@ export default function AboutPage() {
 
       <h2>Who We Are</h2>
       <p>
-        We are a small team of developers, designers, and tier list enthusiasts — gamers, anime fans, and people who
+        We are a small team of developers, designers, and tier list enthusiasts, gamers, anime fans, and people who
         love ranking things and debating the results. TheTierMaker started as a side project when we could not find a
         tier list maker that did not annoy us.
       </p>
       <p>
-        Today, over 500 creators have published tier lists on TheTierMaker — from video game characters to fast food
+        Today, over 500 creators have published tier lists on TheTierMaker, from video game characters to fast food
         chains to World Cup jerseys. And we are just getting started.
       </p>
 
@@ -60,36 +60,36 @@ export default function AboutPage() {
         account to save lists permanently, vote on community rankings, and host live sessions.
       </p>
       <p>
-        <strong>We listen to users.</strong> Live voting, meme maker, community feed — features built from your requests.
+        <strong>We listen to users.</strong> Live voting, meme maker, community feed, features built from your requests.
       </p>
 
       <h2>Our Values</h2>
       <ul>
         <li>
-          <strong>Transparency</strong> — plain-English policies (
+          <strong>Transparency</strong>: plain-English policies (
           <Link href="/privacy">Privacy</Link>, <Link href="/terms">Terms</Link>)
         </li>
         <li>
-          <strong>Fairness</strong> — no premium tiers, free means free
+          <strong>Fairness</strong>: no premium tiers, free means free
         </li>
         <li>
-          <strong>Quality</strong> — we test before we ship and fix bugs quickly
+          <strong>Quality</strong>: we test before we ship and fix bugs quickly
         </li>
         <li>
-          <strong>Community</strong> — your tier lists inspire other creators
+          <strong>Community</strong>: your tier lists inspire other creators
         </li>
       </ul>
 
       <h2>Our Templates</h2>
       <p>
-        Templates across gaming, anime, sports, fast food, Pokémon, music, Marvel, and cars — Smash Ultimate, League of
+        Templates across gaming, anime, sports, fast food, Pokémon, music, Marvel, and cars, Smash Ultimate, League of
         Legends, Genshin Impact, World Cup jerseys, and more.{" "}
         <Link href="/app/templates">Browse all templates →</Link>
       </p>
 
       <h2>Our Future</h2>
       <p>
-        More templates, better collaboration, advanced analytics, API access, and native mobile apps — all while keeping
+        More templates, better collaboration, advanced analytics, API access, and native mobile apps, all while keeping
         tier list creation fast, free, and fun.
       </p>
 

@@ -61,7 +61,7 @@ export default function Choice() {
           </table>
         </div>
         <p className="comparison_note_below">
-          Saving, voting, and hosting live sessions require a free account — takes 30 seconds, no card needed.
+          Saving, voting, and hosting live sessions require a free account, takes 30 seconds, no card needed.
         </p>
         <div className="choice_cta_wrap">
           <Link href="/register" className="choice_cta_btn">

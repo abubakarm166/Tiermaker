@@ -408,10 +408,10 @@ export default function LiveEventPage() {
                 <h3 className="text-xl font-semibold text-center mb-1">{displayVoteItem.name}</h3>
                 <p className="text-center text-xs text-muted mb-4">
                   {alreadyVotedOnSelection
-                    ? "You already voted on this item — choose another thumbnail."
+                    ? "You already voted on this item, choose another thumbnail."
                     : selectedItemId != null
-                      ? "Voting on your selection — pick a tier or skip."
-                      : `Suggested next: step ${queue.progress_index + 1} of ${queue.progress_total} — or tap any item below.`}
+                      ? "Voting on your selection, pick a tier or skip."
+                      : `Suggested next: step ${queue.progress_index + 1} of ${queue.progress_total}, or tap any item below.`}
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 mb-3">
                   {detail.tier_rows

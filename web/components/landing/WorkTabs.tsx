@@ -177,7 +177,7 @@ export default function WorkTabs() {
   return (
     <>
       {error && lists !== null && cards.length > 0 && (
-        <p className="text-center text-xs text-amber-200/90 mb-3">Could not refresh — showing last lists.</p>
+        <p className="text-center text-xs text-amber-200/90 mb-3">Could not refresh, showing last lists.</p>
       )}
       <div className="worktabs_nav_wrap">
         <ul className="nav nav-pills" role="tablist">

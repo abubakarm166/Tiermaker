@@ -67,11 +67,11 @@ export default function HowToMakeTierListPage() {
       <p>
         <strong>S Tier: The Best of the Best.</strong> S tier is reserved for the truly exceptional. If something makes
         S tier, it means there&apos;s almost nothing better in its category. Don&apos;t inflate this tier by putting too
-        many things in it — if everything is S tier, nothing is. A strong S tier has two to four items at most.
+        many things in it, if everything is S tier, nothing is. A strong S tier has two to four items at most.
       </p>
       <p>
         <strong>A Tier:</strong> An excellent A tier is for things that are genuinely great but fall just short of S.
-        Most top-quality items land here. Calling something A tier is still a strong compliment — it means it&apos;s
+        Most top-quality items land here. Calling something A tier is still a strong compliment, it means it&apos;s
         among the best, just not untouchable.
       </p>
       <p>
@@ -81,14 +81,14 @@ export default function HowToMakeTierListPage() {
       </p>
       <p>
         <strong>C Tier: Average</strong> C-tier items are fine. They work. But there are better options available, and
-        most people would go for something higher if given the choice. Not an insult — just honest.
+        most people would go for something higher if given the choice. Not an insult, just honest.
       </p>
       <p>
         <strong>D Tier: Below Average.</strong> Something in D tier has real problems. It might still have a use case in
         specific situations, but broadly speaking, it underperforms. Most people would skip it.
       </p>
       <p>
-        <strong>F Tier: The Worst</strong> F tier is reserved for things that genuinely fail — broken, disappointing, or
+        <strong>F Tier: The Worst</strong> F tier is reserved for things that genuinely fail, broken, disappointing, or
         just not worth anyone&apos;s time. Use it sparingly. If everything ends up in F tier, your list loses credibility
         fast.
       </p>
@@ -118,12 +118,12 @@ export default function HowToMakeTierListPage() {
         <li>
           <strong>Is there genuine debate here?</strong> The best tier lists spark disagreement. If everyone agrees on
           the ranking, there&apos;s no conversation to start. Pick topics where reasonable people have different
-          opinions — those lists get shared, argued over, and referenced long after you post them.
+          opinions, those lists get shared, argued over, and referenced long after you post them.
         </li>
         <li>
           <strong>Is the scope manageable?</strong> A list of 10 to 30 items is the sweet spot. Fewer than 10 items,
           and there&apos;s not much to rank. More than 50, and the list becomes overwhelming to read and build. If your
-          topic has hundreds of items, break it into a series — &quot;Best Pokémon by Generation,&quot; instead of
+          topic has hundreds of items, break it into a series, &quot;Best Pokémon by Generation,&quot; instead of
           &quot;Every Pokémon Ever.&quot;
         </li>
       </ol>
@@ -203,7 +203,7 @@ export default function HowToMakeTierListPage() {
       <h4>Step 3: Build Your Tier List on TheTierMaker</h4>
       <p>
         Now the practical part. Here&apos;s how to actually build your tier list using TheTierMaker, the fastest free
-        tier list maker online — no account needed to start.
+        tier list maker online, no account needed to start.
       </p>
 
       <h5>Step 3a: Open the Tier List Maker</h5>
@@ -284,7 +284,7 @@ export default function HowToMakeTierListPage() {
       <h5>Step 3e: Save and Share</h5>
       <p>
         Create a free account to save your tier list permanently. Once saved, you get a shareable link that goes
-        anywhere — Twitter, Discord, Reddit, TikTok, YouTube community posts, wherever your audience is.
+        anywhere, Twitter, Discord, Reddit, TikTok, YouTube community posts, wherever your audience is.
       </p>
       <p>
         If you want to see what the community thinks, post it with a strong opinion in the caption. &quot;This is the
@@ -327,7 +327,7 @@ export default function HowToMakeTierListPage() {
       <h2>Tier List Ideas</h2>
       <h3>Tier List Ideas Across Every Category</h3>
       <p>
-        Stuck on what to rank? Here are some of the most popular tier list topics right now — pick one, build it, and
+        Stuck on what to rank? Here are some of the most popular tier list topics right now, pick one, build it, and
         share it.
       </p>
       <p>
@@ -379,7 +379,7 @@ export default function HowToMakeTierListPage() {
       <p>
         <strong>Time it to a current moment.</strong> A tier list posted right after a major game patch, a new season
         drop, a tournament, or a viral moment gets far more traction than one posted randomly. Tier lists are reactive
-        content — they perform best when they respond to something people are already talking about.
+        content, they perform best when they respond to something people are already talking about.
       </p>
       <p>
         <strong>Make it slightly controversial.</strong> A tier list where everyone agrees on every ranking is boring.

@@ -6,16 +6,16 @@ const FAQ_ITEMS = [
   {
     question: "Do I need an account to use TheTierMaker?",
     answer:
-      "No — you can start building a tier list right away without an account. You only need a free account to save your list, vote on community rankings, or host a live session.",
+      "No, you can start building a tier list right away without an account. You only need a free account to save your list, vote on community rankings, or host a live session.",
   },
   {
     question: "Is it really free?",
-    answer: "Yes — 100% free forever. No credit card, no hidden tiers, no paywalls.",
+    answer: "Yes, 100% free forever. No credit card, no hidden tiers, no paywalls.",
   },
   {
     question: "What is the Meme Maker?",
     answer:
-      "It's a built-in tool that lets you create and remix memes — upload an image, add your caption, and share it anywhere. Browse community memes or make your own from scratch.",
+      "It's a built-in tool that lets you create and remix memes, upload an image, add your caption, and share it anywhere. Browse community memes or make your own from scratch.",
   },
   {
     question: "How does the Live feature work?",

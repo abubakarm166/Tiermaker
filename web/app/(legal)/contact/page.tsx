@@ -196,9 +196,9 @@ export default function ContactPage() {
 
       <h2>Response Promise</h2>
       <ul>
-        <li>You will get a human response — no automated replies or chatbots.</li>
-        <li>You will get a useful response — we explain what we are doing if we cannot solve immediately.</li>
-        <li>You will get a timely response — we hit our response time targets 95% of the time.</li>
+        <li>You will get a human response, no automated replies or chatbots.</li>
+        <li>You will get a useful response, we explain what we are doing if we cannot solve immediately.</li>
+        <li>You will get a timely response, we hit our response time targets 95% of the time.</li>
       </ul>
 
       <h2>Before You Contact Us</h2>

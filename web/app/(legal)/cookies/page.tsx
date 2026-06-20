@@ -24,22 +24,22 @@ export default function CookiesPage() {
       <h2>Why We Use Cookies</h2>
       <ul>
         <li>
-          <strong>Authentication</strong> — keep you logged in without re-entering your password on every page
+          <strong>Authentication</strong>: keep you logged in without re-entering your password on every page
         </li>
         <li>
-          <strong>Saving your work</strong> — restore tier list drafts if your browser crashes
+          <strong>Saving your work</strong>: restore tier list drafts if your browser crashes
         </li>
         <li>
-          <strong>Preferences</strong> — remember view settings and editor choices
+          <strong>Preferences</strong>: remember view settings and editor choices
         </li>
         <li>
-          <strong>Security</strong> — detect fraud and vote manipulation
+          <strong>Security</strong>: detect fraud and vote manipulation
         </li>
         <li>
-          <strong>Analytics</strong> — understand how people use TheTierMaker (Google Analytics)
+          <strong>Analytics</strong>: understand how people use TheTierMaker (Google Analytics)
         </li>
         <li>
-          <strong>Advertising</strong> — show relevant ads via Google AdSense
+          <strong>Advertising</strong>: show relevant ads via Google AdSense
         </li>
       </ul>
       <p>
