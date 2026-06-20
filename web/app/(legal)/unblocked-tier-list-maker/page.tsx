@@ -139,21 +139,7 @@ export default function UnblockedTierListPage() {
         Incorrect: http://thetiermaker.com
       </p>
 
-      <h3>Method 2: Use Alternative Subdomains</h3>
-      <p>Some networks block the main domain but not subdomains. Try these URLs:</p>
-      <ul>
-        <li>
-          <a href="https://app.thetiermaker.com">https://app.thetiermaker.com</a>
-        </li>
-        <li>
-          <a href="https://create.thetiermaker.com">https://create.thetiermaker.com</a>
-        </li>
-        <li>
-          <a href="https://new.thetiermaker.com">https://new.thetiermaker.com</a>
-        </li>
-      </ul>
-
-      <h3>Method 3: URL Shortener</h3>
+      <h3>Method 2: URL Shortener</h3>
       <p>
         Paste the full URL into TinyURL or Bitly. The shortened link may not be in the network&apos;s block database.
         This technique works for many users seeking an unblocked tier list maker.
@@ -162,20 +148,20 @@ export default function UnblockedTierListPage() {
         <strong>Limitation:</strong> Many schools block all URL shorteners. Success rate is approximately 50 percent.
       </p>
 
-      <h3>Method 4: Google Translate Proxy</h3>
+      <h3>Method 3: Google Translate Proxy</h3>
       <p>
         Navigate to translate.google.com. Set both source and target languages to English. Paste the tier list maker
         unblocked URL into the translation field. Google fetches the page through its servers. Network filters typically
         do not block Google Translate.
       </p>
 
-      <h3>Method 5: Alternative Browsers</h3>
+      <h3>Method 4: Alternative Browsers</h3>
       <p>
         Some schools block tier list makers only in Google Chrome but not in Firefox, Edge, or Brave. Test different
         browsers when looking for a tier-maker unblocked solution.
       </p>
 
-      <h3>Method 6: Cellular Hotspot</h3>
+      <h3>Method 5: Cellular Hotspot</h3>
       <p>
         Disable school Wi-Fi. Use personal cellular data. Schools cannot block cellular connections. This is the most
         reliable unblocked tier list maker method.
@@ -184,7 +170,7 @@ export default function UnblockedTierListPage() {
         <strong>Limitation:</strong> Consumes mobile data allowance.
       </p>
 
-      <h3>Method 7: VPN (Use With Caution)</h3>
+      <h3>Method 6: VPN (Use With Caution)</h3>
       <p>VPNs encrypt all traffic and bypass most network filters.</p>
       <p>
         <strong>Warning:</strong> Many schools prohibit VPN use. Violations may result in disciplinary action. Free
