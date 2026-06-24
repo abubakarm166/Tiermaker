@@ -84,7 +84,7 @@ export default function AboutPage() {
       <p>
         Templates across gaming, anime, sports, fast food, Pokémon, music, Marvel, and cars, Smash Ultimate, League of
         Legends, Genshin Impact, World Cup jerseys, and more.{" "}
-        <Link href="/app/templates">Browse all templates →</Link>
+        <Link href="/templates">Browse all templates →</Link>
       </p>
 
       <h2>Our Future</h2>

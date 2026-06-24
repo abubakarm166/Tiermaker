@@ -31,13 +31,13 @@ const getContrastTextColor = (hex: string) => {
 };
 
 interface TemplateFormProps {
-  id?: string;
+  slug?: string;
   presetCategoryId?: string;
 }
 
-export default function TemplateForm({ id, presetCategoryId = "" }: TemplateFormProps) {
+export default function TemplateForm({ slug, presetCategoryId = "" }: TemplateFormProps) {
   const router = useRouter();
-  const isEdit = Boolean(id);
+  const isEdit = Boolean(slug);
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -67,14 +67,16 @@ export default function TemplateForm({ id, presetCategoryId = "" }: TemplateForm
 
   useEffect(() => {
     if (!presetCategoryId || !categories.length) return;
-    const found = categories.some((c) => String(c.id) === presetCategoryId);
-    if (found) setCategoryId(presetCategoryId);
+    const found = categories.find(
+      (c) => String(c.id) === presetCategoryId || c.slug === presetCategoryId
+    );
+    if (found) setCategoryId(String(found.id));
   }, [presetCategoryId, categories]);
 
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
     let cancelled = false;
-    fetchTemplate(id)
+    fetchTemplate(slug)
       .then((t) => {
         if (cancelled) return;
         setTitle(t.title);
@@ -95,7 +97,7 @@ export default function TemplateForm({ id, presetCategoryId = "" }: TemplateForm
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [slug]);
 
   const addItem = () =>
     setItems((prev) => [{ name: "", image: null, order: 0 }, ...prev]);
@@ -162,12 +164,12 @@ export default function TemplateForm({ id, presetCategoryId = "" }: TemplateForm
       })),
     };
     try {
-      if (isEdit && id) {
-        const updated = await updateTemplate(id, payload);
-        router.push(`/app/templates/${updated.id}`);
+      if (isEdit && slug) {
+        const updated = await updateTemplate(slug, payload);
+        router.push(`/templates/${updated.slug}`);
       } else {
         const created = await createTemplate(payload);
-        router.push(`/app/templates/${created.id}`);
+        router.push(`/templates/${created.slug}`);
       }
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Save failed");

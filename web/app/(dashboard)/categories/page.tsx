@@ -42,7 +42,7 @@ export default function CategoriesPage() {
           </p>
         </div>
         {isAdmin && (
-          <Link href="/app/categories/new" className="btn-primary shrink-0">
+          <Link href="/categories/new" className="btn-primary shrink-0">
             New category
           </Link>
         )}
@@ -55,7 +55,7 @@ export default function CategoriesPage() {
           {isAdmin && (
             <>
               {" "}
-              <Link href="/app/categories/new" className="link-primary hover:underline">
+              <Link href="/categories/new" className="link-primary hover:underline">
                 Create one
               </Link>
             </>
@@ -66,7 +66,7 @@ export default function CategoriesPage() {
           {categories.map((c) => (
             <li key={c.id}>
               <Link
-                href={`/app/categories/${c.id}`}
+                href={`/categories/${c.slug}`}
                 className="block rounded-xl overflow-hidden border border-app bg-surface-elevated hover:border-[#333] p-4"
               >
                 {c.image ? (

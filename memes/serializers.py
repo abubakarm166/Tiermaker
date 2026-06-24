@@ -11,6 +11,7 @@ class MemeListSerializer(serializers.ModelSerializer):
         model = Meme
         fields = (
             "id",
+            "slug",
             "title",
             "preview",
             "author_email",
@@ -31,6 +32,7 @@ class MemeDetailSerializer(serializers.ModelSerializer):
         model = Meme
         fields = (
             "id",
+            "slug",
             "title",
             "snapshot",
             "preview",

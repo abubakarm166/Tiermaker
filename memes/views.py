@@ -3,6 +3,7 @@ import os
 from typing import Any
 
 from django.core.files.base import ContentFile
+from core.lookups import SlugOrPkLookupMixin
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
@@ -15,7 +16,7 @@ from .models import Meme
 from .serializers import MemeCreateSerializer, MemeDetailSerializer, MemeListSerializer
 
 
-class MemeViewSet(viewsets.ModelViewSet):
+class MemeViewSet(SlugOrPkLookupMixin, viewsets.ModelViewSet):
     """
     Public gallery + authenticated creation.
 

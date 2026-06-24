@@ -19,7 +19,7 @@ export default function Hero() {
             Drag, drop, and rank anything you love, anime, gaming, sports, Pokémon, fast food, Marvel, music, and more.
             No downloads. No credit card. Just start ranking.
           </p>
-          <Link href="/app/templates">
+          <Link href="/templates">
             <button type="button">Start Ranking Free →</button>
           </Link>
           <p className="hero_login_link">

@@ -34,16 +34,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const listsMenuRef = useRef<HTMLDivElement | null>(null);
   const memesMenuRef = useRef<HTMLDivElement | null>(null);
 
-  const isTemplates = pathname === "/app" || pathname.startsWith("/app/templates");
-  const isCategories = pathname.startsWith("/app/categories");
-  const isFeed = pathname.startsWith("/app/lists/feed");
+  const isTemplates = pathname === "/templates" || pathname.startsWith("/templates");
+  const isCategories = pathname.startsWith("/categories");
+  const isFeed = pathname.startsWith("/lists/feed");
   const isNewList =
-    pathname === "/app/lists/new" || /^\/app\/lists\/[^/]+\/edit/.test(pathname);
+    pathname === "/lists/new" || /^\/lists\/[^/]+\/edit/.test(pathname);
   const isMyLists =
-    pathname === "/app/lists" ||
-    (pathname.startsWith("/app/lists/") && !isFeed && !isNewList);
-  const isMemeEditor = pathname.startsWith("/app/meme-editor");
-  const isMemes = pathname === "/app/memes" || pathname.startsWith("/app/memes/");
+    pathname === "/lists" ||
+    (pathname.startsWith("/lists/") && !isFeed && !isNewList);
+  const isMemeEditor = pathname.startsWith("/meme-editor");
+  const isMemes = pathname === "/memes" || pathname.startsWith("/memes/");
   const isLive = pathname.startsWith("/live");
 
   const listsSectionActive = isCategories || isFeed || isMyLists || isNewList;
@@ -95,7 +95,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Desktop nav — primary links + grouped dropdowns */}
           <nav className="hidden md:flex items-center gap-1 flex-nowrap justify-end min-w-0">
-            <Link href="/app" className={navLinkClass(isTemplates)}>
+            <Link href="/templates" className={navLinkClass(isTemplates)}>
               Templates
             </Link>
 
@@ -121,7 +121,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {listsMenuOpen && (
                 <div role="menu" className={dropdownPanelClass}>
                   <Link
-                    href="/app/categories"
+                    href="/categories"
                     className={dropdownItemClass(isCategories)}
                     role="menuitem"
                     onClick={() => setListsMenuOpen(false)}
@@ -129,7 +129,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     Categories
                   </Link>
                   <Link
-                    href="/app/lists/feed"
+                    href="/lists/feed"
                     className={dropdownItemClass(isFeed)}
                     role="menuitem"
                     onClick={() => setListsMenuOpen(false)}
@@ -137,7 +137,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     New tier lists
                   </Link>
                   <Link
-                    href="/app/lists"
+                    href="/lists"
                     className={dropdownItemClass(isMyLists)}
                     role="menuitem"
                     onClick={() => setListsMenuOpen(false)}
@@ -145,7 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     My lists
                   </Link>
                   <Link
-                    href="/app/lists/new"
+                    href="/lists/new"
                     className={dropdownItemClass(isNewList)}
                     role="menuitem"
                     onClick={() => setListsMenuOpen(false)}
@@ -178,7 +178,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {memesMenuOpen && (
                 <div role="menu" className={dropdownPanelClass}>
                   <Link
-                    href="/app/memes"
+                    href="/memes"
                     className={dropdownItemClass(isMemes)}
                     role="menuitem"
                     onClick={() => setMemesMenuOpen(false)}
@@ -186,7 +186,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     Browse memes
                   </Link>
                   <Link
-                    href="/app/meme-editor"
+                    href="/meme-editor"
                     className={dropdownItemClass(isMemeEditor)}
                     role="menuitem"
                     onClick={() => setMemesMenuOpen(false)}
@@ -250,34 +250,34 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {open && (
           <div className="mx-auto mt-2 w-full max-w-6xl rounded-2xl border border-[#383838] bg-[#161616] px-4 py-4 md:hidden shadow-[0_12px_40px_rgba(0,0,0,0.75)] ring-1 ring-white/[0.06]">
             <div className="flex flex-col gap-1">
-              <Link href="/app" className={navLinkClass(isTemplates)} onClick={() => setOpen(false)}>
+              <Link href="/templates" className={navLinkClass(isTemplates)} onClick={() => setOpen(false)}>
                 Templates
               </Link>
 
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#666] px-3 pt-3 pb-1">Tier lists</p>
               <Link
-                href="/app/categories"
+                href="/categories"
                 className={navLinkClass(isCategories)}
                 onClick={() => setOpen(false)}
               >
                 Categories
               </Link>
-              <Link href="/app/lists/feed" className={navLinkClass(isFeed)} onClick={() => setOpen(false)}>
+              <Link href="/lists/feed" className={navLinkClass(isFeed)} onClick={() => setOpen(false)}>
                 New tier lists
               </Link>
-              <Link href="/app/lists" className={navLinkClass(isMyLists)} onClick={() => setOpen(false)}>
+              <Link href="/lists" className={navLinkClass(isMyLists)} onClick={() => setOpen(false)}>
                 My lists
               </Link>
-              <Link href="/app/lists/new" className={navLinkClass(isNewList)} onClick={() => setOpen(false)}>
+              <Link href="/lists/new" className={navLinkClass(isNewList)} onClick={() => setOpen(false)}>
                 Create list
               </Link>
 
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#666] px-3 pt-3 pb-1">Memes</p>
-              <Link href="/app/memes" className={navLinkClass(isMemes)} onClick={() => setOpen(false)}>
+              <Link href="/memes" className={navLinkClass(isMemes)} onClick={() => setOpen(false)}>
                 Browse memes
               </Link>
               <Link
-                href="/app/meme-editor"
+                href="/meme-editor"
                 className={navLinkClass(isMemeEditor)}
                 onClick={() => setOpen(false)}
               >

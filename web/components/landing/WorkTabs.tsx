@@ -79,7 +79,7 @@ function RecentCard({ list, rank }: { list: TierList; rank: number }) {
   const avatars = tierChipsFromList(list);
   const items = totalPlacedItems(list);
   const author = authorLabel();
-  const href = `/app/lists/${list.id}`;
+  const href = `/lists/${list.slug}`;
 
   return (
     <Link href={href} className="recent_work_card_body recentwork_card_link">

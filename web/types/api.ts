@@ -3,6 +3,7 @@ export type UserRole = "USER" | "ADMIN";
 export interface Category {
   id: number;
   name: string;
+  slug: string;
   image: string | null;
   /** Number of tier list templates in this category (from API). */
   template_count?: number;
@@ -38,10 +39,12 @@ export interface TemplateItem {
 
 export interface Template {
   id: number;
+  slug: string;
   title: string;
   description: string;
   category: number | null;
   category_name: string | null;
+  category_slug?: string | null;
   tags: string[];
   visibility: Visibility;
   created_by: number;
@@ -58,6 +61,7 @@ export type ReactionType = "like" | "love" | "laugh" | "wow" | "sad";
 
 export interface TierList {
   id: number;
+  slug: string;
   template: number;
   template_detail?: Template;
   user: number;
@@ -92,6 +96,7 @@ export interface RegisterResponse {
 
 export interface Meme {
   id: number;
+  slug: string;
   title: string;
   snapshot?: unknown;
   preview: string | null;
@@ -118,6 +123,7 @@ export interface LiveEventDetail {
   status: "SCHEDULED" | "LIVE" | "PAUSED" | "ENDED";
   template_title: string;
   template_id: number;
+  template_slug?: string;
   host_email: string | null;
   tier_rows: LiveTierRow[];
   summary: {

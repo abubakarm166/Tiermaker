@@ -468,7 +468,7 @@ export default function LiveEventPage() {
         </div>
 
         <div className="mt-12 border-t border-[#222] pt-8 text-center text-sm text-muted">
-          <Link href={`/app/templates/${detail.template_id}`} className="text-[#FF9F1C] hover:underline">
+          <Link href={`/templates/${detail.template_slug ?? detail.template_id}`} className="text-[#FF9F1C] hover:underline">
             View template
           </Link>
           {" · "}

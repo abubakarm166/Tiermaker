@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ("id", "name", "image", "template_count", "sample_templates")
+        fields = ("id", "name", "slug", "image", "template_count", "sample_templates")
 
     def get_template_count(self, obj):
         v = getattr(obj, "template_count", None)
@@ -39,7 +39,7 @@ class CategoryWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ("id", "name", "image")
+        fields = ("id", "name", "slug", "image")
 
     @staticmethod
     def _normalize_image_path(value):
@@ -86,6 +86,7 @@ class TemplateItemWriteSerializer(serializers.Serializer):
 class TemplateListSerializer(serializers.ModelSerializer):
     created_by_email = serializers.EmailField(source="created_by.email", read_only=True)
     category_name = serializers.CharField(source="category.name", read_only=True, allow_null=True)
+    category_slug = serializers.CharField(source="category.slug", read_only=True, allow_null=True)
     popularity = serializers.SerializerMethodField()
     thumbnail = serializers.SerializerMethodField()
 
@@ -93,10 +94,12 @@ class TemplateListSerializer(serializers.ModelSerializer):
         model = Template
         fields = (
             "id",
+            "slug",
             "title",
             "description",
             "category",
             "category_name",
+            "category_slug",
             "tags",
             "visibility",
             "created_by",
@@ -126,17 +129,20 @@ class TemplateDetailSerializer(serializers.ModelSerializer):
     items = TemplateItemSerializer(many=True, read_only=True)
     created_by_email = serializers.EmailField(source="created_by.email", read_only=True)
     category_name = serializers.CharField(source="category.name", read_only=True, allow_null=True)
+    category_slug = serializers.CharField(source="category.slug", read_only=True, allow_null=True)
     popularity = serializers.SerializerMethodField()
 
     class Meta:
         model = Template
         fields = (
             "id",
+            "slug",
             "title",
             "description",
             "thumbnail",
             "category",
             "category_name",
+            "category_slug",
             "tags",
             "visibility",
             "created_by",

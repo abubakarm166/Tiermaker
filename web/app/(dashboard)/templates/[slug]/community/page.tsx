@@ -9,13 +9,13 @@ import type { Template } from "@/types/api";
 
 export default function TemplateCommunityRankingPage() {
   const params = useParams();
-  const id = params.id as string;
+  const slug = params.slug as string;
   const [template, setTemplate] = useState<Template | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
-    fetchTemplate(id)
+    fetchTemplate(slug)
       .then((res) => {
         if (!cancelled) setTemplate(res);
       })
@@ -28,7 +28,7 @@ export default function TemplateCommunityRankingPage() {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return <div className="text-muted py-12 text-center">Loading…</div>;
@@ -38,7 +38,7 @@ export default function TemplateCommunityRankingPage() {
     return (
       <div className="card p-8 text-muted">
         Template not found.{" "}
-        <Link href="/app/templates" className="text-[#FF9F1C] hover:underline">
+        <Link href="/templates" className="text-[#FF9F1C] hover:underline">
           Browse templates
         </Link>
       </div>
@@ -52,7 +52,7 @@ export default function TemplateCommunityRankingPage() {
       <div className="relative flex flex-col gap-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
-            href={`/app/templates/${id}`}
+            href={`/templates/${slug}`}
             className="inline-flex items-center gap-2 rounded-xl border border-app bg-surface px-3 py-1.5 text-xs font-medium text-muted-strong hover:bg-white/5"
           >
             <span className="text-lg leading-none">←</span>
@@ -70,7 +70,7 @@ export default function TemplateCommunityRankingPage() {
           </p>
         </header>
 
-        <CommunityRankingView templateId={id} />
+        <CommunityRankingView templateSlug={slug} />
       </div>
     </div>
   );

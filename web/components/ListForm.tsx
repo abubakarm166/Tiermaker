@@ -26,11 +26,11 @@ const getContrastTextColor = (hex: string) => {
 
 export default function ListForm() {
   const params = useParams();
-  const id = params?.id as string | undefined;
+  const slug = params?.slug as string | undefined;
   const searchParams = useSearchParams();
   const presetTemplateId = searchParams?.get("template") ?? null;
   const remixFromId = searchParams?.get("remix") ?? null;
-  const isEdit = Boolean(id);
+  const isEdit = Boolean(slug);
   const { user } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -66,15 +66,17 @@ export default function ListForm() {
 
   useEffect(() => {
     if (presetTemplateId && templates.length) {
-      const found = templates.find((t) => String(t.id) === presetTemplateId);
-      if (found) setTemplateId(presetTemplateId);
+      const found = templates.find(
+        (t) => String(t.id) === presetTemplateId || t.slug === presetTemplateId
+      );
+      if (found) setTemplateId(String(found.id));
     }
   }, [presetTemplateId, templates]);
 
   useEffect(() => {
-    if (!id || templateId) return;
+    if (!slug || templateId) return;
     let cancelled = false;
-    fetchList(id)
+    fetchList(slug)
       .then((list) => {
         if (!cancelled && list.template) setTemplateId(String(list.template));
       })
@@ -82,7 +84,7 @@ export default function ListForm() {
     return () => {
       cancelled = true;
     };
-  }, [id, templateId]);
+  }, [slug, templateId]);
 
   useEffect(() => {
     if (!templateId) {
@@ -120,9 +122,9 @@ export default function ListForm() {
     };
   }, [templateId]);
 
-  /** Pre-fill from an existing public list (?remix=<listId>) after template loads. */
+  /** Pre-fill from an existing public list (?remix=<listSlug>) after template loads. */
   useEffect(() => {
-    if (!remixFromId || !/^\d+$/.test(remixFromId) || !template || isEdit) return;
+    if (!remixFromId || !template || isEdit) return;
     let cancelled = false;
     fetchList(remixFromId)
       .then((list) => {
@@ -146,9 +148,9 @@ export default function ListForm() {
   }, [remixFromId, template, isEdit]);
 
   useEffect(() => {
-    if (!id || !template) return;
+    if (!slug || !template) return;
     let cancelled = false;
-    fetchList(id)
+    fetchList(slug)
       .then((list) => {
         if (cancelled) return;
         if (list.template !== template.id) return;
@@ -158,7 +160,7 @@ export default function ListForm() {
           Number(user.id) !== Number(list.user) &&
           user.role !== "ADMIN"
         ) {
-          router.replace(`/app/lists/${id}`);
+          router.replace(`/lists/${slug}`);
           return;
         }
         setTitle(list.title);
@@ -181,7 +183,7 @@ export default function ListForm() {
     return () => {
       cancelled = true;
     };
-  }, [id, template?.id, user?.id, user?.role, router]);
+  }, [slug, template?.id, user?.id, user?.role, router]);
 
   const moveItem = (
     itemId: number,
@@ -338,12 +340,12 @@ export default function ListForm() {
         color_overrides: colorOverrides,
         custom_rows: customRows,
       };
-      if (isEdit && id) {
-        const updated = await updateList(id, payload);
-        if (updated?.id) router.push(`/app/lists/${updated.id}`);
+      if (isEdit && slug) {
+        const updated = await updateList(slug, payload);
+        if (updated?.id) router.push(`/lists/${updated.slug}`);
       } else {
         const created = await createList(payload);
-        if (created?.id) router.push(`/app/lists/${created.id}`);
+        if (created?.id) router.push(`/lists/${created.slug}`);
         else setError("Created but missing list id – try opening My Lists");
       }
     } catch (err) {

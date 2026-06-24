@@ -177,7 +177,7 @@ export function LiveHubContent() {
               Create live event
             </Link>
             <Link
-              href="/app/templates"
+              href="/templates"
               className="inline-flex items-center justify-center rounded-xl border border-[#444] px-4 py-3 text-sm text-muted-strong hover:bg-white/5"
             >
               Templates

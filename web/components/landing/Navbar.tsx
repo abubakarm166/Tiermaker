@@ -8,9 +8,9 @@ import { authStorage } from "@/lib/api";
 import { getUserDisplayName, getUserDisplayTitle } from "@/lib/userDisplay";
 
 const MAIN_NAV = [
-  { label: "Templates", href: "/app/templates" },
-  { label: "Categories", href: "/app/categories" },
-  { label: "Trending", href: "/app/templates?ordering=most_popular" },
+  { label: "Templates", href: "/templates" },
+  { label: "Categories", href: "/categories" },
+  { label: "Trending", href: "/templates?ordering=most_popular" },
   { label: "Live", href: "/live" },
 ] as const;
 
@@ -124,7 +124,7 @@ export default function Navbar() {
                     >
                       {getUserDisplayName(user)}
                     </span>
-                    <Link href="/app">
+                    <Link href="/templates">
                       <button className="navbar_btn2" type="button">
                         Dashboard
                       </button>
@@ -204,7 +204,7 @@ export default function Navbar() {
                   {user ? (
                     <>
                       <span className="text-white-50 small px-2">{getUserDisplayName(user)}</span>
-                      <Link href="/app" onClick={closeMobile}>
+                      <Link href="/templates" onClick={closeMobile}>
                         <button className="navbar_btn2 w-100" type="button">
                           Dashboard
                         </button>

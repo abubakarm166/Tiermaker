@@ -14,7 +14,7 @@ export default function RecentWork() {
         </div>
         <WorkTabs />
         <div className="btn_load_more">
-          <Link href="/app/lists/feed">
+          <Link href="/lists/feed">
             <button type="button">Browse All Lists →</button>
           </Link>
         </div>

@@ -2,10 +2,10 @@ import Link from "next/link";
 
 const footerLinks = {
   PRODUCT: [
-    { label: "Create Tier List", href: "/app/templates/new" },
-    { label: "Templates", href: "/app/templates" },
-    { label: "Trending", href: "/app/templates?ordering=most_popular" },
-    { label: "Browse Tier Lists", href: "/app/lists/feed" },
+    { label: "Create Tier List", href: "/templates/new" },
+    { label: "Templates", href: "/templates" },
+    { label: "Trending", href: "/templates?ordering=most_popular" },
+    { label: "Browse Tier Lists", href: "/lists/feed" },
     { label: "How to Make a Tier List", href: "/how-to-make-a-tier-list" },
     { label: "Unblocked Tier List Maker", href: "/unblocked-tier-list-maker" },
     { label: "Text Tier List Maker", href: "/text-tier-list-maker" },

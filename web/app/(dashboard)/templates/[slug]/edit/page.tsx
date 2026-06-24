@@ -6,11 +6,11 @@ import RequireAuth from "@/components/RequireAuth";
 
 export default function EditTemplatePage() {
   const params = useParams();
-  const id = params.id as string;
+  const slug = params.slug as string;
 
   return (
     <RequireAuth>
-      <TemplateForm id={id} />
+      <TemplateForm slug={slug} />
     </RequireAuth>
   );
 }

@@ -21,7 +21,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       await register(email, password);
-      router.replace("/app");
+      router.replace("/templates");
     } catch (err) {
       const msg =
         err instanceof ApiError &&

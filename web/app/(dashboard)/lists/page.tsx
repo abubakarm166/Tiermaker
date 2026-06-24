@@ -34,7 +34,7 @@ export default function MyListsPage() {
       <div>
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-6">
           <h1 className="font-display text-2xl font-semibold text-white">My Lists</h1>
-          <Link href="/app/lists/new" className="btn-primary">
+          <Link href="/lists/new" className="btn-primary">
             Create list
           </Link>
         </div>
@@ -43,7 +43,7 @@ export default function MyListsPage() {
         ) : lists.length === 0 ? (
           <div className="card p-12 text-center text-muted">
             No lists yet.{" "}
-            <Link href="/app/lists/new" className="link-primary hover:underline">
+            <Link href="/lists/new" className="link-primary hover:underline">
               Create one
             </Link>
           </div>
@@ -55,7 +55,7 @@ export default function MyListsPage() {
                 <li key={list.id}>
                   <div className="rounded-xl overflow-hidden border border-app bg-surface-elevated">
                     <Link
-                      href={`/app/lists/${list.id}`}
+                      href={`/lists/${list.slug}`}
                       className="block aspect-[4/3] relative bg-surface-elevated overflow-hidden"
                     >
                       {thumb ? (
@@ -78,7 +78,7 @@ export default function MyListsPage() {
                     <div className="p-2 border-t border-app bg-surface flex items-center justify-between">
                       <span className="text-muted-strong text-xs">{list.visibility}</span>
                       <Link
-                        href={`/app/lists/${list.id}/edit`}
+                        href={`/lists/${list.slug}/edit`}
                         className="text-xs text-muted hover:text-primary transition-colors"
                         onClick={(e) => e.stopPropagation()}
                       >

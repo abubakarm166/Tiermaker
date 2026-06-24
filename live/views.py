@@ -123,6 +123,7 @@ class LiveEventDetailView(APIView):
             {
                 **ser.data,
                 "template_id": event.template_id,
+                "template_slug": event.template.slug,
                 "host_email": event.host.email if event.host_id else None,
                 "tier_rows": tier_rows,
                 "summary": {

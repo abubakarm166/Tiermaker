@@ -14,14 +14,14 @@ import { useAuth } from "@/contexts/AuthContext";
 export default function TemplateDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const id = params.id as string;
+  const slug = params.slug as string;
   const [template, setTemplate] = useState<Template | null>(null);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
     let cancelled = false;
-    fetchTemplate(id)
+    fetchTemplate(slug)
       .then((res) => {
         if (!cancelled) setTemplate(res);
       })
@@ -34,7 +34,7 @@ export default function TemplateDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [slug]);
 
   if (loading) return <div className="text-muted py-12 text-center">Loading…</div>;
   if (!template)
@@ -71,16 +71,16 @@ export default function TemplateDetailPage() {
               <button
                 type="button"
                 className="btn-secondary text-sm"
-                onClick={() => router.push(`/app/templates/${id}/edit`)}
+                onClick={() => router.push(`/templates/${slug}/edit`)}
               >
                 Edit template
               </button>
             )}
-            <Link href={`/app/lists/new?template=${id}`} className="btn-primary text-sm px-5">
+            <Link href={`/lists/new?template=${template.slug}`} className="btn-primary text-sm px-5">
               Create this tier list
             </Link>
-            <LiveVotingPollLink templateId={id} />
-            <CommunityRankingPageLink templateId={id} />
+            <LiveVotingPollLink templateSlug={slug} />
+            <CommunityRankingPageLink templateSlug={slug} />
           </div>
         </div>
 
@@ -236,7 +236,7 @@ export default function TemplateDetailPage() {
           )}
         </div>
 
-        <RecentLiveEventsForTemplateSection templateId={id} variant="app" />
+        <RecentLiveEventsForTemplateSection templateId={template.id} variant="app" />
       </div>
     </div>
   );

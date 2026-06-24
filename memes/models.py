@@ -26,6 +26,7 @@ class Meme(models.Model):
     )
 
     title = models.CharField(max_length=120, blank=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True, db_index=True)
     snapshot = models.JSONField(default=dict)
     preview = models.ImageField(upload_to="memes/%Y/%m/", null=True, blank=True)
 

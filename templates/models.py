@@ -4,6 +4,7 @@ from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=220, unique=True, blank=True, db_index=True)
     image = models.ImageField(upload_to="categories/%Y/%m/", blank=True, null=True)
 
     class Meta:
@@ -20,6 +21,7 @@ class Template(models.Model):
         PRIVATE = "PRIVATE", "Private"
 
     title = models.CharField(max_length=255, db_index=True)
+    slug = models.SlugField(max_length=270, unique=True, blank=True, db_index=True)
     description = models.TextField(blank=True)
     thumbnail = models.ImageField(upload_to="templates/thumbnails/%Y/%m/", blank=True, null=True)
     category = models.ForeignKey(

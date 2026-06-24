@@ -16,7 +16,7 @@ export default function MemeEditorPage() {
             snapshot,
             preview_data_url: previewDataUrl,
           });
-          router.push(`/app/memes/${created.id}`);
+          router.push(`/memes/${created.slug}`);
         } catch (e) {
           if (e instanceof ApiError && e.status === 401) {
             router.push("/login");

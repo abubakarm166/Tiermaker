@@ -40,7 +40,7 @@ export default function TemplatesPage() {
     <div>
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-6">
         <h1 className="font-display text-2xl font-semibold text-white">Templates</h1>
-        <Link href="/app/templates/new" className="btn-primary">
+        <Link href="/templates/new" className="btn-primary">
           New template
         </Link>
       </div>
@@ -72,7 +72,7 @@ export default function TemplatesPage() {
       ) : templates.length === 0 ? (
         <div className="card p-12 text-center text-muted">
           No templates found.{" "}
-          <Link href="/app/templates/new" className="link-primary hover:underline">
+          <Link href="/templates/new" className="link-primary hover:underline">
             Create one
           </Link>
         </div>
@@ -82,7 +82,7 @@ export default function TemplatesPage() {
             {templates.map((t) => (
               <li key={t.id}>
                 <Link
-                  href={`/app/templates/${t.id}`}
+                  href={`/templates/${t.slug}`}
                   className="group block rounded-xl overflow-hidden border border-app bg-surface-elevated hover:border-[#333] hover:shadow-lg transition-all"
                 >
                   <div className="aspect-[4/3] relative bg-surface-elevated overflow-hidden">

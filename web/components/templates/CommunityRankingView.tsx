@@ -33,10 +33,10 @@ function TierGridIcon({ className }: { className?: string }) {
   );
 }
 
-export function CommunityRankingPageLink({ templateId }: { templateId: string }) {
+export function CommunityRankingPageLink({ templateSlug }: { templateSlug: string }) {
   return (
     <Link
-      href={`/app/templates/${templateId}/community`}
+      href={`/templates/${templateSlug}/community`}
       className="inline-flex items-center gap-2 rounded-xl border border-[#3d3d3d] bg-black px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#151515] hover:border-[#555]"
     >
       <TierGridIcon className="shrink-0 opacity-95" />
@@ -45,7 +45,7 @@ export function CommunityRankingPageLink({ templateId }: { templateId: string })
   );
 }
 
-export default function CommunityRankingView({ templateId }: { templateId: string }) {
+export default function CommunityRankingView({ templateSlug }: { templateSlug: string }) {
   const [lists, setLists] = useState<TierList[]>([]);
   const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,12 +60,12 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
     setHasNext(false);
     setSpotlightId(null);
     setSpotlightFull(null);
-  }, [templateId]);
+  }, [templateSlug]);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    fetchTierListsForTemplate(templateId, page)
+    fetchTierListsForTemplate(templateSlug, page)
       .then((res) => {
         if (cancelled) return;
         setHasNext(Boolean(res.next));
@@ -83,7 +83,7 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
     return () => {
       cancelled = true;
     };
-  }, [templateId, page]);
+  }, [templateSlug, page]);
 
   useEffect(() => {
     if (lists.length === 0) {
@@ -152,7 +152,7 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
           <section className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
               <Link
-                href={`/app/templates/${templateId}`}
+                href={`/templates/${templateSlug}`}
                 className="inline-flex items-center justify-center rounded-xl border border-[#3b82f6] bg-[#1e3a5f] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#2563eb]/40 transition-colors"
               >
                 Go to template
@@ -315,7 +315,7 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
 
                   <div className="mt-6">
                     <Link
-                      href={`/app/lists/${spotlightFull.id}`}
+                      href={`/lists/${spotlightFull.slug}`}
                       className="text-sm text-[#FF9F1C] hover:underline"
                     >
                       Open full list page →
@@ -404,7 +404,7 @@ export default function CommunityRankingView({ templateId }: { templateId: strin
       )}
 
       <div className="flex justify-center pt-2">
-        <Link href={`/app/lists/new?template=${templateId}`} className="btn-primary text-sm px-6">
+        <Link href={`/lists/new?template=${templateSlug}`} className="btn-primary text-sm px-6">
           Create a tier list
         </Link>
       </div>

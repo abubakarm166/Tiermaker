@@ -87,7 +87,7 @@ export default function TextTierListMakerPage() {
       </p>
       <p>
         <strong>Step 2: Start a New Tier List and Switch to Text Mode.</strong> Once logged in, open the{" "}
-        <Link href="/app/templates/new">tier list maker</Link> and select the text input option. Instead of uploading
+        <Link href="/templates/new">tier list maker</Link> and select the text input option. Instead of uploading
         images or choosing an image template, you will type your items directly into the tool.
       </p>
       <p>
@@ -375,7 +375,7 @@ export default function TextTierListMakerPage() {
         Already have an account? <Link href="/login">Log In →</Link>
       </p>
       <p>
-        Or jump straight to an image-based template: <Link href="/app/templates">Browse All Templates →</Link>
+        Or jump straight to an image-based template: <Link href="/templates">Browse All Templates →</Link>
       </p>
     </LegalArticle>
   );

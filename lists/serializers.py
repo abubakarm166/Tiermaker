@@ -14,6 +14,7 @@ class TierListSerializer(serializers.ModelSerializer):
         model = TierList
         fields = (
             "id",
+            "slug",
             "template",
             "template_detail",
             "user",
@@ -81,8 +82,8 @@ class TierListDetailSerializer(TierListSerializer):
 class TierListWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = TierList
-        fields = ("id", "template", "title", "visibility", "tier_assignments", "row_order", "label_overrides", "color_overrides", "custom_rows")
-        read_only_fields = ("id",)
+        fields = ("id", "slug", "template", "title", "visibility", "tier_assignments", "row_order", "label_overrides", "color_overrides", "custom_rows")
+        read_only_fields = ("id", "slug")
 
     def validate_row_order(self, value):
         if not isinstance(value, list):

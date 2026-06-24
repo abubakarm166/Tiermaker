@@ -36,7 +36,7 @@ const getContrastTextColor = (hex: string) => {
 
 export default function ListDetailPage() {
   const params = useParams();
-  const id = params?.id as string;
+  const slug = params?.slug as string;
   const router = useRouter();
   const [list, setList] = useState<TierList | null>(null);
   const [related, setRelated] = useState<TierList[]>([]);
@@ -49,12 +49,12 @@ export default function ListDetailPage() {
   useAuth();
 
   useEffect(() => {
-    if (!id || id === "undefined") {
-      router.replace("/app/lists");
+    if (!slug || slug === "undefined") {
+      router.replace("/lists");
       return;
     }
     let cancelled = false;
-    fetchList(id)
+    fetchList(slug)
       .then((l) => {
         if (!cancelled) setList(l);
       })
@@ -67,13 +67,13 @@ export default function ListDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [id, router]);
+  }, [slug, router]);
 
   useEffect(() => {
-    if (!id || id === "undefined") return;
+    if (!slug || slug === "undefined") return;
     let cancelled = false;
     setRelatedLoading(true);
-    fetchRelatedLists(id, 9)
+    fetchRelatedLists(slug, 9)
       .then((res) => {
         if (!cancelled) setRelated(res);
       })
@@ -86,16 +86,16 @@ export default function ListDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [slug]);
 
   const canEdit = Boolean(list?.can_edit);
 
   const handleDelete = async () => {
-    if (!id || !list || !window.confirm("Delete this tier list?")) return;
+    if (!slug || !list || !window.confirm("Delete this tier list?")) return;
     setDeleting(true);
     try {
-      await deleteList(id);
-      router.push("/app/lists");
+      await deleteList(slug);
+      router.push("/lists");
     } catch (e) {
       setError(e instanceof ApiError ? e.message : "Delete failed");
     } finally {
@@ -104,10 +104,10 @@ export default function ListDetailPage() {
   };
 
   const handleReact = async (reactionType: ReactionType | null) => {
-    if (!id || !list) return;
+    if (!slug || !list) return;
     setReacting(true);
     try {
-      const updated = await reactToList(id, reactionType);
+      const updated = await reactToList(slug, reactionType);
       setList((prev) =>
         prev
           ? {
@@ -123,14 +123,14 @@ export default function ListDetailPage() {
   };
 
   const handleExport = async () => {
-    if (!id) return;
+    if (!slug) return;
     setExporting(true);
     try {
-      const blob = await exportListPng(id);
+      const blob = await exportListPng(slug);
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `tierlist-${id}.png`;
+      a.download = `tierlist-${slug}.png`;
       a.click();
       URL.revokeObjectURL(url);
     } catch {
@@ -149,7 +149,7 @@ export default function ListDetailPage() {
       <div className="card p-6 text-primary">
         {error || "List not found"}
         <Link
-          href="/app/lists"
+          href="/lists"
           className="block mt-2 text-primary hover:underline"
         >
           Back to my lists
@@ -204,7 +204,7 @@ export default function ListDetailPage() {
           </h1>
           {template && (
             <Link
-              href={`/app/templates/${template.id}`}
+              href={`/templates/${template.slug}`}
               className="text-muted hover:text-white text-sm mt-1 inline-block"
             >
               Template: {template.title}
@@ -245,7 +245,7 @@ export default function ListDetailPage() {
           {canEdit ? (
             <>
               <Link
-                href={`/app/lists/${id}/edit`}
+                href={`/lists/${slug}/edit`}
                 className="btn-secondary"
               >
                 Edit
@@ -261,7 +261,7 @@ export default function ListDetailPage() {
             </>
           ) : template ? (
             <Link
-              href={`/app/lists/new?template=${template.id}`}
+              href={`/lists/new?template=${template.slug}`}
               className="btn-secondary"
             >
               Create this tier list
@@ -316,7 +316,7 @@ export default function ListDetailPage() {
       {!canEdit && template && (
         <div className="mt-8 text-center">
           <Link
-            href={`/app/lists/new?template=${template.id}`}
+            href={`/lists/new?template=${template.slug}`}
             className="btn-primary inline-flex px-6 py-3"
           >
             Create this tier list
@@ -348,7 +348,7 @@ export default function ListDetailPage() {
                 <li key={rl.id}>
                   <div className="rounded-xl overflow-hidden border border-app bg-surface-elevated">
                     <Link
-                      href={`/app/lists/${rl.id}`}
+                      href={`/lists/${rl.slug}`}
                       className="block aspect-[4/3] relative bg-surface-elevated overflow-hidden"
                     >
                       {thumb ? (

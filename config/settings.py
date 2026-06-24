@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "uploads",
     "memes",
     "live",
-    "core",
+    "core.apps.CoreConfig",
 ]
 
 MIDDLEWARE = [

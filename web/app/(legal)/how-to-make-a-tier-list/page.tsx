@@ -32,7 +32,7 @@ export default function HowToMakeTierListPage() {
         first-ever tier list or you&apos;ve made hundreds, there&apos;s something here worth knowing.
       </p>
       <p>
-        <Link href="/app/templates" className="legal-cta-link">
+        <Link href="/templates" className="legal-cta-link">
           Start Your Tier List Free →
         </Link>
       </p>

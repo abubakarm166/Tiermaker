@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 /** Only allow same-origin relative paths (prevents open redirects). */
-export function safeReturnPath(next: string | null, fallback = "/app"): string {
+export function safeReturnPath(next: string | null, fallback = "/templates"): string {
   if (!next || !next.startsWith("/")) return fallback;
   if (next.startsWith("//") || next.includes("://")) return fallback;
   return next;
@@ -19,7 +19,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (loading) return;
     if (!user) {
-      const q = new URLSearchParams({ next: pathname || "/app" });
+      const q = new URLSearchParams({ next: pathname || "/templates" });
       router.replace(`/login?${q.toString()}`);
     }
   }, [user, loading, router, pathname]);

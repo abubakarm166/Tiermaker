@@ -5,6 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from core.lookups import SlugOrPkLookupMixin
 from core.permissions import IsNotBannedUser
 from .models import Category, Template
 from .serializers import (
@@ -18,7 +19,7 @@ from .permissions import IsOwnerOrAdminTemplate, IsAdminOrReadOnly
 from .filters import TemplateFilter
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(SlugOrPkLookupMixin, viewsets.ModelViewSet):
     """List and retrieve categories; create/update/delete for admin only."""
 
     serializer_class = CategorySerializer
@@ -63,7 +64,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return CategorySerializer
 
 
-class TemplateViewSet(viewsets.ModelViewSet):
+class TemplateViewSet(SlugOrPkLookupMixin, viewsets.ModelViewSet):
     serializer_class = TemplateDetailSerializer
     permission_classes = [IsOwnerOrAdminTemplate]
     filterset_class = TemplateFilter

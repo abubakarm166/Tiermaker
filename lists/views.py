@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.core.files.base import ContentFile
 from django.utils import timezone
 
+from core.lookups import SlugOrPkLookupMixin
 from core.permissions import IsNotBannedUser
 from .models import TierList, TierListReaction
 from .serializers import TierListSerializer, TierListDetailSerializer, TierListWriteSerializer
@@ -15,7 +16,7 @@ from .permissions import IsOwnerOrAdminList
 from .export_service import export_tier_list_to_png
 
 
-class TierListViewSet(viewsets.ModelViewSet):
+class TierListViewSet(SlugOrPkLookupMixin, viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrAdminList]
 
     def get_permissions(self):

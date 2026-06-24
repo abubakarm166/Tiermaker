@@ -33,7 +33,7 @@ export default function MemesGalleryPage() {
               Browse community memes. Open any meme to edit and remix.
             </p>
           </div>
-          <Link href="/app/meme-editor" className="btn-primary">
+          <Link href="/meme-editor" className="btn-primary">
             Create new
           </Link>
         </div>
@@ -53,7 +53,7 @@ export default function MemesGalleryPage() {
             {data.results.map((m) => (
               <Link
                 key={m.id}
-                href={`/app/memes/${m.id}`}
+                href={`/memes/${m.slug}`}
                 className="group rounded-2xl overflow-hidden border border-[#202020] bg-[#101010] hover:border-[#333] transition-colors"
               >
                 <div className="aspect-[16/10] bg-black">

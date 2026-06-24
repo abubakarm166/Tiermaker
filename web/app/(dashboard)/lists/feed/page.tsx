@@ -82,7 +82,7 @@ export default function FeedPage() {
                 <li key={list.id}>
                   <div className="rounded-xl overflow-hidden border border-app bg-surface-elevated">
                     <Link
-                      href={`/app/lists/${list.id}`}
+                      href={`/lists/${list.slug}`}
                       className="block aspect-[4/3] relative bg-surface-elevated overflow-hidden"
                     >
                       {thumb ? (

@@ -7,17 +7,17 @@ import { ApiError, fetchMeme, remixMeme } from "@/lib/api";
 import type { Meme } from "@/types/api";
 
 export default function MemeEditPage() {
-  const params = useParams<{ id: string }>();
+  const params = useParams<{ slug: string }>();
   const router = useRouter();
-  const id = params?.id;
+  const slug = params?.slug;
 
   const [meme, setMeme] = useState<Meme | null>(null);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
     let alive = true;
-    fetchMeme(String(id))
+    fetchMeme(String(slug))
       .then((m) => {
         if (alive) setMeme(m);
       })
@@ -27,7 +27,7 @@ export default function MemeEditPage() {
     return () => {
       alive = false;
     };
-  }, [id]);
+  }, [slug]);
 
   if (error) {
     return (
@@ -58,7 +58,7 @@ export default function MemeEditPage() {
             snapshot,
             preview_data_url: previewDataUrl,
           });
-          router.push(`/app/memes/${created.id}`);
+          router.push(`/memes/${created.slug}`);
         } catch (e) {
           if (e instanceof ApiError && e.status === 401) {
             router.push("/login");

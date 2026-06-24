@@ -27,14 +27,13 @@ function CreateLiveForm() {
     });
   }, []);
 
-  /** From template detail: `/live/create?template=123` — select template + ensure it appears in dropdown. */
+  /** From template detail: `/live/create?template=<slug-or-id>` — select template + ensure it appears in dropdown. */
   useEffect(() => {
     const raw = searchParams.get("template");
-    if (!raw || !/^\d+$/.test(raw)) return;
-    const idNum = Number(raw);
-    setTemplateId(idNum);
+    if (!raw) return;
     fetchTemplate(raw)
       .then((t) => {
+        setTemplateId(t.id);
         setTemplates((prev) => (prev.some((x) => x.id === t.id) ? prev : [t, ...prev]));
       })
       .catch(() => {});

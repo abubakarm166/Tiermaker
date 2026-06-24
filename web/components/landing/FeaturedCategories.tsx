@@ -58,7 +58,7 @@ export default function FeaturedCategories() {
           ) : (
             categories.map((cat) => (
               <div className="col-lg-6 col-md-6 col-sm-12" key={cat.id}>
-                <Link href={`/app/categories/${cat.id}`} className="landing_category_link">
+                <Link href={`/categories/${cat.slug}`} className="landing_category_link">
                   <div className="landing_category_card">
                     <h5>
                       {getCategoryEmoji(cat.name)} {cat.name}
@@ -72,7 +72,7 @@ export default function FeaturedCategories() {
         </div>
 
         <div className="btn_load_more">
-          <Link href="/app/templates">
+          <Link href="/templates">
             <button type="button">Browse All Templates →</button>
           </Link>
         </div>

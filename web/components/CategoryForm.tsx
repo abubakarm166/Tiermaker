@@ -33,7 +33,7 @@ export default function CategoryForm() {
         name: trimmed,
         image: toImagePath(image),
       });
-      router.push(`/app/categories/${created.id}`);
+      router.push(`/categories/${created.slug}`);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Failed to create category.");
     } finally {
@@ -72,7 +72,7 @@ export default function CategoryForm() {
           <button type="submit" className="btn-primary" disabled={saving}>
             {saving ? "Creating…" : "Create category"}
           </button>
-          <Link href="/app/categories" className="btn-secondary inline-flex items-center justify-center">
+          <Link href="/categories" className="btn-secondary inline-flex items-center justify-center">
             Cancel
           </Link>
         </div>

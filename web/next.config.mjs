@@ -17,6 +17,12 @@ const nextConfig = {
       { source: "/media/:path*", destination: `${apiUrl}/media/:path*` },
     ];
   },
+  async redirects() {
+    return [
+      { source: "/app", destination: "/templates", permanent: true },
+      { source: "/app/:path*", destination: "/:path*", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

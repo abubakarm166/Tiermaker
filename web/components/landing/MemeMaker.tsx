@@ -38,7 +38,7 @@ export default function MemeMaker() {
           ))}
         </div>
         <div className="feature_highlight_cta">
-          <Link href="/app/meme-editor">
+          <Link href="/meme-editor">
             <button type="button">Try the Meme Maker Free →</button>
           </Link>
           <p>No account needed to browse. Create a free account to publish and save your memes.</p>

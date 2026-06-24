@@ -47,6 +47,7 @@ class TierList(models.Model):
         related_name="tier_lists",
     )
     title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=270, unique=True, blank=True, db_index=True)
     visibility = models.CharField(
         max_length=10,
         choices=Visibility.choices,

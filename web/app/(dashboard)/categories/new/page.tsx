@@ -19,7 +19,7 @@ function NewCategoryContent() {
         <p className="text-muted text-sm mb-6">
           Only administrators can create categories. Contact an admin or sign in with an admin account.
         </p>
-        <Link href="/app/categories" className="btn-secondary inline-flex">
+        <Link href="/categories" className="btn-secondary inline-flex">
           Back to categories
         </Link>
       </div>
