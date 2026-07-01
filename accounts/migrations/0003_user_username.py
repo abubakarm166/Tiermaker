@@ -32,17 +32,38 @@ def _unique_on_column_exists(cursor, table, column):
     return cursor.fetchone() is not None
 
 
-def _backfill_usernames(User):
+def _backfill_usernames(connection, table):
+    """Backfill via SQL — historical User model has no username field during this migration."""
     from accounts.usernames import generate_random_username, username_from_x_handle
 
-    for user in User.objects.all().order_by("id"):
-        if user.username:
+    with connection.cursor() as cursor:
+        cursor.execute(
+            f"SELECT id, x_username, username FROM {table} ORDER BY id"
+        )
+        rows = cursor.fetchall()
+
+    taken = set()
+    updates = []
+    for user_id, x_username, username in rows:
+        current = (username or "").strip()
+        if current:
+            taken.add(current.lower())
             continue
-        if user.x_username:
-            username = username_from_x_handle(user.x_username)
+        if x_username and str(x_username).strip():
+            candidate = username_from_x_handle(str(x_username))
         else:
-            username = generate_random_username()
-        User.objects.filter(pk=user.pk).update(username=username)
+            candidate = generate_random_username()
+        while candidate.lower() in taken:
+            candidate = generate_random_username()
+        taken.add(candidate.lower())
+        updates.append((candidate, user_id))
+
+    with connection.cursor() as cursor:
+        for candidate, user_id in updates:
+            cursor.execute(
+                f"UPDATE {table} SET username = %s WHERE id = %s",
+                [candidate, user_id],
+            )
 
 
 def apply_username_field(apps, schema_editor):
@@ -59,7 +80,7 @@ def apply_username_field(apps, schema_editor):
                     f"ALTER TABLE {table} ADD COLUMN username varchar(30) NOT NULL DEFAULT ''"
                 )
 
-        _backfill_usernames(User)
+        _backfill_usernames(connection, table)
 
         with connection.cursor() as cursor:
             if not _unique_on_column_exists(cursor, table, "username"):
@@ -83,7 +104,7 @@ def apply_username_field(apps, schema_editor):
     if not has_column:
         schema_editor.add_field(User, temp_field)
 
-    _backfill_usernames(User)
+    _backfill_usernames(connection, table)
 
     final_field = CharField(max_length=30, unique=True)
     final_field.set_attributes_from_name("username")
