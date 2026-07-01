@@ -118,10 +118,14 @@ export async function login(email: string, password: string) {
   return { ...tokens, user };
 }
 
-export function register(email: string, password: string) {
+export function register(email: string, password: string, username?: string) {
   return api<RegisterResponse>("/auth/register/", {
     method: "POST",
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({
+      email,
+      password,
+      ...(username?.trim() ? { username: username.trim() } : {}),
+    }),
   });
 }
 
@@ -141,6 +145,10 @@ export function confirmPasswordReset(payload: { uid: string; token: string; new_
 
 export function fetchMe() {
   return api<User>("/auth/me/");
+}
+
+export function updateMe(data: { username: string }) {
+  return api<User>("/auth/me/", { method: "PATCH", body: JSON.stringify(data) });
 }
 
 export function fetchCategories() {

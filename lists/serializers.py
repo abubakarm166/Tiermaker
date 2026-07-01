@@ -7,7 +7,7 @@ class TierListSerializer(serializers.ModelSerializer):
     template_detail = TemplateListSerializer(source="template", read_only=True)
     reaction_counts = serializers.SerializerMethodField()
     my_reaction = serializers.SerializerMethodField()
-    user_email = serializers.EmailField(source="user.email", read_only=True)
+    user_username = serializers.CharField(source="user.username", read_only=True)
     can_edit = serializers.SerializerMethodField()
 
     class Meta:
@@ -18,7 +18,7 @@ class TierListSerializer(serializers.ModelSerializer):
             "template",
             "template_detail",
             "user",
-            "user_email",
+            "user_username",
             "title",
             "visibility",
             "tier_assignments",

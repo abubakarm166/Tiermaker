@@ -22,7 +22,7 @@ def main():
     # Create admin user
     admin_user, _ = User.objects.get_or_create(
         email="admin@example.com",
-        defaults={"role": User.Role.ADMIN, "is_staff": True}
+        defaults={"role": User.Role.ADMIN, "is_staff": True, "username": "admin"},
     )
     if not admin_user.check_password("adminpass"):
         admin_user.set_password("adminpass")
@@ -32,7 +32,7 @@ def main():
     # Create normal user
     user, _ = User.objects.get_or_create(
         email="user@example.com",
-        defaults={"role": User.Role.USER}
+        defaults={"role": User.Role.USER, "username": "demo_user"},
     )
     if not user.check_password("userpass"):
         user.set_password("userpass")

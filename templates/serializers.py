@@ -84,7 +84,7 @@ class TemplateItemWriteSerializer(serializers.Serializer):
 
 
 class TemplateListSerializer(serializers.ModelSerializer):
-    created_by_email = serializers.EmailField(source="created_by.email", read_only=True)
+    created_by_username = serializers.CharField(source="created_by.username", read_only=True)
     category_name = serializers.CharField(source="category.name", read_only=True, allow_null=True)
     category_slug = serializers.CharField(source="category.slug", read_only=True, allow_null=True)
     popularity = serializers.SerializerMethodField()
@@ -103,7 +103,7 @@ class TemplateListSerializer(serializers.ModelSerializer):
             "tags",
             "visibility",
             "created_by",
-            "created_by_email",
+            "created_by_username",
             "created_at",
             "updated_at",
             "popularity",
@@ -127,7 +127,7 @@ class TemplateListSerializer(serializers.ModelSerializer):
 class TemplateDetailSerializer(serializers.ModelSerializer):
     tier_rows = TierRowSerializer(many=True, read_only=True)
     items = TemplateItemSerializer(many=True, read_only=True)
-    created_by_email = serializers.EmailField(source="created_by.email", read_only=True)
+    created_by_username = serializers.CharField(source="created_by.username", read_only=True)
     category_name = serializers.CharField(source="category.name", read_only=True, allow_null=True)
     category_slug = serializers.CharField(source="category.slug", read_only=True, allow_null=True)
     popularity = serializers.SerializerMethodField()
@@ -146,7 +146,7 @@ class TemplateDetailSerializer(serializers.ModelSerializer):
             "tags",
             "visibility",
             "created_by",
-            "created_by_email",
+            "created_by_username",
             "tier_rows",
             "items",
             "created_at",

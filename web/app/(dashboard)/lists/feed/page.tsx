@@ -5,6 +5,7 @@ import Link from "next/link";
 import { fetchFeed, reactToList } from "@/lib/api";
 import { mediaSrc } from "@/lib/media";
 import { TierListCardCaption } from "@/components/TierListCardCaption";
+import { formatAuthorLabel } from "@/lib/userDisplay";
 import type { TierList, PaginatedResponse, ReactionType } from "@/types/api";
 
 const REACTIONS: { type: ReactionType; label: string; emoji: string }[] = [
@@ -98,7 +99,7 @@ export default function FeedPage() {
                       )}
                       <TierListCardCaption
                         title={list.title}
-                        subtitle="Community member"
+                        subtitle={formatAuthorLabel(list.user_username)}
                         subtitleTone="muted"
                       />
                     </Link>

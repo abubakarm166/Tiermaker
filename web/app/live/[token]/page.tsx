@@ -198,7 +198,7 @@ export default function LiveEventPage() {
     setSelectedItemId(itemId);
   };
 
-  const isHost = Boolean(user?.email && detail?.host_email && user.email === detail.host_email);
+  const isHost = Boolean(user?.id && detail?.host_id && user.id === detail.host_id);
 
   const endsMs = detail ? parseIsoMs(detail.ends_at) : null;
   const startsMs = detail ? parseIsoMs(detail.starts_at) : null;
@@ -472,7 +472,7 @@ export default function LiveEventPage() {
             View template
           </Link>
           {" · "}
-          <span>Hosted by {detail.host_email ?? "—"}</span>
+          <span>Hosted by {detail.host_username ? `@${detail.host_username}` : "—"}</span>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ export function TierListCardCaption({
 }: {
   title: string;
   subtitle?: string | null;
-  /** `muted` = softer line (e.g. email); `strong` = slightly brighter (e.g. template name) */
+  /** `muted` = softer line (e.g. username); `strong` = slightly brighter (e.g. template name) */
   subtitleTone?: "muted" | "strong";
 }) {
   const subClass =

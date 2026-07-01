@@ -124,7 +124,8 @@ class LiveEventDetailView(APIView):
                 **ser.data,
                 "template_id": event.template_id,
                 "template_slug": event.template.slug,
-                "host_email": event.host.email if event.host_id else None,
+                "host_id": event.host_id,
+                "host_username": event.host.username if event.host_id else None,
                 "tier_rows": tier_rows,
                 "summary": {
                     "total_votes": state["total_votes"],
@@ -560,8 +561,8 @@ class LiveEventLandingPreviewView(APIView):
                 if r.user_id in seen_u[eid]:
                     continue
                 seen_u[eid].add(r.user_id)
-                em = r.user.email or ""
-                voters_map[eid].append((em[0] if em else "?").upper())
+                em = (r.user.username or "")[:1]
+                voters_map[eid].append((em or "?").upper())
 
         results = []
         for e in events:
@@ -569,8 +570,8 @@ class LiveEventLandingPreviewView(APIView):
             initials = voters_map.get(e.id, [])
             shown = len(initials)
             extra = max(0, pc - shown)
-            host_email = e.host.email if e.host_id else ""
-            host_display = host_email.split("@", 1)[0] if host_email and "@" in host_email else (host_email or "host")
+            host_username = e.host.username if e.host_id else ""
+            host_display = host_username or "host"
             results.append(
                 {
                     "id": e.id,

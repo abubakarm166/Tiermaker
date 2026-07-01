@@ -19,6 +19,7 @@ from .twitter_oauth import (
     generate_pkce,
     twitter_configured,
 )
+from .usernames import username_from_x_handle
 
 User = get_user_model()
 
@@ -29,7 +30,7 @@ SESSION_NEXT_KEY = "twitter_oauth_next"
 
 def _safe_next_path(raw: str | None) -> str:
     if not raw or not raw.startswith("/") or raw.startswith("//") or "://" in raw:
-        return "/app"
+        return "/templates"
     return raw
 
 
@@ -47,9 +48,16 @@ def get_or_create_user_from_twitter(profile: dict) -> User:
     if user:
         if user.is_banned:
             raise ValueError("banned")
+        updates = []
         if username and user.x_username != username:
             user.x_username = username
-            user.save(update_fields=["x_username", "updated_at"])
+            updates.append("x_username")
+        if not user.username:
+            user.username = username_from_x_handle(x_username)
+            updates.append("username")
+        if updates:
+            updates.append("updated_at")
+            user.save(update_fields=updates)
         return user
 
     email = _twitter_email(twitter_id)
@@ -60,7 +68,11 @@ def get_or_create_user_from_twitter(profile: dict) -> User:
         user.twitter_id = twitter_id
         user.x_username = x_username
         user.set_unusable_password()
-        user.save(update_fields=["twitter_id", "x_username", "password", "updated_at"])
+        fields = ["twitter_id", "x_username", "password", "updated_at"]
+        if not user.username:
+            user.username = username_from_x_handle(x_username)
+            fields.append("username")
+        user.save(update_fields=fields)
         return user
 
     return User.objects.create_user(
@@ -68,6 +80,7 @@ def get_or_create_user_from_twitter(profile: dict) -> User:
         password=None,
         twitter_id=twitter_id,
         x_username=x_username,
+        username=username_from_x_handle(x_username),
     )
 
 

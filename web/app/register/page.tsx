@@ -9,6 +9,7 @@ import TwitterLoginButton from "@/components/TwitterLoginButton";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,18 +21,19 @@ export default function RegisterPage() {
     setError("");
     setLoading(true);
     try {
-      await register(email, password);
-      router.replace("/templates");
+      await register(email, password, username.trim() || undefined);
+      router.replace("/account");
     } catch (err) {
-      const msg =
-        err instanceof ApiError &&
-        typeof err.body === "object" &&
-        err.body !== null &&
-        "email" in (err.body as object)
-          ? (err.body as { email?: string[] }).email?.[0] ?? err.message
-          : err instanceof ApiError
-            ? err.message
-            : "Registration failed";
+      let msg = "Registration failed";
+      if (err instanceof ApiError && typeof err.body === "object" && err.body !== null) {
+        const body = err.body as Record<string, string[] | string>;
+        msg =
+          body.email?.[0] ??
+          body.username?.[0] ??
+          (typeof body.detail === "string" ? body.detail : err.message);
+      } else if (err instanceof ApiError) {
+        msg = err.message;
+      }
       setError(msg);
     } finally {
       setLoading(false);
@@ -56,7 +58,7 @@ export default function RegisterPage() {
 
           <h1 className="text-2xl font-semibold text-white mt-1">Create account</h1>
           <p className="mt-1 text-sm text-muted-strong">
-            Start building and sharing tier lists with your community in seconds.
+            Your email stays private. Pick a username for how you appear publicly, or we&apos;ll assign one for you.
           </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -77,6 +79,28 @@ export default function RegisterPage() {
               required
               autoComplete="email"
             />
+          </div>
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-white mb-1">
+              Username <span className="text-muted-strong font-normal">(optional)</span>
+            </label>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-strong text-sm">@</span>
+              <input
+                id="username"
+                type="text"
+                value={username.replace(/^@+/, "")}
+                onChange={(e) => setUsername(e.target.value.replace(/^@+/, ""))}
+                className="input flex-1"
+                autoComplete="username"
+                minLength={3}
+                maxLength={30}
+                placeholder="yourname"
+              />
+            </div>
+            <p className="mt-1 text-[11px] text-muted-strong">
+              Leave blank for a random username. You can change it anytime in Account settings.
+            </p>
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-white mb-1">Password (min 8)</label>

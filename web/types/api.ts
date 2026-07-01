@@ -14,6 +14,7 @@ export interface Category {
 export interface User {
   id: number;
   email: string;
+  username: string;
   x_username?: string;
   role: UserRole;
   is_banned: boolean;
@@ -48,7 +49,7 @@ export interface Template {
   tags: string[];
   visibility: Visibility;
   created_by: number;
-  created_by_email: string;
+  created_by_username: string;
   created_at: string;
   updated_at: string;
   popularity?: number;
@@ -65,7 +66,7 @@ export interface TierList {
   template: number;
   template_detail?: Template;
   user: number;
-  user_email?: string;
+  user_username?: string;
   title: string;
   visibility: Visibility;
   tier_assignments: Record<string, number[]>;
@@ -100,7 +101,7 @@ export interface Meme {
   title: string;
   snapshot?: unknown;
   preview: string | null;
-  author_email: string | null;
+  author_username: string | null;
   parent_id: number | null;
   created_at: string;
   updated_at: string;
@@ -124,7 +125,8 @@ export interface LiveEventDetail {
   template_title: string;
   template_id: number;
   template_slug?: string;
-  host_email: string | null;
+  host_id: number | null;
+  host_username: string | null;
   tier_rows: LiveTierRow[];
   summary: {
     total_votes: number;

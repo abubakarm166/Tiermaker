@@ -14,6 +14,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { mediaSrc } from "@/lib/media";
 import { TierListCardCaption } from "@/components/TierListCardCaption";
+import { formatAuthorLabel } from "@/lib/userDisplay";
 import type { TierList, ReactionType } from "@/types/api";
 
 const REACTIONS: { type: ReactionType; emoji: string; label: string }[] = [
@@ -364,7 +365,7 @@ export default function ListDetailPage() {
                       )}
                       <TierListCardCaption
                         title={rl.title}
-                        subtitle="Community member"
+                        subtitle={formatAuthorLabel(rl.user_username)}
                         subtitleTone="muted"
                       />
                     </Link>

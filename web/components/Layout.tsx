@@ -222,6 +222,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     role="menu"
                     className="absolute right-0 mt-2 w-44 rounded-xl border border-[#383838] bg-[#161616] shadow-[0_12px_40px_rgba(0,0,0,0.75)] ring-1 ring-white/[0.06] overflow-hidden"
                   >
+                    <Link
+                      href="/account"
+                      className="block px-3 py-2.5 text-sm text-[#c4c4c4] hover:text-white hover:bg-white/[0.06]"
+                      role="menuitem"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      Account
+                    </Link>
                     <button
                       type="button"
                       onClick={handleLogout}

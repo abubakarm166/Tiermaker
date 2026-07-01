@@ -4,7 +4,7 @@ from .models import Meme
 
 
 class MemeListSerializer(serializers.ModelSerializer):
-    author_email = serializers.SerializerMethodField()
+    author_username = serializers.CharField(source="author.username", read_only=True)
     parent_id = serializers.IntegerField(source="parent.id", read_only=True)
 
     class Meta:
@@ -14,18 +14,15 @@ class MemeListSerializer(serializers.ModelSerializer):
             "slug",
             "title",
             "preview",
-            "author_email",
+            "author_username",
             "parent_id",
             "created_at",
             "updated_at",
         )
 
-    def get_author_email(self, obj: Meme):
-        return getattr(obj.author, "email", None)
-
 
 class MemeDetailSerializer(serializers.ModelSerializer):
-    author_email = serializers.SerializerMethodField()
+    author_username = serializers.CharField(source="author.username", read_only=True)
     parent_id = serializers.IntegerField(source="parent.id", read_only=True)
 
     class Meta:
@@ -36,18 +33,14 @@ class MemeDetailSerializer(serializers.ModelSerializer):
             "title",
             "snapshot",
             "preview",
-            "author_email",
+            "author_username",
             "parent_id",
             "created_at",
             "updated_at",
         )
-
-    def get_author_email(self, obj: Meme):
-        return getattr(obj.author, "email", None)
 
 
 class MemeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meme
         fields = ("title", "snapshot", "preview", "parent")
-

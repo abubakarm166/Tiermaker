@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchMemes } from "@/lib/api";
+import { formatAuthorLabel } from "@/lib/userDisplay";
 import type { Meme, PaginatedResponse } from "@/types/api";
 
 export default function MemesGalleryPage() {
@@ -75,7 +76,7 @@ export default function MemesGalleryPage() {
                     {m.title || `Meme #${m.id}`}
                   </div>
                   <div className="text-xs text-muted-strong mt-0.5 flex items-center justify-between gap-2">
-                    <span className="truncate">{m.author_email ?? "Anonymous"}</span>
+                    <span className="truncate">{formatAuthorLabel(m.author_username)}</span>
                     <span className="opacity-70">Remix</span>
                   </div>
                 </div>
