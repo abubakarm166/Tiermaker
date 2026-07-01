@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ADMIN = "ADMIN", "Admin"
 
     email = models.EmailField(unique=True, db_index=True)
-    username = models.CharField(max_length=30, unique=True, db_index=True)
+    username = models.CharField(max_length=30, unique=True)
     twitter_id = models.CharField(max_length=32, unique=True, null=True, blank=True, db_index=True)
     x_username = models.CharField(max_length=50, blank=True, default="")
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.USER)
