@@ -1,13 +1,18 @@
 from django.db import migrations, models
 
-from core.slugs import build_slug
+from core.migration_slug import apply_slug_field
 
 
-def populate_slugs(apps, schema_editor):
-    TierList = apps.get_model("lists", "TierList")
-    for obj in TierList.objects.all().iterator():
-        obj.slug = build_slug(obj.title, obj.pk)
-        obj.save(update_fields=["slug"])
+def apply_tierlist_slug(apps, schema_editor):
+    apply_slug_field(
+        apps,
+        schema_editor,
+        app_label="lists",
+        model_name="TierList",
+        source_column="title",
+        max_length=270,
+        default_text="list",
+    )
 
 
 class Migration(migrations.Migration):
@@ -17,10 +22,22 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="tierlist",
-            name="slug",
-            field=models.SlugField(blank=True, db_index=True, max_length=270, unique=True),
+        migrations.SeparateDatabaseAndState(
+            database_operations=[
+                migrations.RunPython(apply_tierlist_slug, migrations.RunPython.noop),
+            ],
+            state_operations=[
+                migrations.AddField(
+                    model_name="tierlist",
+                    name="slug",
+                    field=models.SlugField(default="", max_length=270),
+                    preserve_default=False,
+                ),
+                migrations.AlterField(
+                    model_name="tierlist",
+                    name="slug",
+                    field=models.SlugField(max_length=270, unique=True),
+                ),
+            ],
         ),
-        migrations.RunPython(populate_slugs, migrations.RunPython.noop),
     ]

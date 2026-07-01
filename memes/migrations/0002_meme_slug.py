@@ -1,14 +1,18 @@
 from django.db import migrations, models
 
-from core.slugs import build_slug
+from core.migration_slug import apply_slug_field
 
 
-def populate_slugs(apps, schema_editor):
-    Meme = apps.get_model("memes", "Meme")
-    for obj in Meme.objects.all().iterator():
-        text = (obj.title or "").strip() or "meme"
-        obj.slug = build_slug(text, obj.pk)
-        obj.save(update_fields=["slug"])
+def apply_meme_slug(apps, schema_editor):
+    apply_slug_field(
+        apps,
+        schema_editor,
+        app_label="memes",
+        model_name="Meme",
+        source_column="title",
+        max_length=140,
+        default_text="meme",
+    )
 
 
 class Migration(migrations.Migration):
@@ -18,10 +22,22 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="meme",
-            name="slug",
-            field=models.SlugField(blank=True, db_index=True, max_length=140, unique=True),
+        migrations.SeparateDatabaseAndState(
+            database_operations=[
+                migrations.RunPython(apply_meme_slug, migrations.RunPython.noop),
+            ],
+            state_operations=[
+                migrations.AddField(
+                    model_name="meme",
+                    name="slug",
+                    field=models.SlugField(default="", max_length=140),
+                    preserve_default=False,
+                ),
+                migrations.AlterField(
+                    model_name="meme",
+                    name="slug",
+                    field=models.SlugField(max_length=140, unique=True),
+                ),
+            ],
         ),
-        migrations.RunPython(populate_slugs, migrations.RunPython.noop),
     ]
