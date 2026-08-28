@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Free Tier List Maker Online, Create, Rank & Share | TheTierMaker",
   description:
     "Make a free tier list online in seconds, no login needed to start. Rank anime, games, Pokémon, sports, fast food & more. Custom tier list maker. Free forever.",
+  verification: {
+    google: "swOchfiUXcqPD61Lcz9bxDPR9U_B3znIiFYOwTAnx1U",
+  },
 };
 
 export default function RootLayout({
